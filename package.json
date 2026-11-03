@@ -1,0 +1,28 @@
+{
+  "name": "shekor-platform",
+  "private": true,
+  "version": "1.0.0",
+  "packageManager": "pnpm@10.34.6",
+  "engines": { "node": ">=20.9" },
+  "scripts": {
+    "dev": "turbo run dev --parallel",
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "test:integration": "pnpm --filter @shekor/web test:integration",
+    "test:e2e": "pnpm --filter @shekor/e2e test",
+    "db:generate": "pnpm --filter @shekor/db generate",
+    "db:migrate": "pnpm --filter @shekor/db migrate:deploy",
+    "db:migrate:dev": "pnpm --filter @shekor/db migrate:dev",
+    "db:seed": "pnpm --filter @shekor/db seed",
+    "db:reset": "pnpm --filter @shekor/db reset"
+  },
+  "devDependencies": {
+    "turbo": "^2.11.10",
+    "typescript": "5.9.3"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["@prisma/client", "@prisma/engines", "prisma", "esbuild", "sharp", "unrs-resolver"]
+  }
+}

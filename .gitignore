@@ -1,0 +1,17 @@
+node_modules/
+.next/
+dist/
+coverage/
+.turbo/
+*.tsbuildinfo
+.env
+.env.local
+.env.*.local
+!.env.example
+apps/web/storage/uploads/*
+!apps/web/storage/uploads/.gitkeep
+tests/e2e/test-results/
+tests/e2e/playwright-report/
+tests/lighthouse/reports/*.json
+.DS_Store
+*.log

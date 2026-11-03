@@ -1,0 +1,2069 @@
+{
+ "categories": [
+  {
+   "slug": "sofas",
+   "en": "Sofas",
+   "bn": "সোফা",
+   "icon": "sofa",
+   "image": "cat-sofa"
+  },
+  {
+   "slug": "beds",
+   "en": "Beds",
+   "bn": "খাট",
+   "icon": "bed-double",
+   "image": "cat-bed"
+  },
+  {
+   "slug": "dining",
+   "en": "Dining Sets",
+   "bn": "ডাইনিং সেট",
+   "icon": "utensils",
+   "image": "cat-dining"
+  },
+  {
+   "slug": "almirah",
+   "en": "Almirah & Wardrobes",
+   "bn": "আলমারি ও ওয়ার্ডরোব",
+   "icon": "door-closed",
+   "image": "cat-wardrobe"
+  },
+  {
+   "slug": "showcase",
+   "en": "Showcase & Cabinets",
+   "bn": "শোকেস ও কেবিনেট",
+   "icon": "archive",
+   "image": "cat-cabinet"
+  },
+  {
+   "slug": "divan",
+   "en": "Divan & Daybeds",
+   "bn": "ডিভান",
+   "icon": "sofa",
+   "image": "cat-divan"
+  },
+  {
+   "slug": "tables",
+   "en": "Coffee & Side Tables",
+   "bn": "সেন্টার ও সাইড টেবিল",
+   "icon": "table",
+   "image": "cat-table"
+  },
+  {
+   "slug": "chairs",
+   "en": "Chairs & Armchairs",
+   "bn": "চেয়ার ও আর্মচেয়ার",
+   "icon": "armchair",
+   "image": "cat-chair"
+  },
+  {
+   "slug": "office",
+   "en": "Office Furniture",
+   "bn": "অফিস ফার্নিচার",
+   "icon": "briefcase",
+   "image": "cat-office"
+  },
+  {
+   "slug": "kids",
+   "en": "Kids Furniture",
+   "bn": "শিশুদের ফার্নিচার",
+   "icon": "baby",
+   "image": "cat-kids"
+  },
+  {
+   "slug": "storage",
+   "en": "Shelves & Storage",
+   "bn": "শেলফ ও স্টোরেজ",
+   "icon": "library",
+   "image": "cat-shelf"
+  },
+  {
+   "slug": "decor",
+   "en": "Decor & Lighting",
+   "bn": "ডেকর ও লাইটিং",
+   "icon": "lamp",
+   "image": "cat-decor"
+  }
+ ],
+ "rooms": [
+  {
+   "slug": "living",
+   "en": "Living Room",
+   "bn": "বসার ঘর",
+   "image": "room-living"
+  },
+  {
+   "slug": "bedroom",
+   "en": "Bedroom",
+   "bn": "শোবার ঘর",
+   "image": "room-bedroom"
+  },
+  {
+   "slug": "dining-room",
+   "en": "Dining Room",
+   "bn": "খাবার ঘর",
+   "image": "room-dining"
+  },
+  {
+   "slug": "office-room",
+   "en": "Home Office",
+   "bn": "হোম অফিস",
+   "image": "room-office"
+  },
+  {
+   "slug": "kids-room",
+   "en": "Kids Room",
+   "bn": "শিশুদের ঘর",
+   "image": "room-kids"
+  },
+  {
+   "slug": "outdoor",
+   "en": "Balcony & Outdoor",
+   "bn": "বারান্দা ও আউটডোর",
+   "image": "room-outdoor"
+  }
+ ],
+ "materials": [
+  {
+   "slug": "mahogany",
+   "en": "Mahogany",
+   "bn": "মেহগনি"
+  },
+  {
+   "slug": "teak",
+   "en": "Segun (Teak)",
+   "bn": "সেগুন"
+  },
+  {
+   "slug": "gorjon",
+   "en": "Gorjon",
+   "bn": "গর্জন"
+  },
+  {
+   "slug": "oak",
+   "en": "Oak",
+   "bn": "ওক"
+  },
+  {
+   "slug": "beech",
+   "en": "Beech",
+   "bn": "বিচ"
+  },
+  {
+   "slug": "mdf",
+   "en": "Lacquered MDF",
+   "bn": "ল্যাকার এমডিএফ"
+  },
+  {
+   "slug": "rubber",
+   "en": "Rubber Wood",
+   "bn": "রাবার উড"
+  },
+  {
+   "slug": "metal",
+   "en": "Powder-coated Steel",
+   "bn": "পাউডার কোটেড স্টিল"
+  },
+  {
+   "slug": "fabric",
+   "en": "Linen Fabric",
+   "bn": "লিনেন কাপড়"
+  },
+  {
+   "slug": "velvet",
+   "en": "Velvet",
+   "bn": "ভেলভেট"
+  },
+  {
+   "slug": "leather",
+   "en": "Leatherette",
+   "bn": "লেদারেট"
+  },
+  {
+   "slug": "cane",
+   "en": "Cane & Teak",
+   "bn": "বেত ও সেগুন"
+  }
+ ],
+ "products": [
+  {
+   "id": 101,
+   "slug": "aranya-3-seater-teak-sofa",
+   "en": "Aranya 3-Seater Teak Sofa",
+   "bn": "অরণ্য ৩-সিটার সেগুন সোফা",
+   "cat": "sofas",
+   "room": "living",
+   "mat": "teak",
+   "price": 84500,
+   "old": 99500,
+   "rating": 4.8,
+   "reviews": 126,
+   "badge": "bestseller",
+   "img": "p-sofa-1",
+   "sw": [
+    "#7a8b74",
+    "#c9b79c",
+    "#3d4a5c"
+   ],
+   "stock": "in",
+   "lead": 5
+  },
+  {
+   "id": 102,
+   "slug": "nodi-l-shape-sectional",
+   "en": "Nodi L-Shape Sectional Sofa",
+   "bn": "নদী এল-শেপ সেকশনাল সোফা",
+   "cat": "sofas",
+   "room": "living",
+   "mat": "fabric",
+   "price": 132000,
+   "old": null,
+   "rating": 4.7,
+   "reviews": 58,
+   "badge": "new",
+   "img": "p-sofa-2",
+   "sw": [
+    "#b8b2a7",
+    "#55606e"
+   ],
+   "stock": "in",
+   "lead": 7
+  },
+  {
+   "id": 103,
+   "slug": "shimul-king-bed-mahogany",
+   "en": "Shimul King Bed (Mahogany)",
+   "bn": "শিমুল কিং খাট (মেহগনি)",
+   "cat": "beds",
+   "room": "bedroom",
+   "mat": "mahogany",
+   "price": 96000,
+   "old": 112000,
+   "rating": 4.9,
+   "reviews": 204,
+   "badge": "sale",
+   "img": "p-bed-1",
+   "sw": [
+    "#5b3a29",
+    "#8a5a3c"
+   ],
+   "stock": "in",
+   "lead": 7
+  },
+  {
+   "id": 104,
+   "slug": "kadam-storage-bed",
+   "en": "Kadam Semi-Double Storage Bed",
+   "bn": "কদম সেমি-ডাবল স্টোরেজ খাট",
+   "cat": "beds",
+   "room": "bedroom",
+   "mat": "oak",
+   "price": 58500,
+   "old": null,
+   "rating": 4.6,
+   "reviews": 77,
+   "badge": null,
+   "img": "p-bed-2",
+   "sw": [
+    "#c8a27a",
+    "#6b4a33"
+   ],
+   "stock": "low",
+   "lead": 5
+  },
+  {
+   "id": 105,
+   "slug": "borsha-4-door-almirah",
+   "en": "Borsha 4-Door Almirah",
+   "bn": "বর্ষা ৪-দরজা আলমারি",
+   "cat": "almirah",
+   "room": "bedroom",
+   "mat": "gorjon",
+   "price": 71000,
+   "old": 79000,
+   "rating": 4.7,
+   "reviews": 92,
+   "badge": "sale",
+   "img": "p-wardrobe-1",
+   "sw": [
+    "#e9e1d4",
+    "#6b4a33"
+   ],
+   "stock": "in",
+   "lead": 10
+  },
+  {
+   "id": 106,
+   "slug": "jamdani-glass-showcase",
+   "en": "Jamdani Glass Showcase",
+   "bn": "জামদানি গ্লাস শোকেস",
+   "cat": "showcase",
+   "room": "living",
+   "mat": "teak",
+   "price": 64000,
+   "old": null,
+   "rating": 4.8,
+   "reviews": 41,
+   "badge": "made",
+   "img": "p-cabinet-1",
+   "sw": [
+    "#7c4a2d"
+   ],
+   "stock": "made",
+   "lead": 21
+  },
+  {
+   "id": 107,
+   "slug": "shapla-divan-bolsters",
+   "en": "Shapla Divan with Bolsters",
+   "bn": "শাপলা ডিভান (বালিশসহ)",
+   "cat": "divan",
+   "room": "living",
+   "mat": "teak",
+   "price": 38500,
+   "old": 44000,
+   "rating": 4.5,
+   "reviews": 63,
+   "badge": "sale",
+   "img": "p-divan-1",
+   "sw": [
+    "#d9c7a5",
+    "#7a8b74"
+   ],
+   "stock": "in",
+   "lead": 5
+  },
+  {
+   "id": 108,
+   "slug": "padma-6-seater-dining",
+   "en": "Padma 6-Seater Dining Set",
+   "bn": "পদ্মা ৬-সিটার ডাইনিং সেট",
+   "cat": "dining",
+   "room": "dining-room",
+   "mat": "mahogany",
+   "price": 118000,
+   "old": 134000,
+   "rating": 4.8,
+   "reviews": 149,
+   "badge": "bestseller",
+   "img": "p-dining-1",
+   "sw": [
+    "#5b3a29",
+    "#a57a52"
+   ],
+   "stock": "in",
+   "lead": 7
+  },
+  {
+   "id": 109,
+   "slug": "meghna-oak-dinner-wagon",
+   "en": "Meghna Oak Dinner Wagon",
+   "bn": "মেঘনা ওক ডিনার ওয়াগন",
+   "cat": "dining",
+   "room": "dining-room",
+   "mat": "oak",
+   "price": 42000,
+   "old": null,
+   "rating": 4.6,
+   "reviews": 28,
+   "badge": null,
+   "img": "p-wagon-1",
+   "sw": [
+    "#c8a27a"
+   ],
+   "stock": "in",
+   "lead": 7
+  },
+  {
+   "id": 110,
+   "slug": "kashful-dressing-table",
+   "en": "Kashful Dressing Table",
+   "bn": "কাশফুল ড্রেসিং টেবিল",
+   "cat": "storage",
+   "room": "bedroom",
+   "mat": "mdf",
+   "price": 27500,
+   "old": 32000,
+   "rating": 4.4,
+   "reviews": 51,
+   "badge": "sale",
+   "img": "p-dresser-1",
+   "sw": [
+    "#f2ede4",
+    "#2f3a33"
+   ],
+   "stock": "in",
+   "lead": 5
+  },
+  {
+   "id": 111,
+   "slug": "jhinuk-velvet-armchair",
+   "en": "Jhinuk Velvet Armchair",
+   "bn": "ঝিনুক ভেলভেট আর্মচেয়ার",
+   "cat": "chairs",
+   "room": "living",
+   "mat": "velvet",
+   "price": 24900,
+   "old": null,
+   "rating": 4.7,
+   "reviews": 88,
+   "badge": "new",
+   "img": "p-arm-1",
+   "sw": [
+    "#2f5d50",
+    "#b5651d",
+    "#7b2d3b"
+   ],
+   "stock": "in",
+   "lead": 3
+  },
+  {
+   "id": 112,
+   "slug": "sundarban-coffee-table",
+   "en": "Sundarban Coffee Table",
+   "bn": "সুন্দরবন কফি টেবিল",
+   "cat": "tables",
+   "room": "living",
+   "mat": "teak",
+   "price": 18500,
+   "old": 21000,
+   "rating": 4.6,
+   "reviews": 97,
+   "badge": "sale",
+   "img": "p-table-1",
+   "sw": [
+    "#7c4a2d",
+    "#c8a27a"
+   ],
+   "stock": "in",
+   "lead": 3
+  },
+  {
+   "id": 113,
+   "slug": "rongdhonu-kids-bunk-bed",
+   "en": "Rongdhonu Kids Bunk Bed",
+   "bn": "রংধনু কিডস বাংক বেড",
+   "cat": "kids",
+   "room": "kids-room",
+   "mat": "beech",
+   "price": 54000,
+   "old": null,
+   "rating": 4.8,
+   "reviews": 36,
+   "badge": "new",
+   "img": "p-kids-1",
+   "sw": [
+    "#f2ede4",
+    "#8fb8a8"
+   ],
+   "stock": "in",
+   "lead": 10
+  },
+  {
+   "id": 114,
+   "slug": "karigor-ergonomic-chair",
+   "en": "Karigor Ergonomic Office Chair",
+   "bn": "কারিগর এরগোনমিক অফিস চেয়ার",
+   "cat": "office",
+   "room": "office-room",
+   "mat": "metal",
+   "price": 16900,
+   "old": 19500,
+   "rating": 4.5,
+   "reviews": 213,
+   "badge": "bestseller",
+   "img": "p-office-1",
+   "sw": [
+    "#1f2421",
+    "#55606e"
+   ],
+   "stock": "in",
+   "lead": 2
+  },
+  {
+   "id": 115,
+   "slug": "dhanshiri-executive-desk",
+   "en": "Dhanshiri Executive Desk",
+   "bn": "ধানসিঁড়ি এক্সিকিউটিভ ডেস্ক",
+   "cat": "office",
+   "room": "office-room",
+   "mat": "oak",
+   "price": 46500,
+   "old": null,
+   "rating": 4.7,
+   "reviews": 22,
+   "badge": null,
+   "img": "p-desk-1",
+   "sw": [
+    "#c8a27a",
+    "#3b2f27"
+   ],
+   "stock": "in",
+   "lead": 7
+  },
+  {
+   "id": 116,
+   "slug": "boighor-bookshelf",
+   "en": "Boighor 5-Tier Bookshelf",
+   "bn": "বইঘর ৫-তাক বুকশেলফ",
+   "cat": "storage",
+   "room": "living",
+   "mat": "rubber",
+   "price": 14500,
+   "old": 16900,
+   "rating": 4.6,
+   "reviews": 74,
+   "badge": "sale",
+   "img": "p-shelf-1",
+   "sw": [
+    "#c8a27a",
+    "#1f2421"
+   ],
+   "stock": "in",
+   "lead": 3
+  },
+  {
+   "id": 117,
+   "slug": "nakshi-tv-cabinet",
+   "en": "Nakshi TV Cabinet",
+   "bn": "নকশি টিভি কেবিনেট",
+   "cat": "showcase",
+   "room": "living",
+   "mat": "mahogany",
+   "price": 36000,
+   "old": null,
+   "rating": 4.7,
+   "reviews": 45,
+   "badge": null,
+   "img": "p-tv-1",
+   "sw": [
+    "#5b3a29"
+   ],
+   "stock": "low",
+   "lead": 5
+  },
+  {
+   "id": 118,
+   "slug": "shitalpati-cane-bench",
+   "en": "Shitalpati Cane Bench",
+   "bn": "শীতলপাটি বেতের বেঞ্চ",
+   "cat": "chairs",
+   "room": "outdoor",
+   "mat": "cane",
+   "price": 12900,
+   "old": null,
+   "rating": 4.5,
+   "reviews": 19,
+   "badge": "new",
+   "img": "p-bench-1",
+   "sw": [
+    "#c8a27a"
+   ],
+   "stock": "in",
+   "lead": 5
+  },
+  {
+   "id": 119,
+   "slug": "aram-kedara-rocking-chair",
+   "en": "Aram Kedara Rocking Chair",
+   "bn": "আরাম কেদারা রকিং চেয়ার",
+   "cat": "chairs",
+   "room": "living",
+   "mat": "teak",
+   "price": 22500,
+   "old": 26000,
+   "rating": 4.9,
+   "reviews": 67,
+   "badge": "sale",
+   "img": "p-chair-1",
+   "sw": [
+    "#7c4a2d",
+    "#2f3a33"
+   ],
+   "stock": "in",
+   "lead": 5
+  },
+  {
+   "id": 120,
+   "slug": "jonaki-bedside-table",
+   "en": "Jonaki Bedside Table",
+   "bn": "জোনাকি বেডসাইড টেবিল",
+   "cat": "tables",
+   "room": "bedroom",
+   "mat": "oak",
+   "price": 9800,
+   "old": null,
+   "rating": 4.6,
+   "reviews": 112,
+   "badge": null,
+   "img": "p-night-1",
+   "sw": [
+    "#c8a27a",
+    "#f2ede4"
+   ],
+   "stock": "in",
+   "lead": 3
+  },
+  {
+   "id": 121,
+   "slug": "akash-floor-lamp",
+   "en": "Akash Brass Floor Lamp",
+   "bn": "আকাশ ব্রাস ফ্লোর ল্যাম্প",
+   "cat": "decor",
+   "room": "living",
+   "mat": "metal",
+   "price": 8900,
+   "old": 10500,
+   "rating": 4.4,
+   "reviews": 39,
+   "badge": "sale",
+   "img": "p-lamp-1",
+   "sw": [
+    "#b08d57"
+   ],
+   "stock": "in",
+   "lead": 2
+  },
+  {
+   "id": 122,
+   "slug": "dolna-baby-cradle",
+   "en": "Dolna Baby Cradle",
+   "bn": "দোলনা বেবি ক্র্যাডল",
+   "cat": "kids",
+   "room": "kids-room",
+   "mat": "beech",
+   "price": 15800,
+   "old": null,
+   "rating": 4.8,
+   "reviews": 27,
+   "badge": null,
+   "img": "p-cradle-1",
+   "sw": [
+    "#f2ede4"
+   ],
+   "stock": "in",
+   "lead": 7
+  },
+  {
+   "id": 123,
+   "slug": "alna-cloth-rack",
+   "en": "Alna Teak Cloth Rack",
+   "bn": "আলনা সেগুন কাপড়ের র‍্যাক",
+   "cat": "storage",
+   "room": "bedroom",
+   "mat": "teak",
+   "price": 11500,
+   "old": null,
+   "rating": 4.3,
+   "reviews": 33,
+   "badge": null,
+   "img": "p-alna-1",
+   "sw": [
+    "#7c4a2d"
+   ],
+   "stock": "in",
+   "lead": 5
+  },
+  {
+   "id": 124,
+   "slug": "nokkhotro-kitchen-cabinet",
+   "en": "Nokkhotro Modular Kitchen Unit",
+   "bn": "নক্ষত্র মডুলার কিচেন ইউনিট",
+   "cat": "storage",
+   "room": "dining-room",
+   "mat": "mdf",
+   "price": 89000,
+   "old": null,
+   "rating": 4.6,
+   "reviews": 14,
+   "badge": "made",
+   "img": "p-kitchen-1",
+   "sw": [
+    "#f2ede4",
+    "#2f5d50"
+   ],
+   "stock": "made",
+   "lead": 25
+  }
+ ],
+ "showrooms": [
+  {
+   "en": "Banani Flagship",
+   "bn": "বনানী ফ্ল্যাগশিপ",
+   "city": "Dhaka",
+   "addrEn": "House 42, Road 11, Banani, Dhaka 1213",
+   "addrBn": "বাড়ি ৪২, রোড ১১, বনানী, ঢাকা ১২১৩",
+   "phone": "09612-345601",
+   "flagship": true,
+   "lat": 23.7937,
+   "lng": 90.4066
+  },
+  {
+   "en": "Dhanmondi Experience Centre",
+   "bn": "ধানমন্ডি এক্সপেরিয়েন্স সেন্টার",
+   "city": "Dhaka",
+   "addrEn": "Satmasjid Road, Dhanmondi 27, Dhaka",
+   "addrBn": "সাতমসজিদ রোড, ধানমন্ডি ২৭, ঢাকা",
+   "phone": "09612-345602",
+   "flagship": true,
+   "lat": 23.7561,
+   "lng": 90.3732
+  },
+  {
+   "en": "Uttara Sector 7",
+   "bn": "উত্তরা সেক্টর ৭",
+   "city": "Dhaka",
+   "addrEn": "Sonargaon Janapath, Sector 7, Uttara",
+   "addrBn": "সোনারগাঁও জনপথ, সেক্টর ৭, উত্তরা",
+   "phone": "09612-345603",
+   "flagship": false,
+   "lat": 23.8701,
+   "lng": 90.3995
+  },
+  {
+   "en": "Mirpur 10",
+   "bn": "মিরপুর ১০",
+   "city": "Dhaka",
+   "addrEn": "Begum Rokeya Sarani, Mirpur 10",
+   "addrBn": "বেগম রোকেয়া সরণি, মিরপুর ১০",
+   "phone": "09612-345604",
+   "flagship": false,
+   "lat": 23.8069,
+   "lng": 90.3687
+  },
+  {
+   "en": "GEC Circle",
+   "bn": "জিইসি মোড়",
+   "city": "Chattogram",
+   "addrEn": "CDA Avenue, GEC Circle, Chattogram",
+   "addrBn": "সিডিএ এভিনিউ, জিইসি মোড়, চট্টগ্রাম",
+   "phone": "09612-345605",
+   "flagship": true,
+   "lat": 22.3591,
+   "lng": 91.8219
+  },
+  {
+   "en": "Zindabazar",
+   "bn": "জিন্দাবাজার",
+   "city": "Sylhet",
+   "addrEn": "Zindabazar Main Road, Sylhet",
+   "addrBn": "জিন্দাবাজার মেইন রোড, সিলেট",
+   "phone": "09612-345606",
+   "flagship": false,
+   "lat": 24.8949,
+   "lng": 91.8687
+  },
+  {
+   "en": "Shaheb Bazar",
+   "bn": "সাহেব বাজার",
+   "city": "Rajshahi",
+   "addrEn": "Shaheb Bazar Zero Point, Rajshahi",
+   "addrBn": "সাহেব বাজার জিরো পয়েন্ট, রাজশাহী",
+   "phone": "09612-345607",
+   "flagship": false,
+   "lat": 24.3667,
+   "lng": 88.6
+  },
+  {
+   "en": "KDA Avenue",
+   "bn": "কেডিএ এভিনিউ",
+   "city": "Khulna",
+   "addrEn": "KDA Avenue, Sonadanga, Khulna",
+   "addrBn": "কেডিএ এভিনিউ, সোনাডাঙ্গা, খুলনা",
+   "phone": "09612-345608",
+   "flagship": false,
+   "lat": 22.8167,
+   "lng": 89.55
+  }
+ ],
+ "posts": [
+  {
+   "slug": "choose-right-wood",
+   "en": "How to choose the right wood: Segun vs Mahogany vs Gorjon",
+   "bn": "সঠিক কাঠ বাছাই: সেগুন, মেহগনি নাকি গর্জন?",
+   "catEn": "Guides",
+   "catBn": "গাইড",
+   "image": "blog-wood",
+   "date": "12 Oct 2026",
+   "mins": 7
+  },
+  {
+   "slug": "small-flat-living-room",
+   "en": "7 ideas for a small Dhaka flat living room",
+   "bn": "ঢাকার ছোট ফ্ল্যাটের বসার ঘরের ৭টি আইডিয়া",
+   "catEn": "Inspiration",
+   "catBn": "অনুপ্রেরণা",
+   "image": "blog-living",
+   "date": "04 Oct 2026",
+   "mins": 5
+  },
+  {
+   "slug": "monsoon-furniture-care",
+   "en": "Monsoon care: protecting wooden furniture from humidity",
+   "bn": "বর্ষায় কাঠের ফার্নিচারের যত্ন",
+   "catEn": "Care",
+   "catBn": "যত্ন",
+   "image": "blog-care",
+   "date": "27 Sep 2026",
+   "mins": 4
+  },
+  {
+   "slug": "eid-home-refresh",
+   "en": "Eid home refresh on a budget",
+   "bn": "বাজেটে ঈদের ঘর সাজানো",
+   "catEn": "Trends",
+   "catBn": "ট্রেন্ড",
+   "image": "blog-eid",
+   "date": "15 Sep 2026",
+   "mins": 6
+  },
+  {
+   "slug": "meet-the-karigor",
+   "en": "Meet the karigor: 30 years of hand carving",
+   "bn": "কারিগরের সাথে পরিচয়: ৩০ বছরের হাতের কারুকাজ",
+   "catEn": "Craft",
+   "catBn": "কারুশিল্প",
+   "image": "blog-craft",
+   "date": "02 Sep 2026",
+   "mins": 8
+  },
+  {
+   "slug": "home-office-setup",
+   "en": "Ergonomic home office setup guide",
+   "bn": "এরগোনমিক হোম অফিস সাজানোর গাইড",
+   "catEn": "Guides",
+   "catBn": "গাইড",
+   "image": "blog-office",
+   "date": "20 Aug 2026",
+   "mins": 5
+  }
+ ],
+ "reviews": [
+  {
+   "nameEn": "Farhana R.",
+   "nameBn": "ফারহানা র.",
+   "loc": "Gulshan, Dhaka",
+   "rating": 5,
+   "titleEn": "Solid teak, beautiful finish",
+   "titleBn": "মজবুত সেগুন, চমৎকার ফিনিশ",
+   "bodyEn": "The sofa arrived in 4 days and the assembly team was very professional. The fabric feels premium and the teak frame is really solid.",
+   "bodyBn": "সোফাটি ৪ দিনে পৌঁছেছে এবং অ্যাসেম্বলি টিম খুবই পেশাদার ছিল। কাপড় প্রিমিয়াম, সেগুনের ফ্রেম অনেক মজবুত।",
+   "photos": [
+    "rev-1",
+    "rev-2"
+   ]
+  },
+  {
+   "nameEn": "Tanvir H.",
+   "nameBn": "তানভীর হ.",
+   "loc": "Agrabad, Chattogram",
+   "rating": 4,
+   "titleEn": "Great value with EMI",
+   "titleBn": "ইএমআই-তে দারুণ মূল্য",
+   "bodyEn": "Took 6-month 0% EMI with my City Bank card. Delivery to Chattogram took 8 days, slightly longer than expected but well packed.",
+   "bodyBn": "সিটি ব্যাংক কার্ডে ৬ মাসের ০% ইএমআই নিয়েছি। চট্টগ্রামে ডেলিভারিতে ৮ দিন লেগেছে, তবে প্যাকিং ভালো ছিল।",
+   "photos": [
+    "rev-3"
+   ]
+  },
+  {
+   "nameEn": "Nusrat J.",
+   "nameBn": "নুসরাত জ.",
+   "loc": "Mirpur, Dhaka",
+   "rating": 5,
+   "titleEn": "Color exactly as shown",
+   "titleBn": "ছবির মতোই রং",
+   "bodyEn": "I visited the Dhanmondi showroom first to check the fabric. The online price was the same and I got loyalty points too.",
+   "bodyBn": "আগে ধানমন্ডি শোরুমে গিয়ে কাপড় দেখেছি। অনলাইনে একই দাম, সাথে লয়্যালটি পয়েন্টও পেয়েছি।",
+   "photos": []
+  }
+ ],
+ "orders": [
+  {
+   "no": "SHK-260431",
+   "name": "Farhana Rahman",
+   "phone": "01711-234567",
+   "date": "25 Oct 2026",
+   "items": 2,
+   "total": 103000,
+   "pay": "bKash",
+   "payStatus": "Paid",
+   "status": "Processing",
+   "zone": "Dhaka"
+  },
+  {
+   "no": "SHK-260430",
+   "name": "Tanvir Hossain",
+   "phone": "01819-876543",
+   "date": "25 Oct 2026",
+   "items": 1,
+   "total": 132000,
+   "pay": "EMI · City Bank",
+   "payStatus": "Paid",
+   "status": "Confirmed",
+   "zone": "Chattogram"
+  },
+  {
+   "no": "SHK-260429",
+   "name": "Nusrat Jahan",
+   "phone": "01912-345678",
+   "date": "24 Oct 2026",
+   "items": 3,
+   "total": 64500,
+   "pay": "COD",
+   "payStatus": "Advance 20%",
+   "status": "In production",
+   "zone": "Dhaka"
+  },
+  {
+   "no": "SHK-260428",
+   "name": "Arif Chowdhury",
+   "phone": "01611-112233",
+   "date": "24 Oct 2026",
+   "items": 1,
+   "total": 24900,
+   "pay": "Nagad",
+   "payStatus": "Paid",
+   "status": "Dispatched",
+   "zone": "Sylhet"
+  },
+  {
+   "no": "SHK-260427",
+   "name": "Sadia Islam",
+   "phone": "01556-778899",
+   "date": "23 Oct 2026",
+   "items": 4,
+   "total": 186400,
+   "pay": "Card · Visa",
+   "payStatus": "Paid",
+   "status": "Out for delivery",
+   "zone": "Dhaka"
+  },
+  {
+   "no": "SHK-260426",
+   "name": "Mahmudul Hasan",
+   "phone": "01733-445566",
+   "date": "23 Oct 2026",
+   "items": 1,
+   "total": 16900,
+   "pay": "COD",
+   "payStatus": "Pending",
+   "status": "Pending",
+   "zone": "Rajshahi"
+  },
+  {
+   "no": "SHK-260425",
+   "name": "Rumana Akter",
+   "phone": "01844-990011",
+   "date": "22 Oct 2026",
+   "items": 2,
+   "total": 47300,
+   "pay": "bKash",
+   "payStatus": "Paid",
+   "status": "Delivered",
+   "zone": "Dhaka"
+  },
+  {
+   "no": "SHK-260424",
+   "name": "Kamrul Islam",
+   "phone": "01922-334455",
+   "date": "22 Oct 2026",
+   "items": 1,
+   "total": 96000,
+   "pay": "Bank transfer",
+   "payStatus": "Advance 50%",
+   "status": "In production",
+   "zone": "Khulna"
+  },
+  {
+   "no": "SHK-260423",
+   "name": "Jannatul Ferdous",
+   "phone": "01799-667788",
+   "date": "21 Oct 2026",
+   "items": 2,
+   "total": 33400,
+   "pay": "Nagad",
+   "payStatus": "Refunded",
+   "status": "Cancelled",
+   "zone": "Dhaka"
+  },
+  {
+   "no": "SHK-260422",
+   "name": "Shafiqul Alam",
+   "phone": "01677-223344",
+   "date": "21 Oct 2026",
+   "items": 5,
+   "total": 214000,
+   "pay": "Card · Amex",
+   "payStatus": "Paid",
+   "status": "Delivered",
+   "zone": "Chattogram"
+  }
+ ],
+ "divisions": [
+  {
+   "en": "Dhaka",
+   "bn": "ঢাকা"
+  },
+  {
+   "en": "Chattogram",
+   "bn": "চট্টগ্রাম"
+  },
+  {
+   "en": "Sylhet",
+   "bn": "সিলেট"
+  },
+  {
+   "en": "Rajshahi",
+   "bn": "রাজশাহী"
+  },
+  {
+   "en": "Khulna",
+   "bn": "খুলনা"
+  },
+  {
+   "en": "Barishal",
+   "bn": "বরিশাল"
+  },
+  {
+   "en": "Rangpur",
+   "bn": "রংপুর"
+  },
+  {
+   "en": "Mymensingh",
+   "bn": "ময়মনসিংহ"
+  }
+ ],
+ "brands": [
+  {
+   "slug": "atelier",
+   "en": "Shekor Atelier",
+   "bn": "শেকড় অ্যাটেলিয়ে",
+   "kind": "own",
+   "tagEn": "Heirloom solid wood, hand-carved",
+   "tagBn": "হাতে খোদাই করা উত্তরাধিকারের সলিড কাঠ",
+   "image": "about-craft",
+   "since": "2009",
+   "storyEn": "Our founding line. Seasoned Segun and Mahogany, mortise-and-tenon joinery and hand-rubbed finishes by master karigors in Gazipur.",
+   "storyBn": "আমাদের প্রথম লাইন। শুকানো সেগুন ও মেহগনি, মর্টিস-টেনন জোড় ও গাজীপুরের ওস্তাদ কারিগরদের হাতের ফিনিশ।"
+  },
+  {
+   "slug": "studio",
+   "en": "Shekor Studio",
+   "bn": "শেকড় স্টুডিও",
+   "kind": "own",
+   "tagEn": "Modern lines for city apartments",
+   "tagBn": "শহরের অ্যাপার্টমেন্টের জন্য আধুনিক নকশা",
+   "image": "hero-1",
+   "since": "2018",
+   "storyEn": "Lighter proportions, modular sofas and space-saving storage designed for Dhaka flats — still solid wood where it matters.",
+   "storyBn": "হালকা অনুপাত, মডুলার সোফা ও জায়গা বাঁচানো স্টোরেজ — ঢাকার ফ্ল্যাটের জন্য, প্রয়োজনীয় জায়গায় সলিড কাঠ।"
+  },
+  {
+   "slug": "contract",
+   "en": "Shekor Contract",
+   "bn": "শেকড় কন্ট্র্যাক্ট",
+   "kind": "own",
+   "tagEn": "Hospitality, workplace & projects",
+   "tagBn": "হসপিটালিটি, ওয়ার্কপ্লেস ও প্রজেক্ট",
+   "image": "room-office",
+   "since": "2020",
+   "storyEn": "Specification-grade furniture for hotels, offices and restaurants, with fire-rated foams, commercial fabrics and project management.",
+   "storyBn": "হোটেল, অফিস ও রেস্টুরেন্টের জন্য স্পেসিফিকেশন-গ্রেড ফার্নিচার, ফায়ার-রেটেড ফোম ও প্রজেক্ট ম্যানেজমেন্টসহ।"
+  },
+  {
+   "slug": "kids",
+   "en": "Shekor Kids",
+   "bn": "শেকড় কিডস",
+   "kind": "own",
+   "tagEn": "Safe, playful, built to be handed down",
+   "tagBn": "নিরাপদ, আনন্দময়, প্রজন্মের জন্য",
+   "image": "room-kids",
+   "since": "2021",
+   "storyEn": "Rounded edges, non-toxic water-based paints and convertible pieces that grow with your child.",
+   "storyBn": "গোল কিনারা, বিষমুক্ত ওয়াটার-বেসড রং ও বাচ্চার সাথে বদলে যাওয়া ফার্নিচার।"
+  },
+  {
+   "slug": "bunon",
+   "en": "Bunon Textiles",
+   "bn": "বুনন টেক্সটাইল",
+   "kind": "partner",
+   "tagEn": "Handloom upholstery from Tangail",
+   "tagBn": "টাঙ্গাইলের তাঁতের আপহোলস্টারি",
+   "image": "look-2",
+   "since": "Partner since 2019",
+   "storyEn": "A weaving cooperative in Tangail supplying handloom cottons and jamdani-inspired upholstery for our sofas and cushions.",
+   "storyBn": "টাঙ্গাইলের একটি তাঁতি সমবায় — আমাদের সোফা ও কুশনের তাঁতের সুতি ও জামদানি-অনুপ্রাণিত কাপড়।"
+  },
+  {
+   "slug": "beth",
+   "en": "Beth & Bansh Co-op",
+   "bn": "বেত ও বাঁশ কো-অপ",
+   "kind": "partner",
+   "tagEn": "Cane & rattan from Sylhet",
+   "tagBn": "সিলেটের বেত ও রাটান",
+   "image": "outdoor",
+   "since": "Partner since 2020",
+   "storyEn": "Fair-trade cane and bamboo weaving from Sylhet artisans for outdoor and verandah collections.",
+   "storyBn": "সিলেটের কারিগরদের ফেয়ার-ট্রেড বেত ও বাঁশের বুনন — বারান্দা ও আউটডোর কালেকশনের জন্য।"
+  },
+  {
+   "slug": "alo",
+   "en": "Alo Lighting",
+   "bn": "আলো লাইটিং",
+   "kind": "partner",
+   "tagEn": "Brass & linen lighting",
+   "tagBn": "ব্রাস ও লিনেন লাইটিং",
+   "image": "p-lamp-1",
+   "since": "Partner since 2022",
+   "storyEn": "Spun-brass and linen lamps finished in Old Dhaka workshops, curated to complete Shekor rooms.",
+   "storyBn": "পুরান ঢাকার কারখানায় তৈরি ব্রাস ও লিনেনের ল্যাম্প — শেকড়ের ঘর সম্পূর্ণ করতে।"
+  }
+ ],
+ "designers": [
+  {
+   "slug": "rafiq",
+   "en": "Rafiqul Islam",
+   "bn": "রফিকুল ইসলাম",
+   "roleEn": "Master karigor · 32 years",
+   "roleBn": "ওস্তাদ কারিগর · ৩২ বছর",
+   "image": "about-workshop",
+   "bioEn": "Leads our carving bench in Gazipur; trained three generations of carvers.",
+   "bioBn": "গাজীপুরে আমাদের খোদাই বিভাগের প্রধান; তিন প্রজন্মের কারিগর তৈরি করেছেন।"
+  },
+  {
+   "slug": "nabila",
+   "en": "Nabila Haque",
+   "bn": "নাবিলা হক",
+   "roleEn": "Creative director",
+   "roleBn": "ক্রিয়েটিভ ডিরেক্টর",
+   "image": "consult",
+   "bioEn": "Architect (BUET) who shapes every Shekor collection from sketch to prototype.",
+   "bioBn": "বুয়েটের স্থপতি — প্রতিটি কালেকশন স্কেচ থেকে প্রোটোটাইপ পর্যন্ত গড়ে তোলেন।"
+  },
+  {
+   "slug": "tanim",
+   "en": "Tanim Ahmed",
+   "bn": "তানিম আহমেদ",
+   "roleEn": "Head of Studio line",
+   "roleBn": "স্টুডিও লাইনের প্রধান",
+   "image": "custom",
+   "bioEn": "Industrial designer focused on modular, apartment-sized living.",
+   "bioBn": "মডুলার ও অ্যাপার্টমেন্ট উপযোগী ফার্নিচারে দক্ষ ইন্ডাস্ট্রিয়াল ডিজাইনার।"
+  },
+  {
+   "slug": "sumi",
+   "en": "Sumaiya Akter",
+   "bn": "সুমাইয়া আক্তার",
+   "roleEn": "Textile & colour lead",
+   "roleBn": "টেক্সটাইল ও কালার লিড",
+   "image": "look-3",
+   "bioEn": "Works with Tangail weavers to develop our upholstery palettes.",
+   "bioBn": "টাঙ্গাইলের তাঁতিদের সাথে আমাদের কাপড়ের রং ও নকশা তৈরি করেন।"
+  }
+ ],
+ "collections": [
+  {
+   "slug": "aranya",
+   "en": "Aranya",
+   "bn": "অরণ্য",
+   "brand": "atelier",
+   "designer": "nabila",
+   "year": "2026",
+   "hero": "hero-1",
+   "introEn": "Forest-inspired living: deep Segun frames, sage linen and soft curves.",
+   "introBn": "বন-অনুপ্রাণিত বসার ঘর: গাঢ় সেগুন ফ্রেম, সেজ লিনেন ও নরম বাঁক।",
+   "products": [
+    101,
+    112,
+    111,
+    121,
+    117
+   ],
+   "mood": [
+    "look-1",
+    "g-sofa-2",
+    "g-sofa-3"
+   ]
+  },
+  {
+   "slug": "padma",
+   "en": "Padma",
+   "bn": "পদ্মা",
+   "brand": "atelier",
+   "designer": "rafiq",
+   "year": "2025",
+   "hero": "hero-2",
+   "introEn": "A dining collection for long family meals, carved with river motifs.",
+   "introBn": "লম্বা পারিবারিক আড্ডার জন্য ডাইনিং কালেকশন, নদীর মোটিফে খোদাই।",
+   "products": [
+    108,
+    109,
+    124
+   ],
+   "mood": [
+    "room-dining",
+    "kitchen",
+    "look-2"
+   ]
+  },
+  {
+   "slug": "nodi",
+   "en": "Nodi",
+   "bn": "নদী",
+   "brand": "studio",
+   "designer": "tanim",
+   "year": "2026",
+   "hero": "g-sofa-4",
+   "introEn": "Modular sofas and low storage that flow around compact rooms.",
+   "introBn": "ছোট ঘরের চারপাশে প্রবাহিত মডুলার সোফা ও নিচু স্টোরেজ।",
+   "products": [
+    102,
+    116,
+    107,
+    112
+   ],
+   "mood": [
+    "g-sofa-5",
+    "room-living",
+    "look-3"
+   ]
+  },
+  {
+   "slug": "shimul",
+   "en": "Shimul",
+   "bn": "শিমুল",
+   "brand": "atelier",
+   "designer": "rafiq",
+   "year": "2024",
+   "hero": "hero-3",
+   "introEn": "Bedroom pieces in solid Mahogany, finished like old family furniture.",
+   "introBn": "সলিড মেহগনিতে শোবার ঘর — পুরোনো পারিবারিক ফার্নিচারের মতো ফিনিশ।",
+   "products": [
+    103,
+    105,
+    120,
+    110,
+    123
+   ],
+   "mood": [
+    "room-bedroom",
+    "p-bed-2",
+    "p-wardrobe-1"
+   ]
+  },
+  {
+   "slug": "kormo",
+   "en": "Kormo",
+   "bn": "কর্ম",
+   "brand": "contract",
+   "designer": "tanim",
+   "year": "2025",
+   "hero": "room-office",
+   "introEn": "Executive and workstation furniture for focused, healthy offices.",
+   "introBn": "মনোযোগী ও স্বাস্থ্যকর অফিসের জন্য এক্সিকিউটিভ ও ওয়ার্কস্টেশন ফার্নিচার।",
+   "products": [
+    114,
+    115,
+    116
+   ],
+   "mood": [
+    "cat-office",
+    "blog-office",
+    "p-office-1"
+   ]
+  },
+  {
+   "slug": "baranda",
+   "en": "Baranda",
+   "bn": "বারান্দা",
+   "brand": "studio",
+   "designer": "sumi",
+   "year": "2026",
+   "hero": "room-outdoor",
+   "introEn": "Cane, teak and handloom for verandahs, rooftops and resort decks.",
+   "introBn": "বারান্দা, ছাদ ও রিসোর্ট ডেকের জন্য বেত, সেগুন ও তাঁত।",
+   "products": [
+    118,
+    119,
+    107
+   ],
+   "mood": [
+    "outdoor",
+    "ugc-4",
+    "ugc-5"
+   ]
+  }
+ ],
+ "projectTypes": [
+  {
+   "slug": "residential",
+   "en": "Residential",
+   "bn": "আবাসিক"
+  },
+  {
+   "slug": "hospitality",
+   "en": "Hospitality",
+   "bn": "হসপিটালিটি"
+  },
+  {
+   "slug": "corporate",
+   "en": "Corporate",
+   "bn": "কর্পোরেট"
+  },
+  {
+   "slug": "retail",
+   "en": "Retail & F&B",
+   "bn": "রিটেইল ও রেস্টুরেন্ট"
+  }
+ ],
+ "projects": [
+  {
+   "slug": "gulshan-penthouse",
+   "en": "A Gulshan Penthouse",
+   "bn": "গুলশানের একটি পেন্টহাউস",
+   "type": "residential",
+   "cityEn": "Gulshan, Dhaka",
+   "cityBn": "গুলশান, ঢাকা",
+   "year": "2026",
+   "hero": "look-2",
+   "images": [
+    "look-1",
+    "room-living",
+    "room-bedroom",
+    "room-dining"
+   ],
+   "area": "5,200 sq ft",
+   "scopeEn": "Full home furnishing, 64 pieces, custom walnut wall panelling",
+   "scopeBn": "সম্পূর্ণ বাড়ি সাজানো, ৬৪টি পিস, কাস্টম ওয়ালনাট প্যানেলিং",
+   "collections": [
+    "aranya",
+    "shimul"
+   ]
+  },
+  {
+   "slug": "srimangal-tea-resort",
+   "en": "Srimangal Tea Resort",
+   "bn": "শ্রীমঙ্গল টি রিসোর্ট",
+   "type": "hospitality",
+   "cityEn": "Srimangal, Sylhet",
+   "cityBn": "শ্রীমঙ্গল, সিলেট",
+   "year": "2025",
+   "hero": "outdoor",
+   "images": [
+    "room-outdoor",
+    "ugc-4",
+    "room-bedroom",
+    "look-2"
+   ],
+   "area": "42 keys",
+   "scopeEn": "Guest rooms, restaurant and verandah lounges",
+   "scopeBn": "গেস্ট রুম, রেস্টুরেন্ট ও বারান্দা লাউঞ্জ",
+   "collections": [
+    "baranda",
+    "shimul"
+   ]
+  },
+  {
+   "slug": "tejgaon-hq",
+   "en": "Fintech HQ, Tejgaon",
+   "bn": "ফিনটেক সদর দপ্তর, তেজগাঁও",
+   "type": "corporate",
+   "cityEn": "Tejgaon, Dhaka",
+   "cityBn": "তেজগাঁও, ঢাকা",
+   "year": "2025",
+   "hero": "room-office",
+   "images": [
+    "cat-office",
+    "blog-office",
+    "p-office-1",
+    "p-desk-1"
+   ],
+   "area": "38,000 sq ft",
+   "scopeEn": "320 workstations, boardroom, client lounge",
+   "scopeBn": "৩২০টি ওয়ার্কস্টেশন, বোর্ডরুম, ক্লায়েন্ট লাউঞ্জ",
+   "collections": [
+    "kormo"
+   ]
+  },
+  {
+   "slug": "dhanmondi-bistro",
+   "en": "Nakshi Bistro, Dhanmondi",
+   "bn": "নকশি বিস্ট্রো, ধানমন্ডি",
+   "type": "retail",
+   "cityEn": "Dhanmondi, Dhaka",
+   "cityBn": "ধানমন্ডি, ঢাকা",
+   "year": "2024",
+   "hero": "room-dining",
+   "images": [
+    "p-dining-1",
+    "kitchen",
+    "look-3",
+    "ugc-2"
+   ],
+   "area": "110 covers",
+   "scopeEn": "Dining chairs, banquettes, bar and host stand",
+   "scopeBn": "ডাইনিং চেয়ার, ব্যাঙ্কোয়েট, বার ও হোস্ট স্ট্যান্ড",
+   "collections": [
+    "padma"
+   ]
+  },
+  {
+   "slug": "coxs-bazar-villa",
+   "en": "Beach Villa, Cox’s Bazar",
+   "bn": "বিচ ভিলা, কক্সবাজার",
+   "type": "residential",
+   "cityEn": "Inani, Cox’s Bazar",
+   "cityBn": "ইনানী, কক্সবাজার",
+   "year": "2026",
+   "hero": "room-outdoor",
+   "images": [
+    "outdoor",
+    "ugc-5",
+    "g-sofa-5",
+    "room-living"
+   ],
+   "area": "3 bedrooms",
+   "scopeEn": "Weather-tolerant teak and cane throughout",
+   "scopeBn": "পুরোটা জুড়ে আবহাওয়া-সহনশীল সেগুন ও বেত",
+   "collections": [
+    "baranda",
+    "nodi"
+   ]
+  },
+  {
+   "slug": "chattogram-residence",
+   "en": "Hillside Residence, Chattogram",
+   "bn": "পাহাড়ি বাসভবন, চট্টগ্রাম",
+   "type": "residential",
+   "cityEn": "Khulshi, Chattogram",
+   "cityBn": "খুলশী, চট্টগ্রাম",
+   "year": "2025",
+   "hero": "g-sofa-3",
+   "images": [
+    "g-sofa-2",
+    "room-bedroom",
+    "p-cabinet-1",
+    "look-1"
+   ],
+   "area": "4,100 sq ft",
+   "scopeEn": "Living, dining and library in carved Mahogany",
+   "scopeBn": "খোদাই করা মেহগনিতে বসার ঘর, ডাইনিং ও লাইব্রেরি",
+   "collections": [
+    "shimul",
+    "padma"
+   ]
+  }
+ ],
+ "galleryCategories": [
+  {
+   "slug": "living",
+   "en": "Living",
+   "bn": "বসার ঘর",
+   "image": "room-living"
+  },
+  {
+   "slug": "bedroom",
+   "en": "Bedroom",
+   "bn": "শোবার ঘর",
+   "image": "room-bedroom"
+  },
+  {
+   "slug": "dining",
+   "en": "Dining",
+   "bn": "ডাইনিং",
+   "image": "room-dining"
+  },
+  {
+   "slug": "office",
+   "en": "Office & Study",
+   "bn": "অফিস ও স্টাডি",
+   "image": "room-office"
+  },
+  {
+   "slug": "outdoor",
+   "en": "Outdoor",
+   "bn": "আউটডোর",
+   "image": "room-outdoor"
+  },
+  {
+   "slug": "kids",
+   "en": "Kids",
+   "bn": "শিশুদের",
+   "image": "room-kids"
+  },
+  {
+   "slug": "kitchen",
+   "en": "Kitchen",
+   "bn": "কিচেন",
+   "image": "kitchen"
+  }
+ ],
+ "gallery": [
+  {
+   "image": "hero-1",
+   "en": "Aranya living, Gulshan",
+   "bn": "অরণ্য লিভিং, গুলশান",
+   "category": "living",
+   "brand": "atelier",
+   "collection": "aranya",
+   "room": "living",
+   "material": "teak",
+   "ptype": "residential",
+   "product": 101,
+   "tall": true
+  },
+  {
+   "image": "look-1",
+   "en": "Sage linen & Segun",
+   "bn": "সেজ লিনেন ও সেগুন",
+   "category": "living",
+   "brand": "atelier",
+   "collection": "aranya",
+   "room": "living",
+   "material": "fabric",
+   "ptype": "residential",
+   "product": 101,
+   "tall": false
+  },
+  {
+   "image": "g-sofa-2",
+   "en": "Afternoon light",
+   "bn": "বিকেলের আলো",
+   "category": "living",
+   "brand": "studio",
+   "collection": "nodi",
+   "room": "living",
+   "material": "fabric",
+   "ptype": null,
+   "product": 102,
+   "tall": true
+  },
+  {
+   "image": "hero-2",
+   "en": "Padma dining for eight",
+   "bn": "আটজনের পদ্মা ডাইনিং",
+   "category": "dining",
+   "brand": "atelier",
+   "collection": "padma",
+   "room": "dining-room",
+   "material": "mahogany",
+   "ptype": null,
+   "product": 108,
+   "tall": false
+  },
+  {
+   "image": "room-dining",
+   "en": "Carved river motif",
+   "bn": "নদীর মোটিফ খোদাই",
+   "category": "dining",
+   "brand": "atelier",
+   "collection": "padma",
+   "room": "dining-room",
+   "material": "mahogany",
+   "ptype": "retail",
+   "product": 108,
+   "tall": true
+  },
+  {
+   "image": "hero-3",
+   "en": "Shimul bedroom",
+   "bn": "শিমুল বেডরুম",
+   "category": "bedroom",
+   "brand": "atelier",
+   "collection": "shimul",
+   "room": "bedroom",
+   "material": "mahogany",
+   "ptype": "residential",
+   "product": 103,
+   "tall": false
+  },
+  {
+   "image": "room-bedroom",
+   "en": "Quiet mornings",
+   "bn": "নিরিবিলি সকাল",
+   "category": "bedroom",
+   "brand": "atelier",
+   "collection": "shimul",
+   "room": "bedroom",
+   "material": "mahogany",
+   "ptype": "hospitality",
+   "product": 103,
+   "tall": true
+  },
+  {
+   "image": "p-wardrobe-1",
+   "en": "Borsha almirah",
+   "bn": "বর্ষা আলমারি",
+   "category": "bedroom",
+   "brand": "atelier",
+   "collection": "shimul",
+   "room": "bedroom",
+   "material": "gorjon",
+   "ptype": null,
+   "product": 105,
+   "tall": false
+  },
+  {
+   "image": "room-office",
+   "en": "Kormo workplace",
+   "bn": "কর্ম ওয়ার্কপ্লেস",
+   "category": "office",
+   "brand": "contract",
+   "collection": "kormo",
+   "room": "office-room",
+   "material": "oak",
+   "ptype": "corporate",
+   "product": 115,
+   "tall": false
+  },
+  {
+   "image": "blog-office",
+   "en": "Focus corner",
+   "bn": "মনোযোগের কোণ",
+   "category": "office",
+   "brand": "contract",
+   "collection": "kormo",
+   "room": "office-room",
+   "material": "metal",
+   "ptype": "corporate",
+   "product": 114,
+   "tall": true
+  },
+  {
+   "image": "outdoor",
+   "en": "Baranda at dusk",
+   "bn": "গোধূলিতে বারান্দা",
+   "category": "outdoor",
+   "brand": "beth",
+   "collection": "baranda",
+   "room": "outdoor",
+   "material": "cane",
+   "ptype": "hospitality",
+   "product": 118,
+   "tall": true
+  },
+  {
+   "image": "ugc-4",
+   "en": "Verandah lounge",
+   "bn": "বারান্দা লাউঞ্জ",
+   "category": "outdoor",
+   "brand": "beth",
+   "collection": "baranda",
+   "room": "outdoor",
+   "material": "cane",
+   "ptype": "residential",
+   "product": 118,
+   "tall": false
+  },
+  {
+   "image": "room-kids",
+   "en": "A room to grow",
+   "bn": "বেড়ে ওঠার ঘর",
+   "category": "kids",
+   "brand": "kids",
+   "collection": null,
+   "room": "kids-room",
+   "material": "beech",
+   "ptype": "residential",
+   "product": 113,
+   "tall": false
+  },
+  {
+   "image": "p-kids-1",
+   "en": "Rongdhonu bunk",
+   "bn": "রংধনু বাংক",
+   "category": "kids",
+   "brand": "kids",
+   "collection": null,
+   "room": "kids-room",
+   "material": "beech",
+   "ptype": null,
+   "product": 113,
+   "tall": true
+  },
+  {
+   "image": "kitchen",
+   "en": "Padma kitchen",
+   "bn": "পদ্মা কিচেন",
+   "category": "kitchen",
+   "brand": "studio",
+   "collection": "padma",
+   "room": "dining-room",
+   "material": "mdf",
+   "ptype": "residential",
+   "product": 124,
+   "tall": false
+  },
+  {
+   "image": "g-sofa-4",
+   "en": "Nodi modular",
+   "bn": "নদী মডুলার",
+   "category": "living",
+   "brand": "studio",
+   "collection": "nodi",
+   "room": "living",
+   "material": "fabric",
+   "ptype": null,
+   "product": 102,
+   "tall": false
+  },
+  {
+   "image": "look-2",
+   "en": "Handloom cushions",
+   "bn": "তাঁতের কুশন",
+   "category": "living",
+   "brand": "bunon",
+   "collection": "aranya",
+   "room": "living",
+   "material": "fabric",
+   "ptype": null,
+   "product": 111,
+   "tall": true
+  },
+  {
+   "image": "p-lamp-1",
+   "en": "Spun brass",
+   "bn": "ব্রাস ল্যাম্প",
+   "category": "living",
+   "brand": "alo",
+   "collection": "aranya",
+   "room": "living",
+   "material": "metal",
+   "ptype": null,
+   "product": 121,
+   "tall": false
+  },
+  {
+   "image": "g-sofa-3",
+   "en": "Library, Khulshi",
+   "bn": "লাইব্রেরি, খুলশী",
+   "category": "living",
+   "brand": "atelier",
+   "collection": "shimul",
+   "room": "living",
+   "material": "mahogany",
+   "ptype": "residential",
+   "product": 117,
+   "tall": true
+  },
+  {
+   "image": "look-3",
+   "en": "Studio textures",
+   "bn": "স্টুডিও টেক্সচার",
+   "category": "living",
+   "brand": "studio",
+   "collection": "nodi",
+   "room": "living",
+   "material": "velvet",
+   "ptype": null,
+   "product": 111,
+   "tall": false
+  },
+  {
+   "image": "cat-office",
+   "en": "Boardroom",
+   "bn": "বোর্ডরুম",
+   "category": "office",
+   "brand": "contract",
+   "collection": "kormo",
+   "room": "office-room",
+   "material": "oak",
+   "ptype": "corporate",
+   "product": 115,
+   "tall": false
+  },
+  {
+   "image": "ugc-5",
+   "en": "Rooftop evenings",
+   "bn": "ছাদের সন্ধ্যা",
+   "category": "outdoor",
+   "brand": "beth",
+   "collection": "baranda",
+   "room": "outdoor",
+   "material": "teak",
+   "ptype": "residential",
+   "product": 119,
+   "tall": true
+  },
+  {
+   "image": "p-cabinet-1",
+   "en": "Jamdani showcase",
+   "bn": "জামদানি শোকেস",
+   "category": "living",
+   "brand": "atelier",
+   "collection": "aranya",
+   "room": "living",
+   "material": "teak",
+   "ptype": null,
+   "product": 106,
+   "tall": false
+  },
+  {
+   "image": "ugc-2",
+   "en": "Bistro banquette",
+   "bn": "বিস্ট্রো ব্যাঙ্কোয়েট",
+   "category": "dining",
+   "brand": "contract",
+   "collection": "padma",
+   "room": "dining-room",
+   "material": "teak",
+   "ptype": "retail",
+   "product": 108,
+   "tall": false
+  }
+ ],
+ "catalogues": [
+  {
+   "slug": "master-2026",
+   "kind": "master",
+   "ref": null,
+   "en": "Shekor Collection Book 2026",
+   "bn": "শেকড় কালেকশন বুক ২০২৬",
+   "season": "2026",
+   "cover": "hero-1"
+  },
+  {
+   "slug": "cat-living",
+   "kind": "category",
+   "ref": "living",
+   "en": "Living Catalogue",
+   "bn": "বসার ঘর ক্যাটালগ",
+   "season": "2026",
+   "cover": "room-living"
+  },
+  {
+   "slug": "cat-bedroom",
+   "kind": "category",
+   "ref": "bedroom",
+   "en": "Bedroom Catalogue",
+   "bn": "শোবার ঘর ক্যাটালগ",
+   "season": "2026",
+   "cover": "room-bedroom"
+  },
+  {
+   "slug": "cat-dining",
+   "kind": "category",
+   "ref": "dining",
+   "en": "Dining Catalogue",
+   "bn": "ডাইনিং ক্যাটালগ",
+   "season": "2026",
+   "cover": "room-dining"
+  },
+  {
+   "slug": "cat-office",
+   "kind": "category",
+   "ref": "office",
+   "en": "Office & Study Catalogue",
+   "bn": "অফিস ও স্টাডি ক্যাটালগ",
+   "season": "2026",
+   "cover": "room-office"
+  },
+  {
+   "slug": "cat-outdoor",
+   "kind": "category",
+   "ref": "outdoor",
+   "en": "Outdoor Catalogue",
+   "bn": "আউটডোর ক্যাটালগ",
+   "season": "2026",
+   "cover": "room-outdoor"
+  },
+  {
+   "slug": "cat-kids",
+   "kind": "category",
+   "ref": "kids",
+   "en": "Kids Catalogue",
+   "bn": "শিশুদের ক্যাটালগ",
+   "season": "2026",
+   "cover": "room-kids"
+  },
+  {
+   "slug": "cat-kitchen",
+   "kind": "category",
+   "ref": "kitchen",
+   "en": "Kitchen Catalogue",
+   "bn": "কিচেন ক্যাটালগ",
+   "season": "2026",
+   "cover": "kitchen"
+  },
+  {
+   "slug": "brand-atelier",
+   "kind": "brand",
+   "ref": "atelier",
+   "en": "Shekor Atelier Catalogue",
+   "bn": "শেকড় অ্যাটেলিয়ে ক্যাটালগ",
+   "season": "2026",
+   "cover": "about-craft"
+  },
+  {
+   "slug": "brand-studio",
+   "kind": "brand",
+   "ref": "studio",
+   "en": "Shekor Studio Catalogue",
+   "bn": "শেকড় স্টুডিও ক্যাটালগ",
+   "season": "2026",
+   "cover": "hero-1"
+  },
+  {
+   "slug": "brand-contract",
+   "kind": "brand",
+   "ref": "contract",
+   "en": "Shekor Contract Catalogue",
+   "bn": "শেকড় কন্ট্র্যাক্ট ক্যাটালগ",
+   "season": "2026",
+   "cover": "room-office"
+  },
+  {
+   "slug": "brand-kids",
+   "kind": "brand",
+   "ref": "kids",
+   "en": "Shekor Kids Catalogue",
+   "bn": "শেকড় কিডস ক্যাটালগ",
+   "season": "2026",
+   "cover": "room-kids"
+  },
+  {
+   "slug": "brand-bunon",
+   "kind": "brand",
+   "ref": "bunon",
+   "en": "Bunon Textiles Catalogue",
+   "bn": "বুনন টেক্সটাইল ক্যাটালগ",
+   "season": "2026",
+   "cover": "look-2"
+  },
+  {
+   "slug": "brand-beth",
+   "kind": "brand",
+   "ref": "beth",
+   "en": "Beth & Bansh Co-op Catalogue",
+   "bn": "বেত ও বাঁশ কো-অপ ক্যাটালগ",
+   "season": "2026",
+   "cover": "outdoor"
+  },
+  {
+   "slug": "brand-alo",
+   "kind": "brand",
+   "ref": "alo",
+   "en": "Alo Lighting Catalogue",
+   "bn": "আলো লাইটিং ক্যাটালগ",
+   "season": "2026",
+   "cover": "p-lamp-1"
+  },
+  {
+   "slug": "coll-aranya",
+   "kind": "collection",
+   "ref": "aranya",
+   "en": "Aranya Collection Lookbook",
+   "bn": "অরণ্য কালেকশন লুকবুক",
+   "season": "2026",
+   "cover": "hero-1"
+  },
+  {
+   "slug": "coll-padma",
+   "kind": "collection",
+   "ref": "padma",
+   "en": "Padma Collection Lookbook",
+   "bn": "পদ্মা কালেকশন লুকবুক",
+   "season": "2025",
+   "cover": "hero-2"
+  },
+  {
+   "slug": "coll-nodi",
+   "kind": "collection",
+   "ref": "nodi",
+   "en": "Nodi Collection Lookbook",
+   "bn": "নদী কালেকশন লুকবুক",
+   "season": "2026",
+   "cover": "g-sofa-4"
+  },
+  {
+   "slug": "coll-shimul",
+   "kind": "collection",
+   "ref": "shimul",
+   "en": "Shimul Collection Lookbook",
+   "bn": "শিমুল কালেকশন লুকবুক",
+   "season": "2024",
+   "cover": "hero-3"
+  },
+  {
+   "slug": "coll-kormo",
+   "kind": "collection",
+   "ref": "kormo",
+   "en": "Kormo Collection Lookbook",
+   "bn": "কর্ম কালেকশন লুকবুক",
+   "season": "2025",
+   "cover": "room-office"
+  },
+  {
+   "slug": "coll-baranda",
+   "kind": "collection",
+   "ref": "baranda",
+   "en": "Baranda Collection Lookbook",
+   "bn": "বারান্দা কালেকশন লুকবুক",
+   "season": "2026",
+   "cover": "room-outdoor"
+  }
+ ],
+ "faqs": [
+  {
+   "groupEn": "Orders & payment",
+   "groupBn": "অর্ডার ও পেমেন্ট",
+   "items": [
+    {
+     "qEn": "What payment methods do you accept?",
+     "qBn": "কোন কোন পেমেন্ট পদ্ধতি গ্রহণ করেন?",
+     "aEn": "bKash, Nagad, Rocket, all Visa/Mastercard/Amex cards via SSLCommerz, 0% EMI on 24 banks, cash on delivery (up to ৳1,00,000) and bank transfer for corporate orders.",
+     "aBn": "বিকাশ, নগদ, রকেট, SSLCommerz-এর মাধ্যমে সব ভিসা/মাস্টারকার্ড/অ্যামেক্স কার্ড, ২৪টি ব্যাংকে ০% ইএমআই, ক্যাশ অন ডেলিভারি (৳১,০০,০০০ পর্যন্ত) এবং কর্পোরেট অর্ডারে ব্যাংক ট্রান্সফার।"
+    },
+    {
+     "qEn": "Can I pay a partial advance?",
+     "qBn": "আংশিক অগ্রিম দেওয়া যাবে?",
+     "aEn": "Yes. Pay 20% or 50% at checkout and the balance on delivery. Made-to-order items need at least 30% advance.",
+     "aBn": "হ্যাঁ। চেকআউটে ২০% বা ৫০% দিন, বাকিটা ডেলিভারিতে। অর্ডারে তৈরি পণ্যে কমপক্ষে ৩০% অগ্রিম প্রয়োজন।"
+    },
+    {
+     "qEn": "How does 0% EMI work?",
+     "qBn": "০% ইএমআই কীভাবে কাজ করে?",
+     "aEn": "Choose EMI at checkout and pay with a partner-bank credit card. The bank converts the amount into 3–12 equal monthly instalments with no interest.",
+     "aBn": "চেকআউটে ইএমআই বেছে নিয়ে পার্টনার ব্যাংকের ক্রেডিট কার্ডে পেমেন্ট করুন। ব্যাংক সুদ ছাড়া ৩–১২টি সমান মাসিক কিস্তিতে ভাগ করে দেবে।"
+    }
+   ]
+  },
+  {
+   "groupEn": "Delivery & assembly",
+   "groupBn": "ডেলিভারি ও অ্যাসেম্বলি",
+   "items": [
+    {
+     "qEn": "How long does delivery take?",
+     "qBn": "ডেলিভারিতে কত দিন লাগে?",
+     "aEn": "Inside Dhaka 3–5 working days; other districts 5–10 days. Made-to-order pieces take 3–4 weeks.",
+     "aBn": "ঢাকার ভেতরে ৩–৫ কার্যদিবস; অন্যান্য জেলায় ৫–১০ দিন। অর্ডারে তৈরি পণ্যে ৩–৪ সপ্তাহ।"
+    },
+    {
+     "qEn": "Is assembly free?",
+     "qBn": "অ্যাসেম্বলি কি ফ্রি?",
+     "aEn": "Yes, in Dhaka and Chattogram city. Elsewhere our technicians guide you over a video call.",
+     "aBn": "হ্যাঁ, ঢাকা ও চট্টগ্রাম শহরে। অন্যত্র আমাদের টেকনিশিয়ান ভিডিও কলে সহায়তা করেন।"
+    }
+   ]
+  },
+  {
+   "groupEn": "Returns & warranty",
+   "groupBn": "রিটার্ন ও ওয়ারেন্টি",
+   "items": [
+    {
+     "qEn": "What is your return policy?",
+     "qBn": "রিটার্ন নীতি কী?",
+     "aEn": "Stock items can be returned within 7 days of delivery in original condition. We collect it for free in Dhaka.",
+     "aBn": "স্টকের পণ্য ডেলিভারির ৭ দিনের মধ্যে আসল অবস্থায় ফেরত দেওয়া যায়। ঢাকায় আমরা ফ্রিতে নিয়ে আসি।"
+    },
+    {
+     "qEn": "What does the warranty cover?",
+     "qBn": "ওয়ারেন্টিতে কী কী অন্তর্ভুক্ত?",
+     "aEn": "10 years on solid-wood frames against manufacturing defects and termites; 1 year on fabric, foam, hardware and finish.",
+     "aBn": "সলিড-কাঠের ফ্রেমে উৎপাদনজনিত ত্রুটি ও উইপোকার বিরুদ্ধে ১০ বছর; কাপড়, ফোম, হার্ডওয়্যার ও ফিনিশে ১ বছর।"
+    }
+   ]
+  }
+ ]
+}

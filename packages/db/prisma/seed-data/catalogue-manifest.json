@@ -1,0 +1,86 @@
+{
+ "brand-alo": {
+  "pages": 4,
+  "mb": 0.2
+ },
+ "brand-atelier": {
+  "pages": 10,
+  "mb": 0.8
+ },
+ "brand-beth": {
+  "pages": 4,
+  "mb": 0.3
+ },
+ "brand-bunon": {
+  "pages": 4,
+  "mb": 0.4
+ },
+ "brand-contract": {
+  "pages": 5,
+  "mb": 0.4
+ },
+ "brand-kids": {
+  "pages": 4,
+  "mb": 0.3
+ },
+ "brand-studio": {
+  "pages": 6,
+  "mb": 0.6
+ },
+ "cat-bedroom": {
+  "pages": 6,
+  "mb": 0.5
+ },
+ "cat-dining": {
+  "pages": 5,
+  "mb": 0.4
+ },
+ "cat-kids": {
+  "pages": 4,
+  "mb": 0.3
+ },
+ "cat-kitchen": {
+  "pages": 5,
+  "mb": 0.4
+ },
+ "cat-living": {
+  "pages": 8,
+  "mb": 0.7
+ },
+ "cat-office": {
+  "pages": 4,
+  "mb": 0.4
+ },
+ "cat-outdoor": {
+  "pages": 4,
+  "mb": 0.4
+ },
+ "coll-aranya": {
+  "pages": 8,
+  "mb": 0.6
+ },
+ "coll-baranda": {
+  "pages": 7,
+  "mb": 0.7
+ },
+ "coll-kormo": {
+  "pages": 7,
+  "mb": 0.5
+ },
+ "coll-nodi": {
+  "pages": 7,
+  "mb": 0.7
+ },
+ "coll-padma": {
+  "pages": 7,
+  "mb": 0.6
+ },
+ "coll-shimul": {
+  "pages": 8,
+  "mb": 0.6
+ },
+ "master-2026": {
+  "pages": 21,
+  "mb": 2
+ }
+}

@@ -1,0 +1,834 @@
+// Shekor platform — MySQL 8 schema.
+// Bilingual content uses paired columns (xxxEn / xxxBn): the platform ships two fixed locales,
+// which keeps queries single-table and indexable. See docs/architecture.md (Localization).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// ───────────────────────── Identity & RBAC ─────────────────────────
+
+enum UserKind {
+  CUSTOMER
+  STAFF
+}
+
+model User {
+  id            Int       @id @default(autoincrement())
+  kind          UserKind  @default(CUSTOMER)
+  name          String    @db.VarChar(120)
+  email         String?   @unique @db.VarChar(191)
+  phone         String?   @unique @db.VarChar(20)
+  passwordHash  String?   @db.VarChar(100)
+  emailVerified DateTime?
+  phoneVerified DateTime?
+  locale        String    @default("en") @db.VarChar(5)
+  theme         String    @default("system") @db.VarChar(10)
+  marketingOptIn Boolean  @default(false)
+  isActive      Boolean   @default(true)
+  roleId        Int?
+  role          Role?     @relation(fields: [roleId], references: [id])
+  loyaltyPoints Int       @default(0)
+  tier          String    @default("Sapling") @db.VarChar(20)
+  lastLoginAt   DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  sessions      Session[]
+  addresses     Address[]
+  orders        Order[]
+  reviews       Review[]
+  wishlist      WishlistItem[]
+  loyaltyTxns   LoyaltyTransaction[]
+  auditLogs     AuditLog[]
+  stockAlerts   StockAlert[]
+
+  @@index([kind])
+}
+
+model Role {
+  id          Int              @id @default(autoincrement())
+  name        String           @unique @db.VarChar(60)
+  description String?          @db.VarChar(255)
+  isSystem    Boolean          @default(false)
+  permissions RolePermission[]
+  users       User[]
+  createdAt   DateTime         @default(now())
+}
+
+model Permission {
+  id    Int              @id @default(autoincrement())
+  code  String           @unique @db.VarChar(80) // e.g. "products.write"
+  group String           @db.VarChar(40)
+  label String           @db.VarChar(120)
+  roles RolePermission[]
+}
+
+model RolePermission {
+  roleId       Int
+  permissionId Int
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, permissionId])
+}
+
+model Session {
+  id         String   @id @db.VarChar(64) // sha256(token) — raw token only lives in the cookie
+  userId     Int
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  scope      String   @default("store") @db.VarChar(10) // store | admin
+  csrfSecret String   @db.VarChar(64)
+  userAgent  String?  @db.VarChar(255)
+  ip         String?  @db.VarChar(64)
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model OtpCode {
+  id        Int      @id @default(autoincrement())
+  target    String   @db.VarChar(191) // phone or email
+  purpose   String   @db.VarChar(20) // login | register | reset | verify
+  codeHash  String   @db.VarChar(100)
+  attempts  Int      @default(0)
+  consumed  Boolean  @default(false)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([target, purpose])
+}
+
+model AuditLog {
+  id        Int      @id @default(autoincrement())
+  userId    Int?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  action    String   @db.VarChar(60)
+  entity    String   @db.VarChar(60)
+  entityId  String?  @db.VarChar(60)
+  summary   String?  @db.VarChar(255)
+  meta      Json?
+  ip        String?  @db.VarChar(64)
+  createdAt DateTime @default(now())
+
+  @@index([entity, entityId])
+  @@index([createdAt])
+}
+
+model OutboxMessage {
+  id        Int       @id @default(autoincrement())
+  channel   String    @db.VarChar(10) // sms | email
+  to        String    @db.VarChar(191)
+  subject   String?   @db.VarChar(191)
+  body      String    @db.Text
+  provider  String    @db.VarChar(30)
+  status    String    @default("sent") @db.VarChar(20)
+  createdAt DateTime  @default(now())
+
+  @@index([to])
+}
+
+// ───────────────────────── Catalog ─────────────────────────
+
+model Category {
+  id          Int        @id @default(autoincrement())
+  slug        String     @unique @db.VarChar(120)
+  nameEn      String     @db.VarChar(120)
+  nameBn      String     @db.VarChar(120)
+  descEn      String?    @db.Text
+  descBn      String?    @db.Text
+  image       String?    @db.VarChar(255)
+  icon        String?    @db.VarChar(40)
+  parentId    Int?
+  parent      Category?  @relation("CategoryTree", fields: [parentId], references: [id])
+  children    Category[] @relation("CategoryTree")
+  sortOrder   Int        @default(0)
+  isActive    Boolean    @default(true)
+  metaTitleEn String?    @db.VarChar(191)
+  metaTitleBn String?    @db.VarChar(191)
+  metaDescEn  String?    @db.VarChar(320)
+  metaDescBn  String?    @db.VarChar(320)
+  products    Product[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Room {
+  id        Int       @id @default(autoincrement())
+  slug      String    @unique @db.VarChar(80)
+  nameEn    String    @db.VarChar(120)
+  nameBn    String    @db.VarChar(120)
+  image     String?   @db.VarChar(255)
+  sortOrder Int       @default(0)
+  products  Product[]
+}
+
+model Material {
+  id       Int       @id @default(autoincrement())
+  slug     String    @unique @db.VarChar(80)
+  nameEn   String    @db.VarChar(120)
+  nameBn   String    @db.VarChar(120)
+  careEn   String?   @db.Text
+  careBn   String?   @db.Text
+  products Product[]
+}
+
+model Brand {
+  id          Int          @id @default(autoincrement())
+  slug        String       @unique @db.VarChar(80)
+  nameEn      String       @db.VarChar(120)
+  nameBn      String       @db.VarChar(120)
+  kind        String       @default("own") @db.VarChar(10) // own | partner
+  taglineEn   String?      @db.VarChar(255)
+  taglineBn   String?      @db.VarChar(255)
+  storyEn     String?      @db.Text
+  storyBn     String?      @db.Text
+  image       String?      @db.VarChar(255)
+  since       String?      @db.VarChar(60)
+  sortOrder   Int          @default(0)
+  isActive    Boolean      @default(true)
+  products    Product[]
+  collections Collection[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model Designer {
+  id          Int          @id @default(autoincrement())
+  slug        String       @unique @db.VarChar(80)
+  nameEn      String       @db.VarChar(120)
+  nameBn      String       @db.VarChar(120)
+  roleEn      String?      @db.VarChar(160)
+  roleBn      String?      @db.VarChar(160)
+  bioEn       String?      @db.Text
+  bioBn       String?      @db.Text
+  image       String?      @db.VarChar(255)
+  sortOrder   Int          @default(0)
+  collections Collection[]
+}
+
+model Collection {
+  id          Int        @id @default(autoincrement())
+  slug        String     @unique @db.VarChar(80)
+  nameEn      String     @db.VarChar(120)
+  nameBn      String     @db.VarChar(120)
+  introEn     String?    @db.Text
+  introBn     String?    @db.Text
+  year        String?    @db.VarChar(10)
+  heroImage   String?    @db.VarChar(255)
+  moodImages  Json?
+  brandId     Int?
+  brand       Brand?     @relation(fields: [brandId], references: [id])
+  designerId  Int?
+  designer    Designer?  @relation(fields: [designerId], references: [id])
+  isFeatured  Boolean    @default(false)
+  isActive    Boolean    @default(true)
+  sortOrder   Int        @default(0)
+  products    Product[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+enum StockStatus {
+  IN_STOCK
+  LOW
+  MADE_TO_ORDER
+  OUT_OF_STOCK
+}
+
+model Product {
+  id             Int              @id @default(autoincrement())
+  slug           String           @unique @db.VarChar(160)
+  sku            String           @unique @db.VarChar(40)
+  nameEn         String           @db.VarChar(191)
+  nameBn         String           @db.VarChar(191)
+  shortEn        String?          @db.VarChar(320)
+  shortBn        String?          @db.VarChar(320)
+  descriptionEn  String?          @db.Text
+  descriptionBn  String?          @db.Text
+  categoryId     Int
+  category       Category         @relation(fields: [categoryId], references: [id])
+  roomId         Int?
+  room           Room?            @relation(fields: [roomId], references: [id])
+  materialId     Int?
+  material       Material?        @relation(fields: [materialId], references: [id])
+  brandId        Int?
+  brand          Brand?           @relation(fields: [brandId], references: [id])
+  collectionId   Int?
+  collection     Collection?      @relation(fields: [collectionId], references: [id])
+  price          Int // BDT, whole taka
+  compareAtPrice Int?
+  badge          String?          @db.VarChar(20) // bestseller | new | sale | made
+  stockStatus    StockStatus      @default(IN_STOCK)
+  leadTimeDays   Int              @default(5)
+  widthCm        Int?
+  depthCm        Int?
+  heightCm       Int?
+  weightKg       Decimal?         @db.Decimal(7, 2)
+  seats          Int?
+  assemblyRequired Boolean        @default(true)
+  emiAvailable   Boolean          @default(true)
+  warrantyYears  Int              @default(10)
+  ratingAvg      Decimal          @default(0) @db.Decimal(3, 2)
+  ratingCount    Int              @default(0)
+  soldCount      Int              @default(0)
+  isActive       Boolean          @default(true)
+  isFeatured     Boolean          @default(false)
+  metaTitleEn    String?          @db.VarChar(191)
+  metaTitleBn    String?          @db.VarChar(191)
+  metaDescEn     String?          @db.VarChar(320)
+  metaDescBn     String?          @db.VarChar(320)
+  publishedAt    DateTime?        @default(now())
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  images         ProductImage[]
+  variants       ProductVariant[]
+  reviews        Review[]
+  orderItems     OrderItem[]
+  wishlistItems  WishlistItem[]
+  stockAlerts    StockAlert[]
+  galleryItems   GalleryItem[]
+
+  @@index([categoryId])
+  @@index([brandId])
+  @@index([collectionId])
+  @@index([price])
+  @@index([isActive, isFeatured])
+  @@fulltext([nameEn, nameBn, shortEn])
+}
+
+model ProductImage {
+  id        Int     @id @default(autoincrement())
+  productId Int
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  url       String  @db.VarChar(255)
+  altEn     String? @db.VarChar(191)
+  altBn     String? @db.VarChar(191)
+  sortOrder Int     @default(0)
+
+  @@index([productId])
+}
+
+model ProductVariant {
+  id          Int         @id @default(autoincrement())
+  productId   Int
+  product     Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  sku         String      @unique @db.VarChar(60)
+  nameEn      String      @db.VarChar(120) // e.g. "Sage linen"
+  nameBn      String      @db.VarChar(120)
+  optionType  String      @default("finish") @db.VarChar(20) // finish | fabric | size | colour
+  swatchHex   String?     @db.VarChar(9)
+  priceDelta  Int         @default(0)
+  stockQty    Int         @default(0)
+  lowStockAt  Int         @default(3)
+  isDefault   Boolean     @default(false)
+  sortOrder   Int         @default(0)
+  orderItems  OrderItem[]
+  movements   StockMovement[]
+
+  @@index([productId])
+}
+
+model StockMovement {
+  id        Int            @id @default(autoincrement())
+  variantId Int
+  variant   ProductVariant @relation(fields: [variantId], references: [id], onDelete: Cascade)
+  delta     Int
+  reason    String         @db.VarChar(40) // order | adjustment | restock | cancel
+  ref       String?        @db.VarChar(60)
+  createdAt DateTime       @default(now())
+
+  @@index([variantId])
+}
+
+model Review {
+  id         Int      @id @default(autoincrement())
+  productId  Int
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  userId     Int?
+  user       User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  authorName String   @db.VarChar(120)
+  location   String?  @db.VarChar(120)
+  rating     Int
+  title      String   @db.VarChar(191)
+  body       String   @db.Text
+  photos     Json?
+  status     String   @default("pending") @db.VarChar(12) // pending | approved | rejected
+  verified   Boolean  @default(false)
+  reply      String?  @db.Text
+  createdAt  DateTime @default(now())
+
+  @@index([productId, status])
+}
+
+model StockAlert {
+  id        Int      @id @default(autoincrement())
+  productId Int
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  userId    Int?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  contact   String   @db.VarChar(191)
+  notified  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@unique([productId, contact])
+}
+
+model WishlistItem {
+  userId    Int
+  productId Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@id([userId, productId])
+}
+
+// ───────────────────────── Showcase / CMS ─────────────────────────
+
+model Project {
+  id           Int      @id @default(autoincrement())
+  slug         String   @unique @db.VarChar(120)
+  titleEn      String   @db.VarChar(191)
+  titleBn      String   @db.VarChar(191)
+  type         String   @db.VarChar(20) // residential | hospitality | corporate | retail
+  cityEn       String?  @db.VarChar(120)
+  cityBn       String?  @db.VarChar(120)
+  year         String?  @db.VarChar(10)
+  area         String?  @db.VarChar(60)
+  scopeEn      String?  @db.Text
+  scopeBn      String?  @db.Text
+  storyEn      String?  @db.Text
+  storyBn      String?  @db.Text
+  heroImage    String?  @db.VarChar(255)
+  images       Json?
+  collectionSlugs Json?
+  isFeatured   Boolean  @default(false)
+  isActive     Boolean  @default(true)
+  sortOrder    Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model GalleryItem {
+  id             Int      @id @default(autoincrement())
+  image          String   @db.VarChar(255)
+  titleEn        String   @db.VarChar(191)
+  titleBn        String   @db.VarChar(191)
+  category       String   @db.VarChar(40)
+  brandSlug      String?  @db.VarChar(80)
+  collectionSlug String?  @db.VarChar(80)
+  room           String?  @db.VarChar(40)
+  material       String?  @db.VarChar(40)
+  projectType    String?  @db.VarChar(20)
+  productId      Int?
+  product        Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+  hotspotX       Int?     // percentage for shop-the-piece hotspot
+  hotspotY       Int?
+  tall           Boolean  @default(false)
+  sortOrder      Int      @default(0)
+  isActive       Boolean  @default(true)
+  createdAt      DateTime @default(now())
+
+  @@index([category])
+  @@index([brandSlug])
+  @@index([collectionSlug])
+}
+
+model Catalogue {
+  id        Int      @id @default(autoincrement())
+  slug      String   @unique @db.VarChar(80)
+  kind      String   @db.VarChar(12) // master | category | brand | collection
+  ref       String?  @db.VarChar(80)
+  titleEn   String   @db.VarChar(191)
+  titleBn   String   @db.VarChar(191)
+  season    String?  @db.VarChar(10)
+  coverImage String? @db.VarChar(255)
+  pdfUrl    String   @db.VarChar(255)
+  pageImages Json?   // list of page image URLs for the flipbook
+  pages     Int      @default(0)
+  sizeKb    Int      @default(0)
+  downloads Int      @default(0)
+  isActive  Boolean  @default(true)
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CatalogueRequest {
+  id          Int      @id @default(autoincrement())
+  name        String   @db.VarChar(120)
+  phone       String   @db.VarChar(20)
+  email       String?  @db.VarChar(191)
+  address     String   @db.VarChar(320)
+  catalogues  Json?
+  status      String   @default("new") @db.VarChar(12)
+  createdAt   DateTime @default(now())
+}
+
+model Banner {
+  id         Int       @id @default(autoincrement())
+  placement  String    @default("home-hero") @db.VarChar(40)
+  titleEn    String    @db.VarChar(191)
+  titleBn    String    @db.VarChar(191)
+  subtitleEn String?   @db.VarChar(320)
+  subtitleBn String?   @db.VarChar(320)
+  ctaEn      String?   @db.VarChar(60)
+  ctaBn      String?   @db.VarChar(60)
+  href       String?   @db.VarChar(255)
+  image      String    @db.VarChar(255)
+  startsAt   DateTime?
+  endsAt     DateTime?
+  isActive   Boolean   @default(true)
+  sortOrder  Int       @default(0)
+}
+
+model Page {
+  id          Int      @id @default(autoincrement())
+  slug        String   @unique @db.VarChar(80) // about, privacy, terms, delivery, returns, warranty, emi, cookies
+  titleEn     String   @db.VarChar(191)
+  titleBn     String   @db.VarChar(191)
+  bodyEn      String   @db.LongText // sanitized HTML
+  bodyBn      String   @db.LongText
+  metaDescEn  String?  @db.VarChar(320)
+  metaDescBn  String?  @db.VarChar(320)
+  isPolicy    Boolean  @default(false)
+  isPublished Boolean  @default(true)
+  updatedAt   DateTime @updatedAt
+}
+
+model BlogPost {
+  id          Int       @id @default(autoincrement())
+  slug        String    @unique @db.VarChar(160)
+  titleEn     String    @db.VarChar(191)
+  titleBn     String    @db.VarChar(191)
+  excerptEn   String?   @db.VarChar(320)
+  excerptBn   String?   @db.VarChar(320)
+  bodyEn      String    @db.LongText
+  bodyBn      String    @db.LongText
+  categoryEn  String    @db.VarChar(60)
+  categoryBn  String    @db.VarChar(60)
+  coverImage  String?   @db.VarChar(255)
+  authorName  String    @default("Shekor Studio") @db.VarChar(120)
+  readMinutes Int       @default(5)
+  isPublished Boolean   @default(true)
+  publishedAt DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([isPublished, publishedAt])
+}
+
+model Faq {
+  id         Int     @id @default(autoincrement())
+  groupEn    String  @db.VarChar(60)
+  groupBn    String  @db.VarChar(60)
+  questionEn String  @db.VarChar(320)
+  questionBn String  @db.VarChar(320)
+  answerEn   String  @db.Text
+  answerBn   String  @db.Text
+  sortOrder  Int     @default(0)
+  isActive   Boolean @default(true)
+}
+
+model Showroom {
+  id         Int      @id @default(autoincrement())
+  slug       String   @unique @db.VarChar(80)
+  nameEn     String   @db.VarChar(120)
+  nameBn     String   @db.VarChar(120)
+  city       String   @db.VarChar(40)
+  addressEn  String   @db.VarChar(255)
+  addressBn  String   @db.VarChar(255)
+  phone      String   @db.VarChar(20)
+  hours      String   @default("10:00–21:00") @db.VarChar(60)
+  isFlagship Boolean  @default(false)
+  lat        Decimal  @db.Decimal(9, 6)
+  lng        Decimal  @db.Decimal(9, 6)
+  image      String?  @db.VarChar(255)
+  services   Json?
+  isActive   Boolean  @default(true)
+  sortOrder  Int      @default(0)
+  consultations ConsultationBooking[]
+}
+
+model Setting {
+  key       String   @id @db.VarChar(80)
+  value     Json
+  updatedAt DateTime @updatedAt
+}
+
+model MediaAsset {
+  id        Int      @id @default(autoincrement())
+  url       String   @db.VarChar(255)
+  key       String   @db.VarChar(255)
+  mime      String   @db.VarChar(80)
+  sizeBytes Int
+  alt       String?  @db.VarChar(191)
+  createdAt DateTime @default(now())
+}
+
+model NewsletterSubscriber {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique @db.VarChar(191)
+  locale    String   @default("en") @db.VarChar(5)
+  createdAt DateTime @default(now())
+}
+
+// ───────────────────────── Commerce ─────────────────────────
+
+model DeliveryZone {
+  id            Int      @id @default(autoincrement())
+  code          String   @unique @db.VarChar(40)
+  nameEn        String   @db.VarChar(120)
+  nameBn        String   @db.VarChar(120)
+  divisions     Json     // list of division names covered
+  districts     Json?    // optional list of districts (empty = whole division)
+  charge        Int      // BDT
+  freeOver      Int?     // free delivery above this subtotal
+  assemblyFee   Int      @default(0)
+  leadDaysMin   Int      @default(2)
+  leadDaysMax   Int      @default(5)
+  codAvailable  Boolean  @default(true)
+  isActive      Boolean  @default(true)
+  sortOrder     Int      @default(0)
+}
+
+model Address {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  label     String   @default("Home") @db.VarChar(40)
+  name      String   @db.VarChar(120)
+  phone     String   @db.VarChar(20)
+  division  String   @db.VarChar(40)
+  district  String   @db.VarChar(60)
+  area      String   @db.VarChar(120)
+  line1     String   @db.VarChar(255)
+  isDefault Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model Coupon {
+  id          Int       @id @default(autoincrement())
+  code        String    @unique @db.VarChar(40)
+  descriptionEn String? @db.VarChar(191)
+  descriptionBn String? @db.VarChar(191)
+  type        String    @db.VarChar(12) // percent | fixed | shipping
+  value       Int
+  minSubtotal Int       @default(0)
+  maxDiscount Int?
+  usageLimit  Int?
+  perUserLimit Int?
+  usedCount   Int       @default(0)
+  startsAt    DateTime?
+  endsAt      DateTime?
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  orders      Order[]
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  IN_PRODUCTION
+  QUALITY_CHECK
+  DISPATCHED
+  OUT_FOR_DELIVERY
+  DELIVERED
+  CANCELLED
+  RETURNED
+}
+
+enum PaymentStatus {
+  UNPAID
+  PENDING
+  PARTIAL
+  PAID
+  FAILED
+  REFUNDED
+}
+
+model Order {
+  id              Int           @id @default(autoincrement())
+  orderNo         String        @unique @db.VarChar(20)
+  userId          Int?
+  user            User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+  status          OrderStatus   @default(PENDING)
+  paymentStatus   PaymentStatus @default(UNPAID)
+  paymentMethod   String        @db.VarChar(20) // bkash | nagad | card | cod | bank
+  paymentPlan     String        @default("full") @db.VarChar(12) // full | advance
+  advancePercent  Int           @default(0)
+  customerName    String        @db.VarChar(120)
+  phone           String        @db.VarChar(20)
+  email           String?       @db.VarChar(191)
+  division        String        @db.VarChar(40)
+  district        String        @db.VarChar(60)
+  area            String        @db.VarChar(120)
+  line1           String        @db.VarChar(255)
+  zoneId          Int?
+  zoneName        String?       @db.VarChar(120)
+  deliveryDate    DateTime?
+  deliverySlot    String?       @db.VarChar(20) // morning | afternoon | evening
+  assembly        Boolean       @default(true)
+  notes           String?       @db.VarChar(500)
+  subtotal        Int
+  discount        Int           @default(0)
+  deliveryCharge  Int           @default(0)
+  assemblyCharge  Int           @default(0)
+  total           Int
+  amountPaid      Int           @default(0)
+  couponId        Int?
+  coupon          Coupon?       @relation(fields: [couponId], references: [id], onDelete: SetNull)
+  couponCode      String?       @db.VarChar(40)
+  locale          String        @default("en") @db.VarChar(5)
+  trackingToken   String        @db.VarChar(40)
+  pointsEarned    Int           @default(0)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  items           OrderItem[]
+  history         OrderStatusHistory[]
+  payments        Payment[]
+
+  @@index([userId])
+  @@index([status])
+  @@index([createdAt])
+  @@index([phone])
+}
+
+model OrderItem {
+  id          Int             @id @default(autoincrement())
+  orderId     Int
+  order       Order           @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId   Int?
+  product     Product?        @relation(fields: [productId], references: [id], onDelete: SetNull)
+  variantId   Int?
+  variant     ProductVariant? @relation(fields: [variantId], references: [id], onDelete: SetNull)
+  nameEn      String          @db.VarChar(191)
+  nameBn      String          @db.VarChar(191)
+  variantName String?         @db.VarChar(120)
+  sku         String          @db.VarChar(60)
+  image       String?         @db.VarChar(255)
+  unitPrice   Int
+  qty         Int
+  lineTotal   Int
+
+  @@index([orderId])
+  @@index([productId])
+}
+
+model OrderStatusHistory {
+  id        Int         @id @default(autoincrement())
+  orderId   Int
+  order     Order       @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  status    OrderStatus
+  note      String?     @db.VarChar(320)
+  actorId   Int?
+  createdAt DateTime    @default(now())
+
+  @@index([orderId])
+}
+
+model Payment {
+  id          Int      @id @default(autoincrement())
+  orderId     Int
+  order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  provider    String   @db.VarChar(20)
+  kind        String   @default("full") @db.VarChar(12) // full | advance | balance | refund
+  amount      Int
+  status      String   @default("initiated") @db.VarChar(12) // initiated | success | failed | cancelled
+  providerRef String?  @db.VarChar(120)
+  sessionId   String   @unique @db.VarChar(64)
+  raw         Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([orderId])
+}
+
+model LoyaltyTransaction {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  points    Int
+  reason    String   @db.VarChar(120)
+  orderNo   String?  @db.VarChar(20)
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+// ───────────────────────── Services / Leads ─────────────────────────
+
+model CustomOrderRequest {
+  id          Int      @id @default(autoincrement())
+  ref         String   @unique @db.VarChar(20)
+  name        String   @db.VarChar(120)
+  phone       String   @db.VarChar(20)
+  email       String?  @db.VarChar(191)
+  city        String?  @db.VarChar(60)
+  pieceType   String   @db.VarChar(80)
+  material    String?  @db.VarChar(60)
+  dimensions  String?  @db.VarChar(120)
+  budget      String?  @db.VarChar(60)
+  details     String   @db.Text
+  status      String   @default("new") @db.VarChar(20) // new | measured | quoted | approved | production | closed
+  quoteAmount Int?
+  adminNotes  String?  @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ConsultationBooking {
+  id          Int       @id @default(autoincrement())
+  ref         String    @unique @db.VarChar(20)
+  name        String    @db.VarChar(120)
+  phone       String    @db.VarChar(20)
+  email       String?   @db.VarChar(191)
+  mode        String    @db.VarChar(20) // showroom | video | home
+  showroomId  Int?
+  showroom    Showroom? @relation(fields: [showroomId], references: [id], onDelete: SetNull)
+  date        DateTime
+  timeSlot    String    @db.VarChar(20)
+  rooms       String?   @db.VarChar(191)
+  notes       String?   @db.Text
+  status      String    @default("requested") @db.VarChar(20) // requested | confirmed | completed | cancelled
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model TradeInquiry {
+  id          Int      @id @default(autoincrement())
+  ref         String   @unique @db.VarChar(20)
+  company     String   @db.VarChar(160)
+  contactName String   @db.VarChar(120)
+  phone       String   @db.VarChar(20)
+  email       String   @db.VarChar(191)
+  sector      String   @db.VarChar(40) // corporate | hospitality | residential-dev | architect | retail
+  projectSize String?  @db.VarChar(60)
+  timeline    String?  @db.VarChar(60)
+  message     String   @db.Text
+  status      String   @default("new") @db.VarChar(20) // new | contacted | proposal | won | lost
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ContactMessage {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(120)
+  email     String?  @db.VarChar(191)
+  phone     String?  @db.VarChar(20)
+  subject   String   @db.VarChar(191)
+  message   String   @db.Text
+  status    String   @default("new") @db.VarChar(12)
+  createdAt DateTime @default(now())
+}
