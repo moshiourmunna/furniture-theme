@@ -1,3 +1,4 @@
+import Script from 'next/script';
 import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
 import { notFound } from 'next/navigation';
@@ -60,7 +61,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   return (
     <html lang={locale} className={`${jakarta.variable} ${fraunces.variable} ${hind.variable} ${locale === 'bn' ? 'lang-bn' : ''}`} suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <Script id="shekor-theme" strategy="beforeInteractive">{themeScript}</Script>
       </head>
       <body className="bg-bg text-ink font-sans antialiased">
         <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-ink focus:text-bg focus:px-4 focus:py-2">{locale === 'bn' ? 'মূল কনটেন্টে যান' : 'Skip to content'}</a>
