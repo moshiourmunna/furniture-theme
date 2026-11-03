@@ -33,3 +33,15 @@ export async function api<T = unknown>(path: string, opts: { method?: string; bo
   }
   return data as T;
 }
+
+/** Multipart upload helper (field "file"). */
+export async function apiUpload<T = { url: string }>(path: string, file: File, extra: Record<string, string> = {}): Promise<T> {
+  await ensureCsrf();
+  const fd = new FormData();
+  fd.set('file', file);
+  for (const [k, v] of Object.entries(extra)) fd.set(k, v);
+  const res = await fetch(`/api/v1${path}`, { method: 'POST', credentials: 'same-origin', headers: { 'x-csrf-token': csrf() }, body: fd });
+  const data = await res.json().catch(() => null);
+  if (!res.ok) throw new ApiClientError(res.status, data?.error?.code ?? 'error', data?.error?.message ?? 'Upload failed');
+  return data as T;
+}

@@ -4,6 +4,7 @@ import { prisma, type Prisma, type OrderStatus } from '@shekor/db';
 import {
   canTransition, computeTotals, evaluateCoupon, pointsForAmount, tierFor, ORDER_STATUS_LABEL, formatPrice,
   type CheckoutInput, type PaymentMethod,
+  matchZone,
 } from '@shekor/shared';
 import { ApiError, badRequest, notFound } from '../http';
 import { gatewayFor } from '../payments';
@@ -15,12 +16,7 @@ type Line = { productId: number; variantId?: number | null; qty: number };
 export async function resolveZone(division?: string, district?: string) {
   const zones = await prisma.deliveryZone.findMany({ where: { isActive: true }, orderBy: { sortOrder: 'asc' } });
   if (!division) return null;
-  return (
-    zones.find((z) => district && (z.districts as string[] | null)?.includes(district)) ??
-    zones.find((z) => (z.divisions as string[]).includes(division) && !((z.districts as string[] | null)?.length)) ??
-    zones.find((z) => (z.divisions as string[]).includes('*')) ??
-    null
-  );
+  return matchZone(zones, division, district);
 }
 
 /** Re-prices cart lines from the database (client prices are never trusted). */

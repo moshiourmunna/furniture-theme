@@ -141,3 +141,17 @@ export const DELIVERY_SLOTS = [
   { code: 'afternoon', en: 'Afternoon (1pm–5pm)', bn: 'দুপুর (১টা–৫টা)' },
   { code: 'evening', en: 'Evening (5pm–9pm)', bn: 'সন্ধ্যা (৫টা–৯টা)' },
 ] as const;
+
+/** Resolve a delivery zone: district match → division-only zone → "*" fallback. Pure, shared by client and server. */
+export function matchZone<Z extends { divisions: unknown; districts: unknown }>(zones: Z[], division?: string, district?: string): Z | null {
+  const arr = (v: unknown) => (Array.isArray(v) ? (v as string[]) : []);
+  if (district) {
+    const z = zones.find((z) => arr(z.districts).includes(district));
+    if (z) return z;
+  }
+  if (division) {
+    const z = zones.find((z) => arr(z.divisions).includes(division) && arr(z.districts).length === 0);
+    if (z) return z;
+  }
+  return zones.find((z) => arr(z.divisions).includes('*')) ?? null;
+}
