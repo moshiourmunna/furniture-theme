@@ -1,0 +1,41 @@
+{
+  "name": "@shekor/web",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "dotenv -e ../../.env -- next dev -p 3000",
+    "build": "dotenv -e ../../.env -- next build",
+    "start": "dotenv -e ../../.env -- next start -p 3000",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src",
+    "test": "vitest run --project unit",
+    "test:integration": "dotenv -e ../../.env -- vitest run --project integration"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.1161.0",
+    "@shekor/db": "workspace:*",
+    "@shekor/shared": "workspace:*",
+    "bcryptjs": "^3.0.2",
+    "next": "16.4.4",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "sanitize-html": "^2.17.0",
+    "server-only": "^0.0.1",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/sanitize-html": "^2.16.0",
+    "autoprefixer": "^10.4.21",
+    "dotenv-cli": "^10.0.0",
+    "eslint": "^9.39.1",
+    "eslint-config-next": "16.4.4",
+    "postcss": "^8.5.6",
+    "tailwindcss": "3.4.19",
+    "typescript": "5.9.3",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.2.4"
+  }
+}
