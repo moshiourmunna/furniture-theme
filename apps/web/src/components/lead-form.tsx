@@ -6,7 +6,7 @@ import { useStore } from './providers';
 
 export interface Field {
   name: string; label: string; type?: 'text' | 'email' | 'tel' | 'textarea' | 'select' | 'date' | 'checkboxes' | 'number';
-  required?: boolean; options?: { value: string; label: string }[]; half?: boolean; placeholder?: string; min?: string; numeric?: boolean; autoComplete?: string; hint?: string;
+  required?: boolean; options?: { value: string; label: string }[]; half?: boolean; placeholder?: string; min?: string; numeric?: boolean; join?: boolean; autoComplete?: string; hint?: string;
 }
 
 /** Generic validated form posting to /api/v1/leads?type=… — shows field errors from the API and a reference on success. */
@@ -40,7 +40,7 @@ export function LeadForm({ type, fields, submitLabel, successTitle, successBody,
       setBusy(true);
       try {
         const body: Record<string, unknown> = {};
-        for (const f of fields) { const val = v[f.name]; if (Array.isArray(val) ? val.length : val !== '') body[f.name] = f.numeric ? Number(val) : val; }
+        for (const f of fields) { const val = v[f.name]; if (Array.isArray(val) ? val.length : val !== '') body[f.name] = f.numeric ? Number(val) : f.join && Array.isArray(val) ? val.join(', ') : val; }
         const r = await api<{ ref?: string }>(`/leads?type=${type}`, { body });
         setDone(r.ref ?? '');
       } catch (x) {
@@ -65,7 +65,7 @@ export function LeadForm({ type, fields, submitLabel, successTitle, successBody,
                 <label htmlFor={id} className="label">{f.label}{f.required && ' *'}</label>
                 {f.type === 'textarea' ? <textarea {...common} rows={4} className="input" value={v[f.name] as string} onChange={(e) => set(e.target.value)} placeholder={f.placeholder} />
                   : f.type === 'select' ? <select {...common} className="input" value={v[f.name] as string} onChange={(e) => set(e.target.value)}>{!f.required && <option value="">{t('Choose…', 'বেছে নিন…')}</option>}{f.options?.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}</select>
-                  : <input {...common} type={f.type ?? 'text'} min={f.min} className="input" value={v[f.name] as string} onChange={(e) => set(e.target.value)} placeholder={f.placeholder} autoComplete={f.autoComplete} inputMode={f.type === 'tel' ? 'tel' : undefined} />}
+                  : <input {...common} type={f.type ?? 'text'} min={f.min === 'today' ? new Date(Date.now() + 6 * 3600_000).toISOString().slice(0, 10) : f.min} suppressHydrationWarning className="input" value={v[f.name] as string} onChange={(e) => set(e.target.value)} placeholder={f.placeholder} autoComplete={f.autoComplete} inputMode={f.type === 'tel' ? 'tel' : undefined} />}
               </>
             )}
             {f.hint && !err && <p id={`${id}-hint`} className="text-xs text-muted mt-1">{f.hint}</p>}
