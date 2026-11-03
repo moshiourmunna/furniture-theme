@@ -29,13 +29,14 @@ const security = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  agentRules: false,
   transpilePackages: ['@shekor/shared', '@shekor/db'],
   serverExternalPackages: ['@prisma/client', 'bcryptjs'],
   turbopack: { root: path.resolve(__dirname, '../..') },
   outputFileTracingRoot: path.resolve(__dirname, '../..'),
   ...(process.env.NEXT_OUTPUT === 'standalone' ? { output: 'standalone' as const } : {}),
   images: {
-    formats: ['image/avif', 'image/webp'],
+    formats: ['image/webp'],
     qualities: [70, 80],
     deviceSizes: [390, 640, 768, 1024, 1280, 1600, 1920],
     imageSizes: [64, 96, 160, 240, 320, 480],

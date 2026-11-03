@@ -1,0 +1,12 @@
+{
+  "name": "@shekor/e2e",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:e2e": "playwright test",
+    "browser-pass": "playwright test --config=playwright.browser-pass.config.ts"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.0"
+  }
+}
