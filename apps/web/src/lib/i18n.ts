@@ -14,7 +14,7 @@ export const pf = (l: Locale) => (row: object, field: string): string => {
 };
 export const money = (l: Locale, n: number) => formatPrice(n, l);
 export const num = (l: Locale, n: number | string) => (typeof n === 'number' ? formatNumber(n, l) : l === 'bn' ? n.replace(/[0-9]/g, (d) => '০১২৩৪৫৬৭৮৯'[Number(d)]) : n);
-export const date = (l: Locale, d: Date | string) => formatDate(d, l);
+export const date = (l: Locale, d: Date | string, time = false) => formatDate(d, l, time);
 
 export type LocaleParams<T extends object = object> = { params: Promise<{ locale: string } & T> };
 /** Resolve the [locale] route param (validated by the layout) as a Locale. */

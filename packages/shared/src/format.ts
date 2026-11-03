@@ -43,13 +43,18 @@ const MONTHS_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'
 const MONTHS_BN = ['জানু', 'ফেব্রু', 'মার্চ', 'এপ্রিল', 'মে', 'জুন', 'জুলাই', 'আগস্ট', 'সেপ্টে', 'অক্টো', 'নভে', 'ডিসে'];
 
 /** "25 Oct 2026" / "২৫ অক্টো ২০২৬" — always in Asia/Dhaka. */
-export function formatDate(d: Date | string, locale: Locale = 'en'): string {
+/** Format a date in Asia/Dhaka (UTC+6, no DST). With `time`, appends h:mm am/pm. */
+export function formatDate(d: Date | string, locale: Locale = 'en', time = false): string {
   const date = typeof d === 'string' ? new Date(d) : d;
   const dhaka = new Date(date.getTime() + 6 * 3600_000);
   const day = dhaka.getUTCDate();
   const m = dhaka.getUTCMonth();
   const y = dhaka.getUTCFullYear();
-  return locale === 'bn' ? `${toBnDigits(day)} ${MONTHS_BN[m]} ${toBnDigits(y)}` : `${day} ${MONTHS_EN[m]} ${y}`;
+  const base = locale === 'bn' ? `${toBnDigits(day)} ${MONTHS_BN[m]} ${toBnDigits(y)}` : `${day} ${MONTHS_EN[m]} ${y}`;
+  if (!time) return base;
+  const h24 = dhaka.getUTCHours();
+  const hm = `${h24 % 12 || 12}:${String(dhaka.getUTCMinutes()).padStart(2, '0')}`;
+  return locale === 'bn' ? `${base}, ${toBnDigits(hm)}` : `${base}, ${hm} ${h24 < 12 ? 'am' : 'pm'}`;
 }
 
 /** Pick the EN or BN field of a bilingual record: pick(p, 'name', 'bn') → p.nameBn (falls back to EN). */

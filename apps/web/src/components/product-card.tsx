@@ -13,7 +13,7 @@ export function ProductCard({ p, locale, priority = false, sizes = '(min-width:1
   return (
     <article className="group relative flex flex-col" data-product={p.id} data-testid="product-card">
       <div className="relative overflow-hidden bg-surface-2 aspect-[4/5]">
-        <Link href={href} tabIndex={-1} aria-hidden="true">
+        <Link href={href} tabIndex={-1} aria-hidden="true" className="absolute inset-0 block">
           {p.image && <Image src={p.image} alt={name} fill sizes={sizes} className="object-cover img-zoom" priority={priority} quality={70} />}
           {p.altImage && <Image src={p.altImage} alt="" aria-hidden fill sizes={sizes} className="object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-700" quality={70} />}
         </Link>

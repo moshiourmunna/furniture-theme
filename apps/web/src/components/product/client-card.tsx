@@ -14,7 +14,7 @@ export function ClientProductCard({ p }: { p: ProductCardDTO }) {
   return (
     <article className="group relative flex flex-col" data-testid="product-card">
       <div className="relative overflow-hidden bg-surface-2 aspect-[4/5]">
-        <Link href={href} tabIndex={-1} aria-hidden="true">{p.image && <Image src={p.image} alt={f(p, 'name')} fill sizes="(min-width:768px) 25vw, 50vw" className="object-cover img-zoom" />}</Link>
+        <Link href={href} tabIndex={-1} aria-hidden="true" className="absolute inset-0 block">{p.image && <Image src={p.image} alt={f(p, 'name')} fill sizes="(min-width:768px) 25vw, 50vw" className="object-cover img-zoom" />}</Link>
         <WishlistButton id={p.id} className="absolute top-2 right-2" />
         <CardActions p={p} />
       </div>

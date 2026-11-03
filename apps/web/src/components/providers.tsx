@@ -88,7 +88,7 @@ export function Providers({ locale, children }: { locale: Locale; children: Reac
   }, [t, toast]);
   const setQty = useCallback((p: number, v: number | null, q: number) => setCart((c) => c.map((x) => (x.productId === p && x.variantId === v ? { ...x, qty: Math.max(1, Math.min(20, q)) } : x))), []);
   const removeLine = useCallback((p: number, v: number | null) => setCart((c) => c.filter((x) => !(x.productId === p && x.variantId === v))), []);
-  const clearCart = useCallback(() => setCart([]), []);
+  const clearCart = useCallback(() => { setCart([]); save('shekor-cart', []); }, []);
 
   const toggleWishlist = useCallback((id: number) => {
     setWishlist((w) => {
