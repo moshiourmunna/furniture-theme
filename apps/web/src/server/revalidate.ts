@@ -13,6 +13,8 @@ const WARM_PATHS = ['', '/shop', '/collections', '/projects', '/gallery', '/jour
  */
 export function revalidateStorefront(extra: string[] = []) {
   try {
+    // There is no app/layout.tsx; the root layout is app/[locale]/layout.tsx, so its tag is /[locale]/layout, not /layout.
+    revalidatePath('/[locale]', 'layout');
     revalidatePath('/', 'layout');
   } catch {
     return; // outside a Next request context (unit/integration tests): nothing to revalidate
