@@ -21,13 +21,16 @@ function useLoad<T>(path: string) {
 }
 const Loading = () => { const { t } = useStore(); return <p className="py-16 text-center text-muted">{t('Loading…', 'লোড হচ্ছে…')}</p>; };
 
+export const TIER: Record<string, [string, string]> = { Sapling: ['Sapling', 'চারা'], Segun: ['Segun', 'সেগুন'], Heartwood: ['Heartwood', 'হার্টউড'] };
+const tierName = (t: (a: string, b: string) => string, k: string) => t(...(TIER[k] ?? [k, k]));
+
 const NAV = [
   ['', User, 'Overview', 'সারাংশ'], ['/orders', Package, 'Orders', 'অর্ডার'], ['/addresses', MapPin, 'Addresses', 'ঠিকানা'],
   ['/reviews', Star, 'Reviews', 'রিভিউ'], ['/loyalty', Award, 'Shekor Circle', 'শেকড় সার্কেল'], ['/settings', Settings, 'Settings', 'সেটিংস'],
 ] as const;
 
 export function AccountShell({ children }: { children: React.ReactNode }) {
-  const { t, locale, me, meLoaded, refreshMe } = useStore();
+  const { t, locale, me, meLoaded } = useStore();
   const router = useRouter();
   const path = usePathname();
   useEffect(() => { if (meLoaded && !me) router.replace(lp(locale, `/login?next=${encodeURIComponent(path)}`)); }, [meLoaded, me, router, locale, path]);
@@ -45,7 +48,7 @@ export function AccountShell({ children }: { children: React.ReactNode }) {
             return <Link key={p} href={href} aria-current={active ? 'page' : undefined} className={`flex items-center gap-3 px-3 h-11 text-sm whitespace-nowrap ${active ? 'bg-surface-2 font-medium' : 'hover:bg-surface-2'}`}><Icon className="w-4 h-4" />{t(en, bn)}</Link>;
           })}
           <Link href={lp(locale, '/wishlist')} className="flex items-center gap-3 px-3 h-11 text-sm whitespace-nowrap hover:bg-surface-2"><Heart className="w-4 h-4" />{t('Wishlist', 'উইশলিস্ট')}</Link>
-          <button type="button" className="flex items-center gap-3 px-3 h-11 text-sm whitespace-nowrap hover:bg-surface-2 text-left" data-testid="logout" onClick={async () => { await api('/auth/logout', { method: 'POST' }).catch(() => {}); await refreshMe(); router.replace(lp(locale, '/')); router.refresh(); }}><LogOut className="w-4 h-4" />{t('Sign out', 'সাইন আউট')}</button>
+          <button type="button" className="flex items-center gap-3 px-3 h-11 text-sm whitespace-nowrap hover:bg-surface-2 text-left" data-testid="logout" onClick={async () => { await api('/auth/logout', { method: 'POST' }).catch(() => {}); window.location.assign(lp(locale, '/')); }}><LogOut className="w-4 h-4" />{t('Sign out', 'সাইন আউট')}</button>
         </nav>
       </aside>
       <div className="min-w-0">{children}</div>
@@ -89,7 +92,7 @@ export function AccountHome() {
       <h1 className="h-display text-4xl">{t(`Hello, ${me.name.split(' ')[0]}`, `স্বাগতম, ${me.name.split(' ')[0]}`)}</h1>
       <div className="grid sm:grid-cols-3 gap-4">{cards.map(([l, v, href]) => <Link key={l} href={lp(locale, href)} className="card p-5 hover:border-ink transition-colors"><p className="text-xs text-muted uppercase tracking-widest">{l}</p><p className="h-display text-4xl mt-2">{v}</p></Link>)}</div>
       <section><div className="flex justify-between items-end mb-4"><h2 className="h-serif text-2xl">{t('Recent orders', 'সাম্প্রতিক অর্ডার')}</h2><Link className="link text-sm" href={lp(locale, '/account/orders')}>{t('View all', 'সব দেখুন')}</Link></div>{data ? <OrderList items={data.items.slice(0, 3)} /> : <Loading />}</section>
-      <p className="text-sm text-muted">{t(`Member tier: ${me.tier}`, `সদস্য স্তর: ${me.tier}`)}</p>
+      <p className="text-sm text-muted">{t('Member tier', 'সদস্য স্তর')}: {tierName(t, me.tier)}</p>
     </div>
   );
 }
@@ -208,8 +211,8 @@ export function AccountLoyalty() {
   return (
     <div className="space-y-10" data-testid="loyalty">
       <h1 className="h-display text-4xl">{t('Shekor Circle', 'শেকড় সার্কেল')}</h1>
-      <div className="card p-6 bg-deep text-white border-0"><p className="text-xs uppercase tracking-widest text-sand">{data.tier}</p><p className="h-display text-6xl mt-2">{num(locale, data.points)}</p><p className="text-white/70 mt-1">{t('points · 1 point for every ৳100 spent', 'পয়েন্ট · প্রতি ৳১০০-তে ১ পয়েন্ট')}</p>{next && <p className="text-sm mt-4">{t(`${next[1] - data.points} points to ${next[0]}`, `${next[0]} পর্যন্ত আর ${num('bn', next[1] - data.points)} পয়েন্ট`)}</p>}</div>
-      <div className="grid sm:grid-cols-3 gap-4">{tiers.map(([n, p, en, bn]) => <div key={n} className={`card p-5 ${n === data.tier ? 'ring-2 ring-primary' : ''}`}><p className="font-medium">{n}</p><p className="text-xs text-muted">{num(locale, p)}+ {t('points', 'পয়েন্ট')}</p><p className="text-sm mt-3">{t(en, bn)}</p></div>)}</div>
+      <div className="card p-6 bg-deep text-white border-0"><p className="text-xs uppercase tracking-widest text-sand">{tierName(t, data.tier)}</p><p className="h-display text-6xl mt-2">{num(locale, data.points)}</p><p className="text-white/70 mt-1">{t('points · 1 point for every ৳100 spent', 'পয়েন্ট · প্রতি ৳১০০-তে ১ পয়েন্ট')}</p>{next && <p className="text-sm mt-4">{t(`${next[1] - data.points} points to ${next[0]}`, `${tierName(t, next[0])} পর্যন্ত আর ${num('bn', next[1] - data.points)} পয়েন্ট`)}</p>}</div>
+      <div className="grid sm:grid-cols-3 gap-4">{tiers.map(([n, p, en, bn]) => <div key={n} className={`card p-5 ${n === data.tier ? 'ring-2 ring-primary' : ''}`}><p className="font-medium">{tierName(t, n)}</p><p className="text-xs text-muted">{num(locale, p)}+ {t('points', 'পয়েন্ট')}</p><p className="text-sm mt-3">{t(en, bn)}</p></div>)}</div>
       <section><h2 className="h-serif text-xl mb-4">{t('History', 'ইতিহাস')}</h2>{!data.transactions.length ? <p className="text-muted text-sm">{t('Points appear here after your first delivery.', 'প্রথম ডেলিভারির পর পয়েন্ট এখানে দেখাবে।')}</p> : <ul className="divide-y divide-line border-y border-line text-sm">{data.transactions.map((x) => <li key={x.id} className="py-3 flex justify-between gap-4"><span>{x.reason}{x.orderNo ? ` · ${x.orderNo}` : ''}<span className="block text-xs text-muted">{date(locale, x.createdAt)}</span></span><span className={x.points > 0 ? 'text-success' : 'text-sale'}>{x.points > 0 ? '+' : ''}{num(locale, x.points)}</span></li>)}</ul>}</section>
     </div>
   );
@@ -217,7 +220,6 @@ export function AccountLoyalty() {
 
 export function AccountSettings() {
   const { t, locale, me, refreshMe, toast } = useStore();
-  const router = useRouter();
   const [p, setP] = useState({ name: me?.name ?? '', email: me?.email ?? '', locale: (me?.locale ?? locale) as 'en' | 'bn', marketingOptIn: !!me?.marketingOptIn });
   const [pw, setPw] = useState({ currentPassword: '', newPassword: '' });
   const [msg, setMsg] = useState<Record<string, string>>({});
@@ -256,7 +258,7 @@ export function AccountSettings() {
         <h2 className="h-serif text-xl text-sale">{t('Delete account', 'অ্যাকাউন্ট মুছুন')}</h2>
         <p className="text-sm text-muted">{t('We remove your personal details, addresses and wishlist. Order records are kept for accounting and warranty, without your name.', 'আপনার ব্যক্তিগত তথ্য, ঠিকানা ও উইশলিস্ট মুছে ফেলা হবে। হিসাব ও ওয়ারেন্টির জন্য অর্ডার রেকর্ড নামবিহীনভাবে থাকবে।')}</p>
         <label htmlFor="st-del" className="label">{t('Type DELETE to confirm', 'নিশ্চিত করতে DELETE লিখুন')}</label>
-        <div className="flex gap-3"><input id="st-del" className="input max-w-[200px]" value={confirmDel} onChange={(e) => setConfirmDel(e.target.value)} /><button type="button" className="btn btn-outline text-sale border-sale" disabled={confirmDel !== 'DELETE'} onClick={async () => { await api('/account/profile', { method: 'DELETE' }); await refreshMe(); router.replace(lp(locale, '/')); }}>{t('Delete my account', 'অ্যাকাউন্ট মুছুন')}</button></div>
+        <div className="flex gap-3"><input id="st-del" className="input max-w-[200px]" value={confirmDel} onChange={(e) => setConfirmDel(e.target.value)} /><button type="button" className="btn btn-outline text-sale border-sale" disabled={confirmDel !== 'DELETE'} onClick={async () => { await api('/account/profile', { method: 'DELETE' }); window.location.assign(lp(locale, '/')); }}>{t('Delete my account', 'অ্যাকাউন্ট মুছুন')}</button></div>
       </section>
     </div>
   );

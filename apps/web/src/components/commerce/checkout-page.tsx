@@ -35,13 +35,13 @@ export function CheckoutPage() {
   const [terms, setTerms] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [busy, setBusy] = useState(false);
-  // eslint-disable-next-line react-hooks/set-state-in-effect
+   
   useEffect(() => { try { setCoupon(sessionStorage.getItem('shekor-coupon') ?? ''); } catch { /* ignore */ } }, []);
   useEffect(() => {
     if (!me) return;
-    /* eslint-disable react-hooks/set-state-in-effect */
+     
     setC((x) => ({ name: x.name || me.name, phone: x.phone || me.phone || '', email: x.email || me.email || '' }));
-    /* eslint-enable react-hooks/set-state-in-effect */
+     
     api<{ items: SavedAddress[] }>('/account/addresses').then((r) => {
       setSaved(r.items);
       const d = r.items.find((x) => x.isDefault) ?? r.items[0];
@@ -51,10 +51,10 @@ export function CheckoutPage() {
   const { quote, loading } = useQuote(cart, cartReady, { couponCode: coupon, division: a.division, district: a.district, assembly, paymentMethod: method, paymentPlan: plan, advancePercent: plan === 'advance' ? adv : undefined });
   const lead = useMemo(() => Math.max(quote?.zone?.leadDaysMin ?? 2, ...(quote?.lines.filter((l) => l.madeToOrder).map((l) => l.leadTimeDays) ?? [0])), [quote]);
   const minDate = ymd(new Date(Date.now() + lead * 86400_000));
-  // eslint-disable-next-line react-hooks/set-state-in-effect
+   
   useEffect(() => { if (!date || date < minDate) setDate(minDate); }, [minDate, date]);
   const codOk = quote?.zone?.codAvailable ?? true;
-  // eslint-disable-next-line react-hooks/set-state-in-effect
+   
   useEffect(() => { if (method === 'cod' && !codOk) setMethod('bkash'); }, [codOk, method]);
   const districts = BD_DIVISIONS.find((d) => d.en === a.division)?.districts ?? [];
   const total = quote?.totals.total ?? 0;

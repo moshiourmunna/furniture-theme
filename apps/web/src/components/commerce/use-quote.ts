@@ -20,6 +20,7 @@ export function useQuote(cart: CartLine[], ready: boolean, opts: QuoteOpts) {
   const key = JSON.stringify([cart.map((l) => [l.productId, l.variantId, l.qty]), opts]);
   useEffect(() => {
     if (!ready) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (!cart.length) { setQuote(null); return; }
     const ac = new AbortController();
     setLoading(true);
