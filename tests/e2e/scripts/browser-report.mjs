@@ -79,9 +79,11 @@ if (pass) {
   } else lines.push('No failed or flaky page loads.', '');
 }
 
-const e2e = load('e2e.json');
-if (e2e) {
-  const rows = flatten(e2e);
+// Functional runs may be split per engine (reports/e2e-<engine>.json); fall back to a single reports/e2e.json.
+const perEngine = ['chromium', 'firefox', 'webkit'].map((e) => load(`e2e-${e}.json`)).filter(Boolean);
+const e2eRuns = perEngine.length ? perEngine : [load('e2e.json')].filter(Boolean);
+if (e2eRuns.length) {
+  const rows = e2eRuns.flatMap(flatten);
   const c = count(rows);
   lines.push('## Functional flows (E2E)', '', `**${rows.length} flow runs**: ${fmt(c)}.`, '');
   const titles = [...new Set(rows.map((r) => r.title))];
