@@ -1,4 +1,5 @@
 import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { test, expect } from './fixtures';
 import { ADMIN, STAFF, STORE } from './env';
 import { RESOLVED } from './pages';
@@ -124,7 +125,7 @@ test('inventory adjust, customer points, coupon, settings, CSV, media upload', a
   expect(csv.headers()['content-disposition']).toMatch(/attachment; filename=".+\.csv"/);
 
   await page.goto(`${ADMIN}/media-library`);
-  await page.locator('input[type=file]').setInputFiles(new URL('../../../apps/web/public/brand/shekor-appicon-green-192.png', import.meta.url).pathname);
+  await page.locator('input[type=file]').setInputFiles(fileURLToPath(new URL('../../../apps/web/public/brand/shekor-appicon-green-192.png', import.meta.url)));
   await expect(toast(page)).toContainText(/Upload complete/i);
 });
 

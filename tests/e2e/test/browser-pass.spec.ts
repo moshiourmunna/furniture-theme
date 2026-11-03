@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url';
 /**
  * Full real-browser pass: every storefront + admin page, in every project of playwright.browser-pass.config.ts
  * (Chromium/Firefox/WebKit × desktop/tablet/mobile × EN/BN × light/dark). Each page must load with no console errors,
@@ -11,7 +12,7 @@ import { adminTargets, storefrontTargets, type Target } from './pages';
 import { loginCustomer, loginStaff } from './auth';
 
 type Meta = { engine: string; device: string; locale: 'en' | 'bn'; theme: 'light' | 'dark' };
-const SHOT_ROOT = new URL('../../../docs/screenshots/browser-pass/', import.meta.url).pathname;
+const SHOT_ROOT = fileURLToPath(new URL('../../../docs/screenshots/browser-pass/', import.meta.url));
 
 async function run(t: Target, app: 'store' | 'admin', meta: Meta, page: import('@playwright/test').Page, ctx: import('@playwright/test').BrowserContext, project: string) {
   await ctx.addInitScript(([theme, locale, cart]) => {
