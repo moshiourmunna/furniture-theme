@@ -71,3 +71,4 @@ export function intParam(v: string | null | undefined, def: number, min = 1, max
   if (!Number.isFinite(n)) return def;
   return Math.min(max, Math.max(min, n));
 }
+

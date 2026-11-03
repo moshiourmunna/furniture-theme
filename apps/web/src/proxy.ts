@@ -1,3 +1,4 @@
+import { secureCookie } from './server/secure-cookie';
 import { NextResponse, type NextRequest } from 'next/server';
 
 const LOCALES = ['en', 'bn'];
@@ -41,7 +42,7 @@ export function proxy(req: NextRequest) {
   const res = NextResponse.next();
   if (!req.cookies.get(CSRF_COOKIE)?.value) {
     const token = crypto.randomUUID().replace(/-/g, '') + crypto.randomUUID().replace(/-/g, '').slice(0, 8);
-    res.cookies.set(CSRF_COOKIE, token, { httpOnly: false, sameSite: 'lax', secure: process.env.NODE_ENV === 'production', path: '/', maxAge: 60 * 60 * 24 * 7 });
+    res.cookies.set(CSRF_COOKIE, token, { httpOnly: false, sameSite: 'lax', secure: secureCookie(req), path: '/', maxAge: 60 * 60 * 24 * 7 });
   }
   return res;
 }

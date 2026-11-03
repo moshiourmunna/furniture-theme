@@ -1,10 +1,12 @@
 /** Minimal HTTP-like client that calls Next route handlers directly, keeping a cookie jar and the CSRF double-submit token. */
-type Handler = (req: Request, ctx: { params: Promise<Record<string, string>> }) => Promise<Response>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- route handlers have per-route param types
+type Handler = (req: Request, ctx: any) => Promise<Response>;
 type Mod = Partial<Record<'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE', Handler>>;
 
 export class Client {
   jar = new Map<string, string>([['shekor_csrf', 'test-csrf-token-0123456789']]);
   constructor(public origin = 'http://localhost:3000') {}
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- response JSON is asserted in each test
   async call<T = any>(mod: Mod, method: keyof Mod, path: string, opts: { body?: unknown; params?: Record<string, string>; csrf?: boolean; headers?: Record<string, string> } = {}) {
     const h = mod[method];
     if (!h) throw new Error(`${method} not exported for ${path}`);

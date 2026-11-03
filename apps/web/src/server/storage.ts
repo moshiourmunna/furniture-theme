@@ -12,22 +12,22 @@ export interface StorageDriver {
   remove(key: string): Promise<void>;
 }
 
-const localRoot = () => path.resolve(process.cwd(), env.storageLocalDir);
+const localRoot = () => path.resolve(/*turbopackIgnore: true*/ process.cwd(), env.storageLocalDir);
 
 const local: StorageDriver = {
   async put(key, data) {
-    const file = path.join(localRoot(), key);
+    const file = path.join(/*turbopackIgnore: true*/ localRoot(), key);
     await mkdir(path.dirname(file), { recursive: true });
     await writeFile(file, data);
     return `/uploads/${key}`;
   },
   async get(key) {
-    const file = path.resolve(localRoot(), key);
+    const file = path.resolve(/*turbopackIgnore: true*/ localRoot(), key);
     if (!file.startsWith(localRoot() + path.sep)) return null; // path traversal guard
     try { return await readFile(file); } catch { return null; }
   },
   async remove(key) {
-    try { await unlink(path.join(localRoot(), key)); } catch { /* already gone */ }
+    try { await unlink(path.join(/*turbopackIgnore: true*/ localRoot(), key)); } catch { /* already gone */ }
   },
 };
 

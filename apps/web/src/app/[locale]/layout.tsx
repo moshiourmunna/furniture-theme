@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n';
 import { SITE_URL, orgLd } from '@/lib/seo';
 import { Providers } from '@/components/providers';
-import { BagDrawer, BottomNav, CookieConsent, NavDrawer, Reveal, SearchOverlay, SiteHeader, WhatsApp, type NavData } from '@/components/chrome';
+import { BagDrawer, BottomNav, CookieConsent, NavDrawer, Reveal, SearchOverlay, SiteHeader, ThemeSync, WhatsApp, type NavData } from '@/components/chrome';
 import { SiteFooter } from '@/components/footer';
 import { JsonLd } from '@/components/ui';
 import { taxonomy } from '@/server/services/catalog';
@@ -76,6 +76,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
           <WhatsApp number={settings.store?.whatsapp ?? '8801711000000'} />
           <CookieConsent />
           <Reveal />
+          <ThemeSync />
         </Providers>
         <JsonLd data={[orgLd(), { '@context': 'https://schema.org', '@type': 'WebSite', url: SITE_URL, name: 'Shekor', inLanguage: locale === 'bn' ? 'bn-BD' : 'en', potentialAction: { '@type': 'SearchAction', target: `${SITE_URL}/${locale}/search?q={query}`, 'query-input': 'required name=query' } }]} />
       </body>

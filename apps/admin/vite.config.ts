@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { fileURLToPath } from 'node:url';
 
-const API = process.env.API_ORIGIN || 'http://localhost:3100';
+const API = process.env.API_ORIGIN || 'http://localhost:3000';
 
 // The admin SPA talks to the Next.js REST API. In dev, Vite proxies /api and media to the web app so cookies stay same-origin.
 export default defineConfig({

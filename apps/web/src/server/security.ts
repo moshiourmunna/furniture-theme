@@ -1,4 +1,5 @@
 import 'server-only';
+import { secureCookie } from './secure-cookie';
 import { randomBytes, timingSafeEqual } from 'node:crypto';
 import { NextResponse } from 'next/server';
 import { env } from './env';
@@ -45,9 +46,9 @@ export function assertCsrf(req: Request) {
   if (a.length !== b.length || !timingSafeEqual(a, b)) throw new ApiError(403, 'csrf', 'Security token mismatch — please refresh the page');
 }
 
-export function setCsrfCookie(res: NextResponse, token: string) {
+export function setCsrfCookie(res: NextResponse, token: string, req: Request) {
   // Readable by JS on purpose (double-submit pattern); SameSite=Lax blocks cross-site sends.
-  res.cookies.set(CSRF_COOKIE, token, { httpOnly: false, sameSite: 'lax', secure: env.isProd, path: '/', maxAge: 60 * 60 * 24 * 7 });
+  res.cookies.set(CSRF_COOKIE, token, { httpOnly: false, sameSite: 'lax', secure: secureCookie(req), path: '/', maxAge: 60 * 60 * 24 * 7 });
 }
 
 export function corsHeaders(req: Request): Record<string, string> {

@@ -394,3 +394,19 @@ export function NewsletterForm({ source = 'footer', dark = true }: { source?: st
     </form>
   );
 }
+
+/**
+ * Safety net for the pre-paint theme script: if React ever re-creates <html> attributes on the client
+ * (e.g. when recovering into the not-found boundary), re-apply the saved/system theme.
+ */
+export function ThemeSync() {
+  const pathname = usePathname();
+  useEffect(() => {
+    try {
+      const t = localStorage.getItem('shekor-theme');
+      const dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (document.documentElement.classList.contains('dark') !== dark) document.documentElement.classList.toggle('dark', dark);
+    } catch { /* storage blocked */ }
+  }, [pathname]);
+  return null;
+}

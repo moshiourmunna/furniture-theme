@@ -7,6 +7,6 @@ export const GET = api(async (req) => {
   const existing = parseCookies(req)[CSRF_COOKIE];
   const token = existing || newCsrfToken();
   const res = json({ csrfToken: token });
-  if (!existing) setCsrfCookie(res, token);
+  if (!existing) setCsrfCookie(res, token, req);
   return res;
 });

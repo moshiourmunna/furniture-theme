@@ -1,6 +1,10 @@
 import { z } from 'zod';
+
 import { BD_PHONE_RE, normalizePhone } from './bd';
 import { PAYMENT_METHODS } from './commerce';
+
+// Never probe for eval (`new Function`): the storefront CSP forbids it and browsers log the blocked probe as an error.
+z.config({ jitless: true });
 
 export const phoneSchema = z
   .string()

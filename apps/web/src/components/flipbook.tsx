@@ -41,6 +41,9 @@ export function Flipbook({ pages, title, pdfHref }: { pages: string[]; title: st
     document.addEventListener('keydown', k);
     return () => document.removeEventListener('keydown', k);
   }, [next, prev, pages.length, spreadStart]);
+  // Size each page by whichever is tighter — the available width or the viewport height — so it never overflows.
+  const maxH = fs ? 'calc(100vh - 10rem)' : 'min(70vh, 720px)';
+  const pageWidth = `min(${wide ? 'calc((100vw - 12rem) / 2)' : 'calc(100vw - 6rem)'}, calc(${maxH} * 0.75))`;
   const label = visible.length === 2 ? `${num(locale, visible[0] + 1)}–${num(locale, visible[1] + 1)}` : num(locale, visible[0] + 1);
   const toggleFs = () => { if (document.fullscreenElement) void document.exitFullscreen(); else void root.current?.requestFullscreen?.(); };
   return (
@@ -57,7 +60,7 @@ export function Flipbook({ pages, title, pdfHref }: { pages: string[]; title: st
         onTouchStart={(e) => { touch.current = e.touches[0].clientX; }} onTouchEnd={(e) => { if (touch.current == null) return; const dx = e.changedTouches[0].clientX - touch.current; if (Math.abs(dx) > 40) (dx < 0 ? next : prev)(); touch.current = null; }}>
         <div key={`${i}-${wide}`} className={`flex shadow-pop ${dir === 1 ? 'flip-next' : dir === -1 ? 'flip-prev' : ''}`} style={{ perspective: '1600px' }}>
           {visible.map((p) => (
-            <div key={p} className={`flip-page relative bg-white ${fs ? 'h-[calc(100vh-10rem)]' : 'h-[min(70vh,720px)]'} aspect-[3/4]`}>
+            <div key={p} className="flip-page relative bg-white aspect-[3/4]" style={{ width: pageWidth }}>
               <Image src={pages[p]} alt={`${title} — ${t('page', 'পৃষ্ঠা')} ${p + 1}`} fill sizes={wide ? '40vw' : '90vw'} className="object-contain" priority={p < 3} quality={80} />
             </div>
           ))}

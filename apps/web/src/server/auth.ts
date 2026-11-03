@@ -6,6 +6,7 @@ import { prisma, type User } from '@shekor/db';
 import { normalizePhone, BD_PHONE_RE } from '@shekor/shared';
 import { env } from './env';
 import { ApiError, forbidden, parseCookies, unauthorized, clientIp } from './http';
+import { secureCookie } from './secure-cookie';
 import { newCsrfToken, setCsrfCookie } from './security';
 
 export type Scope = 'store' | 'admin';
@@ -24,15 +25,15 @@ export async function createSession(res: NextResponse, req: Request, userId: num
   await prisma.session.create({
     data: { id: sha256(token), userId, scope, csrfSecret: csrf, expiresAt, userAgent: req.headers.get('user-agent')?.slice(0, 250), ip: clientIp(req) },
   });
-  res.cookies.set(SESSION_COOKIE[scope], token, { httpOnly: true, sameSite: 'lax', secure: env.isProd, path: '/', expires: expiresAt });
-  setCsrfCookie(res, csrf); // rotate CSRF token on login
+  res.cookies.set(SESSION_COOKIE[scope], token, { httpOnly: true, sameSite: 'lax', secure: secureCookie(req), path: '/', expires: expiresAt });
+  setCsrfCookie(res, csrf, req); // rotate CSRF token on login
   await prisma.user.update({ where: { id: userId }, data: { lastLoginAt: new Date() } });
 }
 
 export async function destroySession(res: NextResponse, req: Request, scope: Scope) {
   const token = parseCookies(req)[SESSION_COOKIE[scope]];
   if (token) await prisma.session.deleteMany({ where: { id: sha256(token) } });
-  res.cookies.set(SESSION_COOKIE[scope], '', { httpOnly: true, sameSite: 'lax', secure: env.isProd, path: '/', maxAge: 0 });
+  res.cookies.set(SESSION_COOKIE[scope], '', { httpOnly: true, sameSite: 'lax', secure: secureCookie(req), path: '/', maxAge: 0 });
 }
 
 export type SessionUser = User & { permissions: string[]; roleName: string | null };

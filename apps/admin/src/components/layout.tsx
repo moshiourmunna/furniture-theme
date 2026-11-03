@@ -60,7 +60,7 @@ export const NAV: { en: string; bn: string; items: Item[] }[] = [
   ] },
 ];
 
-export const STORE_URL = (import.meta.env.VITE_STORE_URL as string | undefined) ?? 'http://localhost:3100';
+export const STORE_URL = (import.meta.env.VITE_STORE_URL as string | undefined) ?? 'http://localhost:3000';
 
 export function Layout() {
   const { user, can, logout } = useAuth();

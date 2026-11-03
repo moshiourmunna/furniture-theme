@@ -3,8 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test:e2e": "playwright test",
-    "browser-pass": "playwright test --config=playwright.browser-pass.config.ts"
+    "test": "playwright test",
+    "browser-pass": "playwright test --config=playwright.browser-pass.config.ts",
+    "report": "node scripts/browser-report.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.56.0"
