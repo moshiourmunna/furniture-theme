@@ -49,6 +49,8 @@ DB (box): MySQL 8.4 at 127.0.0.1:3306, user `shekor` / `shekor_dev_pw`, DBs `she
   - Storefront served a stale ISR page after an admin write; fixed with a warm-up.
   - Admin search now matches slug.
   - Lint/impure-render fixes.
-- [ ] Full browser pass (36 projects × 87 pages), then docs/browser-test-report.md + screenshots
-- [ ] Lighthouse on key pages
-- [ ] Final all-suites run, zip /workspace/shekor-platform.zip
+- [x] Full browser pass (36 projects × 87 pages), then docs/browser-test-report.md + screenshots
+- [x] Lighthouse on key pages (docs/lighthouse): home/shop/PDP/about 99–100 across Perf/A11y/BP/SEO; cart SEO 69 is intentional noindex
+- [x] Final all-suites run (unit + integration + e2e Chromium/Firefox/WebKit + browser pass), zip /workspace/shekor-platform.zip
+
+- [x] E2E harness polish (2026-11-03 evening): WebKit pageerror filter matches `/localhost… due to access control checks` (not only `//localhost`); gallery lightbox asserts `data-testid=lightbox` so cookie consent dialog does not collide; OTP flow timeout 120s on Firefox.

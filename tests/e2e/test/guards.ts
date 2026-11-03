@@ -16,7 +16,8 @@ export class PageGuard {
     });
     page.on('pageerror', (e) => {
       // WebKit reports same-origin fetches (RSC prefetches, /api) it cancels on navigation as "... due to access control checks."
-      if (/due to access control checks/.test(e.message) && /\/\/(localhost|127\.0\.0\.1)[:/]/.test(e.message)) return;
+      // Message may be "Fetch API cannot load http://localhost…" or a shortened "/localhost:port/… due to access control checks."
+      if (/due to access control checks/.test(e.message) && /(localhost|127\.0\.0\.1)/.test(e.message)) return;
       this.pageErrors.push(e.message.slice(0, 300));
     });
     page.on('response', (r: Response) => { if (r.status() >= 400 && !this.allowed(`${r.status()} ${r.url()}`)) this.failed.push(`${r.status()} ${r.request().method()} ${r.url()}`); });

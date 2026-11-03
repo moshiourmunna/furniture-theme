@@ -15,3 +15,6 @@ tests/e2e/playwright-report/
 tests/lighthouse/reports/*.json
 .DS_Store
 *.log
+
+# Lighthouse raw JSON is large; keep HTML + README in docs/lighthouse
+docs/lighthouse/*.report.json

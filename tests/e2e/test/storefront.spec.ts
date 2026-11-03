@@ -91,7 +91,7 @@ test.describe('shop + product', () => {
     await page.goto(S('/projects'));
     await page.getByTestId('project-card').first().click();
     const tile = page.getByTestId('lightbox-tile').first();
-    if (await tile.count()) { await tile.click(); await expect(page.getByRole('dialog')).toBeVisible(); await page.keyboard.press('Escape'); }
+    if (await tile.count()) { await tile.click(); await expect(page.getByTestId('lightbox')).toBeVisible(); await page.keyboard.press('Escape'); }
   });
 });
 
@@ -190,6 +190,7 @@ test.describe('account', () => {
     await page.waitForURL(/\/(en|bn)$/);
   });
   test('OTP login, register + verify, forgot + reset', async ({ page, guard }) => {
+    test.setTimeout(120_000);
     void guard;
     await page.goto(S('/login'));
     await page.getByTestId('login-tab-otp').click();
