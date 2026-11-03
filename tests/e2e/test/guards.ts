@@ -14,7 +14,11 @@ export class PageGuard {
       if (/downloadable font: download failed .*status=2152398850/.test(m.text())) return;
       this.consoleErrors.push(m.text().slice(0, 300));
     });
-    page.on('pageerror', (e) => this.pageErrors.push(e.message.slice(0, 300)));
+    page.on('pageerror', (e) => {
+      // WebKit reports same-origin fetches (RSC prefetches, /api) it cancels on navigation as "... due to access control checks."
+      if (/due to access control checks\.$/.test(e.message) && /https?:\/\/(localhost|127\.0\.0\.1)[:/]/.test(e.message)) return;
+      this.pageErrors.push(e.message.slice(0, 300));
+    });
     page.on('response', (r: Response) => { if (r.status() >= 400 && !this.allowed(`${r.status()} ${r.url()}`)) this.failed.push(`${r.status()} ${r.request().method()} ${r.url()}`); });
     page.on('requestfailed', (r: Request) => {
       const err = r.failure()?.errorText ?? '';

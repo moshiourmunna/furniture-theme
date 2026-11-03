@@ -23,7 +23,7 @@ DB (box): MySQL 8.4 at 127.0.0.1:3306, user `shekor` / `shekor_dev_pw`, DBs `she
 - [x] Commerce: cart (server quote, coupons), checkout (bKash/Nagad/card/COD/bank, advance plan), mock gateway, order page + retry, tracking, wishlist, compare
 - [x] Auth (password, OTP, register+verify, reset) + account (overview, orders, addresses CRUD, reviews, loyalty, settings, delete)
 - [x] 404 + catch-all, sitemap.xml, robots.txt, manifest
-- [ ] Check in prod build: React "script tag" console warning on 404 render (dev)
+- [x] Check in prod build: React "script tag" console warning on 404 render. Dev-only; the prod 404 is clean.
 ## Phase 4 — admin (Vite React)
 - [x] Vite + React Router + TanStack Query + RHF/zod + recharts scaffold, tokens shared with web, no-flash theme/lang
 - [x] Layout: permission-filtered grouped nav with badges, global search (Ctrl K), EN/BN, light/dark, view store
@@ -38,3 +38,17 @@ DB (box): MySQL 8.4 at 127.0.0.1:3306, user `shekor` / `shekor_dev_pw`, DBs `she
 - [x] Fixes: /media route clashed with proxied /media → /media-library; form keeps edits after save; delete no longer refetches 404; BN tab opens on BN error; product description HTML rendered (sanitized) on store
 - [x] Lint/typecheck clean, prod build chunked (<400 kB per chunk)
 ## Phase 5 — tests, SEO, polish, docs, browser test report, screenshots, zip
+- [x] Unit (shared 39, web 14, admin 5) + integration against real MySQL `shekor_test` (52) all passing
+- [x] Docs: README (Windows + Linux), docs/architecture.md, docs/erd.md (generated), docs/openapi.yaml (generated), CI workflow, Dockerfiles
+- [x] WebKit system libs installed offline. The InRelease signature was verified with sqv; the .deb SHA256s match the signed Packages index.
+- [x] Functional E2E (24 flows × Chromium/Firefox/WebKit). Fixes found:
+  - Secure cookies over http://localhost broke WebKit.
+  - A stale prefetched redirect after sign-in.
+  - Product form isDirty broken by the colour input.
+  - Resource form lost edits typed while saving.
+  - Storefront served a stale ISR page after an admin write; fixed with a warm-up.
+  - Admin search now matches slug.
+  - Lint/impure-render fixes.
+- [ ] Full browser pass (36 projects × 87 pages), then docs/browser-test-report.md + screenshots
+- [ ] Lighthouse on key pages
+- [ ] Final all-suites run, zip /workspace/shekor-platform.zip

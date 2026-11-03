@@ -117,8 +117,11 @@ test('inventory adjust, customer points, coupon, settings, CSV, media upload', a
   await expect(toast(page)).toContainText(/saved/i);
 
   await page.goto(`${ADMIN}/reports`);
-  const [dl] = await Promise.all([page.waitForEvent('download'), page.getByTestId('report-csv').click()]);
-  expect(dl.suggestedFilename()).toMatch(/\.csv$/);
+  // Check the CSV link's response rather than the download event, which headless WebKit doesn't emit for attachments.
+  const href = await page.getByTestId('report-csv').getAttribute('href');
+  const csv = await page.request.get(new URL(href!, ADMIN).toString());
+  expect(csv.ok()).toBe(true);
+  expect(csv.headers()['content-disposition']).toMatch(/attachment; filename=".+\.csv"/);
 
   await page.goto(`${ADMIN}/media-library`);
   await page.locator('input[type=file]').setInputFiles(new URL('../../../apps/web/public/brand/shekor-appicon-green-192.png', import.meta.url).pathname);
