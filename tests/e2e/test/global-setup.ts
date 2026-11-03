@@ -37,6 +37,19 @@ export default async function globalSetup() {
   const ao = await (await api.get(`${ADMIN}/api/v1/admin/orders?pageSize=1`)).json();
   const ap = await (await api.get(`${ADMIN}/api/v1/admin/products?pageSize=1`)).json();
   const ac = await (await api.get(`${ADMIN}/api/v1/admin/customers?pageSize=1`)).json();
+  // The checkout flows buy the resolved product `p` on every run; keep its variants in stock so repeated runs stay valid.
+  const csrf3 = (await api.storageState()).cookies.find((c) => c.name === 'shekor_csrf')!.value;
+  const slug = String(out.p).replace(/^\/p\//, '');
+  const found = await (await api.get(`${ADMIN}/api/v1/admin/products?q=${encodeURIComponent(slug)}&pageSize=10`)).json();
+  const hit = (found.items as { id: number; slug: string }[]).find((x) => x.slug === slug);
+  if (hit) {
+    const full = await (await api.get(`${ADMIN}/api/v1/admin/products/${hit.id}`)).json();
+    for (const v of full.variants as { id: number; stockQty: number }[]) {
+      if (v.stockQty >= 30) continue;
+      const r = await api.post(`${ADMIN}/api/v1/admin/inventory`, { headers: { 'x-csrf-token': csrf3, origin: ADMIN }, data: { variantId: v.id, delta: 50 - v.stockQty, reason: 'restock' } });
+      if (!r.ok()) throw new Error(`restock failed: ${r.status()} ${await r.text()}`);
+    }
+  }
   out.adminOrderId = ao.items[0].id; out.adminProductId = ap.items[0].id; out.adminCustomerId = ac.items[0].id;
   mkdirSync(dirname(RESOLVED), { recursive: true });
   writeFileSync(RESOLVED, JSON.stringify(out, null, 2));

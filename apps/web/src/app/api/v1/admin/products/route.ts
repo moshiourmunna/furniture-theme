@@ -13,7 +13,7 @@ export const GET = api(async (req) => {
   const pageSize = intParam(sp.get('pageSize'), 25, 1, 100);
   const q = sp.get('q')?.trim();
   const where: Prisma.ProductWhereInput = {
-    ...(q ? { OR: [{ nameEn: { contains: q } }, { nameBn: { contains: q } }, { sku: { contains: q } }] } : {}),
+    ...(q ? { OR: [{ nameEn: { contains: q } }, { nameBn: { contains: q } }, { sku: { contains: q } }, { slug: { contains: q } }] } : {}),
     ...(sp.get('categoryId') ? { categoryId: Number(sp.get('categoryId')) } : {}),
     ...(sp.get('status') === 'active' ? { isActive: true } : sp.get('status') === 'draft' ? { isActive: false } : {}),
     ...(sp.get('stock') ? { stockStatus: sp.get('stock') as Prisma.ProductWhereInput['stockStatus'] } : {}),

@@ -64,7 +64,7 @@ export function Products() {
 const num = z.union([z.string(), z.number(), z.null()]).transform((v) => (v === '' || v === null ? null : Number(v))).refine((v) => v === null || (Number.isFinite(v) && v >= 0), 'Enter a valid number');
 const reqNum = z.union([z.string(), z.number()]).transform(Number).refine((v) => Number.isFinite(v) && v >= 0, 'Enter a valid number');
 const optStr = z.string().nullish();
-const variant = z.object({ id: z.number().optional(), sku: z.string().trim().min(2, 'SKU required'), nameEn: z.string().trim().min(1, 'Required'), nameBn: z.string().trim().min(1, 'Required'), optionType: z.enum(['finish', 'fabric', 'size', 'colour']), swatchHex: z.string().nullish(), priceDelta: z.union([z.string(), z.number()]).transform(Number), stockQty: reqNum, lowStockAt: reqNum, isDefault: z.boolean() });
+const variant = z.object({ id: z.number().optional(), sku: z.string().trim().min(2, 'SKU required'), nameEn: z.string().trim().min(1, 'Required'), nameBn: z.string().trim().min(1, 'Required'), optionType: z.enum(['finish', 'fabric', 'size', 'colour']), swatchHex: z.string().nullish().transform((v) => v || null), priceDelta: z.union([z.string(), z.number()]).transform(Number), stockQty: reqNum, lowStockAt: reqNum, isDefault: z.boolean() });
 const productSchema = z.object({
   slug: z.string().refine((v) => !v || /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(v), 'Lowercase letters, numbers and dashes'), sku: z.string().trim().min(2, 'Required'),
   nameEn: z.string().trim().min(2, 'Required'), nameBn: z.string().trim().min(2, 'Required'), shortEn: optStr, shortBn: optStr, descriptionEn: optStr, descriptionBn: optStr,
@@ -79,9 +79,9 @@ type PForm = z.input<typeof productSchema>;
 const blank = (): PForm => ({ slug: '', sku: '', nameEn: '', nameBn: '', shortEn: '', shortBn: '', descriptionEn: '', descriptionBn: '', categoryId: '', roomId: '', materialId: '', brandId: '', collectionId: '', price: '', compareAtPrice: '', badge: '', stockStatus: 'IN_STOCK', leadTimeDays: 5, widthCm: '', depthCm: '', heightCm: '', seats: '', warrantyYears: 10, assemblyRequired: true, emiAvailable: true, isActive: true, isFeatured: false, metaTitleEn: '', metaTitleBn: '', metaDescEn: '', metaDescBn: '', images: [], variants: [{ sku: '', nameEn: 'Natural', nameBn: 'ন্যাচারাল', optionType: 'finish', swatchHex: '#B08B5E', priceDelta: 0, stockQty: 0, lowStockAt: 3, isDefault: true }] });
 const toFormP = (p: Record<string, unknown>): PForm => {
   const b = blank() as Record<string, unknown>;
-  for (const k of Object.keys(b)) if (k !== 'images' && k !== 'variants') b[k] = p[k] === null || p[k] === undefined ? (typeof b[k] === 'boolean' ? false : '') : p[k];
+  for (const k of Object.keys(b)) if (k !== 'images' && k !== 'variants') b[k] = p[k] === null || p[k] === undefined ? (typeof b[k] === 'boolean' ? false : '') : typeof p[k] === 'number' ? String(p[k]) : p[k]; // inputs report strings; keeps isDirty honest
   b.images = (p.images as { url: string }[]).map((i) => i.url);
-  b.variants = (p.variants as Record<string, unknown>[]).map((v) => ({ id: v.id, sku: v.sku, nameEn: v.nameEn, nameBn: v.nameBn, optionType: v.optionType, swatchHex: v.swatchHex ?? '', priceDelta: v.priceDelta, stockQty: v.stockQty, lowStockAt: v.lowStockAt, isDefault: v.isDefault }));
+  b.variants = (p.variants as Record<string, unknown>[]).map((v) => ({ id: v.id, sku: v.sku, nameEn: v.nameEn, nameBn: v.nameBn, optionType: v.optionType, swatchHex: v.swatchHex ?? '', priceDelta: String(v.priceDelta), stockQty: String(v.stockQty), lowStockAt: String(v.lowStockAt), isDefault: v.isDefault }));
   return b as PForm;
 };
 
@@ -156,7 +156,13 @@ function ProductForm({ id, init, slug }: { id: string; init: PForm; slug: string
                     <td><input className="input h-9" aria-label="Name EN" aria-invalid={!!ve?.nameEn} {...register(`variants.${i}.nameEn`)} /></td>
                     <td><input className="input h-9" aria-label="Name BN" aria-invalid={!!ve?.nameBn} {...register(`variants.${i}.nameBn`)} /></td>
                     <td><select className="input h-9" aria-label="Type" {...register(`variants.${i}.optionType`)}>{['finish', 'fabric', 'size', 'colour'].map((o) => <option key={o}>{o}</option>)}</select></td>
-                    <td><input type="color" className="input h-9 w-12 p-1" aria-label="Swatch" {...register(`variants.${i}.swatchHex`)} /></td>
+                    <td><Controller control={control} name={`variants.${i}.swatchHex`} render={({ field }) => (
+                      // A native colour input can't be empty (it reports #000000), so "no swatch" is shown faded with no value bound.
+                      <div className="flex items-center gap-1">
+                        <input type="color" className="input h-9 w-12 p-1" aria-label={t('Swatch colour', 'সোয়াচ রং')} value={field.value || '#B08B5E'} style={field.value ? undefined : { opacity: 0.35 }} onChange={(ev) => field.onChange(ev.target.value)} onBlur={field.onBlur} />
+                        {field.value ? <button type="button" className="text-xs text-muted hover:text-ink px-1" aria-label={t('Remove swatch', 'সোয়াচ সরান')} onClick={() => field.onChange('')}>×</button> : null}
+                      </div>
+                    )} /></td>
                     <td><input type="number" className="input h-9 w-24" aria-label="Price delta" {...register(`variants.${i}.priceDelta`)} /></td>
                     <td><input type="number" min={0} className="input h-9 w-20" aria-label="Stock" {...register(`variants.${i}.stockQty`)} /></td>
                     <td className="text-center"><input type="checkbox" className="w-4 h-4 accent-[rgb(var(--primary))]" aria-label="Default" {...register(`variants.${i}.isDefault`)} /></td>

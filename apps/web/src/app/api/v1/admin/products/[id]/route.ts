@@ -19,7 +19,7 @@ export const PUT = api<{ id: string }>(async (req, { params }) => {
   if (!(await prisma.product.findUnique({ where: { id } }))) throw notFound('Product not found');
   const p = await saveProduct(await readJson(req, productInput), id);
   await audit(req, user.id, 'update', 'product', id, `Updated ${p!.nameEn}`);
-  revalidateStorefront();
+  revalidateStorefront([`/p/${p!.slug}`]);
   return json(p);
 });
 

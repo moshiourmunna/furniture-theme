@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { Eye, EyeOff } from 'lucide-react';
 import { api, ApiClientError } from '@/lib/api';
 import { lp } from '@/lib/i18n';
@@ -71,7 +71,6 @@ function OtpStep({ target, purpose, devOtp, onDone }: { target: string; purpose:
 
 export function LoginPage() {
   const { t, locale, refreshMe } = useStore();
-  const router = useRouter();
   const next = safeNext(useSearchParams().get('next'), lp(locale, '/account'));
   const [mode, setMode] = useState<'password' | 'otp'>('password');
   const [id, setId] = useState('');
@@ -79,7 +78,8 @@ export function LoginPage() {
   const [err, setErr] = useState('');
   const [busy, setBusy] = useState(false);
   const [otp, setOtp] = useState<{ target: string; devOtp?: string } | null>(null);
-  const done = () => { router.replace(next); router.refresh(); };
+  // Full navigation: the client router may hold a prefetched signed-out redirect for /account.
+  const done = () => window.location.assign(next);
   return (
     <Shell title={t('Welcome back', 'আবার স্বাগতম')} sub={<>{t('New to Shekor?', 'শেকড়ে নতুন?')} <Link className="link" href={lp(locale, `/register?next=${encodeURIComponent(next)}`)}>{t('Create an account', 'অ্যাকাউন্ট খুলুন')}</Link></>}>
       <div role="tablist" className="grid grid-cols-2 border border-line mb-6">
@@ -114,13 +114,12 @@ export function LoginPage() {
 
 export function RegisterPage() {
   const { t, locale } = useStore();
-  const router = useRouter();
   const next = safeNext(useSearchParams().get('next'), lp(locale, '/account'));
   const [f, setF] = useState({ name: '', phone: '', email: '', password: '', marketingOptIn: false });
   const [errs, setErrs] = useState<Record<string, string>>({});
   const [busy, setBusy] = useState(false);
   const [verify, setVerify] = useState<{ target: string; devOtp?: string } | null>(null);
-  if (verify) return <Shell title={t('Verify your number', 'নম্বর যাচাই করুন')}><OtpStep target={verify.target} purpose="verify" devOtp={verify.devOtp} onDone={() => { router.replace(next); router.refresh(); }} /></Shell>;
+  if (verify) return <Shell title={t('Verify your number', 'নম্বর যাচাই করুন')}><OtpStep target={verify.target} purpose="verify" devOtp={verify.devOtp} onDone={() => window.location.assign(next)} /></Shell>;
   return (
     <Shell title={t('Create your account', 'অ্যাকাউন্ট খুলুন')} sub={<>{t('Already have one?', 'আগে থেকেই আছে?')} <Link className="link" href={lp(locale, '/login')}>{t('Sign in', 'সাইন ইন')}</Link></>}>
       <form className="space-y-4" noValidate data-testid="register-form" onSubmit={async (e) => {

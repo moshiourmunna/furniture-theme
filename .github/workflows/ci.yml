@@ -43,7 +43,7 @@ jobs:
       - run: pnpm build
       - name: Start apps
         run: |
-          (cd apps/web && DISABLE_RATE_LIMIT=1 PORT=3000 pnpm start > /tmp/web.log 2>&1 &)
+          (cd apps/web && DISABLE_RATE_LIMIT=1 EXPOSE_DEV_OTP=1 PORT=3000 pnpm start > /tmp/web.log 2>&1 &)
           (cd apps/admin && npx vite preview --port 5173 --strictPort > /tmp/admin.log 2>&1 &)
           npx wait-on -t 60000 http://localhost:3000/api/v1/health http://localhost:5173/login
       - run: pnpm --filter @shekor/e2e exec playwright install --with-deps chromium firefox webkit

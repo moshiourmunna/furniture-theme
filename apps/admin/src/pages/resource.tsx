@@ -117,7 +117,7 @@ function ResourceForm({ resource, id, row, schema, lookups, canWrite, onSaved, o
   const { register, control, handleSubmit, setError, reset, formState: { errors, isSubmitting, isDirty } } = useForm<Record<string, unknown>>({ resolver: zodResolver(schema) as never, defaultValues: toForm(ui.fields, row) });
   const save = useMutation({
     mutationFn: (values: Record<string, unknown>) => api<Record<string, unknown>>(isNew ? `/admin/r/${resource}` : `/admin/r/${resource}/${id}`, { method: isNew ? 'POST' : 'PUT', body: toPayload(ui.fields, values) }),
-    onSuccess: (r, values) => { if (!isNew) reset(values); onSaved(r); },
+    onSuccess: (r, values) => { if (!isNew) reset(values, { keepValues: true }); onSaved(r); }, // keepValues: edits typed while saving survive
     onError: (e) => {
       const fe = (e as ApiError).fields ?? {};
       for (const [k, m] of Object.entries(fe)) setError(k, { message: m });

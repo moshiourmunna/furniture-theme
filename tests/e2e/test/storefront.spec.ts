@@ -106,7 +106,7 @@ test.describe('leads', () => {
     await page.getByLabel(/^Subject/).selectOption({ index: 1 });
     await page.getByLabel(/^Message/).fill('Hello from the end-to-end suite.');
     await page.getByTestId('lead-submit').click();
-    await expect(page.getByTestId('lead-ref')).toBeVisible();
+    await expect(page.getByTestId('contact-success')).toBeVisible();
   });
 });
 
@@ -172,6 +172,7 @@ test.describe('account', () => {
     await page.getByTestId('order-list').locator('a').first().click();
     await expect(page.getByTestId('order-view')).toBeVisible();
     await page.goto(S('/account/addresses'));
+    await page.waitForLoadState('networkidle');
     const n = await page.getByTestId('address-card').count();
     await page.getByTestId('address-add').click();
     await page.fill('#ad-label', 'Office'); await page.fill('#ad-area', 'Gulshan 2'); await page.fill('#ad-line1', 'Level 7, Road 90');

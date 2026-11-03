@@ -102,8 +102,12 @@ test('inventory adjust, customer points, coupon, settings, CSV, media upload', a
   const md = page.getByLabel('Max discount (৳)');
   const old = await md.inputValue();
   await md.fill(String(Number(old) + 1)); await page.getByTestId('resource-save').click();
+  await expect(toast(page)).toContainText(/saved/i);
   await expect(page.getByTestId('resource-save')).toBeDisabled();
-  await md.fill(old); await page.getByTestId('resource-save').click();
+  await md.fill(old);
+  await expect(page.getByTestId('resource-save')).toBeEnabled();
+  await page.getByTestId('resource-save').click();
+  await expect(page.getByTestId('resource-save')).toHaveText(/Save changes/);
   await expect(page.getByTestId('resource-save')).toBeDisabled();
 
   await page.goto(`${ADMIN}/settings`);
@@ -117,7 +121,7 @@ test('inventory adjust, customer points, coupon, settings, CSV, media upload', a
   expect(dl.suggestedFilename()).toMatch(/\.csv$/);
 
   await page.goto(`${ADMIN}/media-library`);
-  await page.locator('input[type=file]').setInputFiles(new URL('../../../apps/admin/public/brand/shekor-appicon-green-192.png', import.meta.url).pathname);
+  await page.locator('input[type=file]').setInputFiles(new URL('../../../apps/web/public/brand/shekor-appicon-green-192.png', import.meta.url).pathname);
   await expect(toast(page)).toContainText(/Upload complete/i);
 });
 
@@ -132,12 +136,12 @@ test('FAQ create → visible on store → delete → gone', async ({ page, guard
   await page.getByTestId('resource-save').click();
   await page.waitForURL(/\/r\/faqs\/\d+$/);
   const store = await context.newPage();
-  await store.goto(`${STORE}/en/faq`);
-  await expect(store.locator('main')).toContainText(q);
+  // Storefront pages are ISR (stale-while-revalidate after an admin write); the API warms them, so allow a few seconds.
+  const faqText = async () => { await store.goto(`${STORE}/en/faq`); return (await store.locator('main').textContent()) ?? ''; };
+  await expect.poll(faqText, { timeout: 15_000, intervals: [500, 1000, 2000] }).toContain(q);
   await page.getByTestId('resource-delete').click(); await page.getByTestId('confirm-ok').click();
   await page.waitForURL(/\/r\/faqs$/);
-  await store.reload();
-  await expect(store.locator('main')).not.toContainText(q);
+  await expect.poll(faqText, { timeout: 15_000, intervals: [500, 1000, 2000] }).not.toContain(q);
   await store.close();
 });
 
@@ -148,12 +152,15 @@ test('banner edit shows on the home page', async ({ page, guard, context }) => {
   const f = page.getByLabel(/^Title \(EN\)/);
   const old = await f.inputValue();
   await f.fill(`${old} (E2E)`); await page.getByTestId('resource-save').click();
+  await expect(toast(page)).toContainText(/saved/i);
   await expect(page.getByTestId('resource-save')).toBeDisabled();
   const store = await context.newPage();
-  await store.goto(`${STORE}/en`);
-  await expect(store.locator('body')).toContainText(`${old} (E2E)`);
+  const home = async () => { await store.goto(`${STORE}/en`); return (await store.locator('body').textContent()) ?? ''; };
+  await expect.poll(home, { timeout: 15_000, intervals: [500, 1000, 2000] }).toContain(`${old} (E2E)`);
   await store.close();
-  await f.fill(old); await page.getByTestId('resource-save').click();
+  await f.fill(old); await expect(page.getByTestId('resource-save')).toBeEnabled();
+  await page.getByTestId('resource-save').click();
+  await expect(page.getByTestId('resource-save')).toHaveText(/Save changes/);
   await expect(page.getByTestId('resource-save')).toBeDisabled();
 });
 

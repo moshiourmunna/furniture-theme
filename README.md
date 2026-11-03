@@ -132,7 +132,7 @@ pnpm --filter @shekor/e2e browser-pass     # 87 pages × 3 engines × 3 sizes ×
 Notes:
 
 - `STORE_URL` and `ADMIN_URL` override the default URLs.
-- Run the web server with `DISABLE_RATE_LIMIT=1` during the browser pass, because it signs in thousands of times.
+- Run the web server with `DISABLE_RATE_LIMIT=1 EXPOSE_DEV_OTP=1` for E2E and the browser pass: the pass signs in thousands of times, and the OTP flows read the mocked code from the API response (only ever exposed when `SMS_PROVIDER=mock`).
 - Reports are written to `tests/e2e/reports/`. Screenshots go to `docs/screenshots/browser-pass/`.
 
 ### Lighthouse

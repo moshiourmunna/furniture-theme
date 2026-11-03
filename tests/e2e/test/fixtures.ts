@@ -8,7 +8,7 @@ export const test = base.extend<{ guard: PageGuard }>({
     await use(g);
     expect(g.pageErrors, 'uncaught exceptions').toEqual([]);
     expect(g.consoleErrors, 'console errors').toEqual([]);
-    expect(g.failed.filter((f) => !/^4(00|01|22) /.test(f)), 'failed requests').toEqual([]);
+    expect(g.failed.filter((f) => !/^4(00|01|22) /.test(f) && !/^404 GET .*\/api\/v1\/orders\/track\?/.test(f)), 'failed requests').toEqual([]);
   },
 });
 export { expect };

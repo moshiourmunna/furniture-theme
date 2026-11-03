@@ -14,7 +14,8 @@ export const env = {
   storageDriver: (process.env.STORAGE_DRIVER || 'local') as 'local' | 's3',
   storageLocalDir: process.env.STORAGE_LOCAL_DIR || './storage/uploads',
   /** Exposes OTP codes in API responses ONLY for mock SMS in non-production (dev + automated tests). */
-  exposeDevOtp: !isProd && (process.env.SMS_PROVIDER || 'mock') === 'mock',
+  // Dev/test only: echo OTPs in API responses when SMS is mocked. Prod builds need EXPOSE_DEV_OTP=1 explicitly (E2E/CI).
+  exposeDevOtp: (!isProd || process.env.EXPOSE_DEV_OTP === '1') && (process.env.SMS_PROVIDER || 'mock') === 'mock',
 };
 
 if (isProd && env.sessionSecret.length < 32) {
