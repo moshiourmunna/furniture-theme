@@ -5,6 +5,7 @@ import { getProduct } from '@/server/services/catalog';
 import { getSettings, listZones } from '@/server/services/content';
 import { getLocale, lp, money, num, pf, tr, type LocaleParams } from '@/lib/i18n';
 import { abs, breadcrumbLd, pageMeta } from '@/lib/seo';
+import { cleanHtml } from '@/server/sanitize';
 import { Breadcrumbs, JsonLd, SectionHead, Stars } from '@/components/ui';
 import { Rail } from '@/components/product-card';
 import { ProductGallery } from '@/components/product/gallery';
@@ -51,7 +52,7 @@ export default async function ProductPage({ params }: Props) {
   const reviews = p.reviews.map((r) => ({ id: r.id, authorName: r.authorName, location: r.location, rating: r.rating, title: r.title, body: r.body, photos: Array.isArray(r.photos) ? (r.photos as string[]) : [], verified: r.verified, reply: r.reply, createdAt: r.createdAt.toISOString() }));
   const avail = p.stockStatus === 'OUT_OF_STOCK' ? 'OutOfStock' : p.stockStatus === 'MADE_TO_ORDER' ? 'PreOrder' : p.stockStatus === 'LOW' ? 'LimitedAvailability' : 'InStock';
   const productLd = {
-    '@context': 'https://schema.org', '@type': 'Product', name: p.nameEn, alternateName: p.nameBn, sku: p.sku, mpn: p.sku, image: p.images.map((i) => abs(i.url)), description: p.shortEn ?? p.descriptionEn ?? p.nameEn,
+    '@context': 'https://schema.org', '@type': 'Product', name: p.nameEn, alternateName: p.nameBn, sku: p.sku, mpn: p.sku, image: p.images.map((i) => abs(i.url)), description: p.shortEn ?? p.descriptionEn?.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim() ?? p.nameEn,
     brand: { '@type': 'Brand', name: p.brand?.nameEn ?? 'Shekor' }, category: p.category.nameEn, material: p.material?.nameEn,
     ...(p.widthCm ? { width: { '@type': 'QuantitativeValue', value: p.widthCm, unitCode: 'CMT' }, depth: { '@type': 'QuantitativeValue', value: p.depthCm, unitCode: 'CMT' }, height: { '@type': 'QuantitativeValue', value: p.heightCm, unitCode: 'CMT' } } : {}),
     ...(p.ratingCount ? { aggregateRating: { '@type': 'AggregateRating', ratingValue: p.ratingAvg, reviewCount: p.ratingCount } } : {}),
@@ -81,7 +82,7 @@ export default async function ProductPage({ params }: Props) {
         </section>
       </div>
       <Tabs tabs={[
-        { key: 'desc', label: t('Description', 'বিবরণ'), content: <div className="prose-sk max-w-3xl">{(desc || f(p, 'short')).split(/\n\n+/).map((para, i) => <p key={i}>{para}</p>)}</div> },
+        { key: 'desc', label: t('Description', 'বিবরণ'), content: /<[a-z][\s\S]*>/i.test(desc ?? '') ? <div className="prose-sk max-w-3xl" dangerouslySetInnerHTML={{ __html: cleanHtml(desc!) }} /> : <div className="prose-sk max-w-3xl">{(desc || f(p, 'short')).split(/\n\n+/).map((para, i) => <p key={i}>{para}</p>)}</div> },
         { key: 'specs', label: t('Specifications', 'স্পেসিফিকেশন'), content: <table className="w-full max-w-3xl text-sm"><caption className="sr-only">{t('Specifications', 'স্পেসিফিকেশন')}</caption><tbody>{specs.filter(([, v]) => v).map(([k, v]) => <tr key={k} className="border-b border-line"><th scope="row" className="py-3 pr-4 text-left font-medium text-muted w-2/5">{k}</th><td className="py-3">{v}</td></tr>)}</tbody></table> },
         ...(p.widthCm ? [{ key: 'dims', label: t('Dimensions', 'মাপ'), content: (
           <div className="grid md:grid-cols-2 gap-8 items-center">

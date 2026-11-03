@@ -136,7 +136,7 @@ function ProductForm({ id, init, slug }: { id: string; init: PForm; slug: string
             <div className="grid gap-4">
               {inp(`name${lang}` as keyof PForm, `${t('Product name', 'পণ্যের নাম')} (${lang === 'En' ? 'EN' : 'বাংলা'}) *`)}
               <Field label={`${t('Short description', 'সংক্ষিপ্ত বিবরণ')} (${lang === 'En' ? 'EN' : 'বাংলা'})`} htmlFor={`p-short${lang}`}><textarea id={`p-short${lang}`} rows={2} className="input" {...register(`short${lang}` as keyof PForm)} /></Field>
-              <Field label={`${t('Description', 'বিবরণ')} (${lang === 'En' ? 'EN' : 'বাংলা'})`} htmlFor={`p-desc${lang}`} hint={t('Plain text; blank lines become paragraphs.', 'সাধারণ টেক্সট; ফাঁকা লাইনে অনুচ্ছেদ।')}><textarea id={`p-desc${lang}`} rows={6} className="input" {...register(`description${lang}` as keyof PForm)} /></Field>
+              <Field label={`${t('Description', 'বিবরণ')} (${lang === 'En' ? 'EN' : 'বাংলা'})`} htmlFor={`p-desc${lang}`} hint={t('Plain text (blank lines become paragraphs) or basic HTML: <p>, <strong>, <em>, lists, links.', 'সাধারণ টেক্সট বা বেসিক HTML।')}><textarea id={`p-desc${lang}`} rows={6} className="input" {...register(`description${lang}` as keyof PForm)} /></Field>
               {(e.nameEn || e.nameBn) && <p className="err">{t('Both English and Bangla names are required.', 'ইংরেজি ও বাংলা দুই নামই প্রয়োজন।')}</p>}
             </div>
           </Card>

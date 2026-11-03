@@ -25,4 +25,16 @@ DB (box): MySQL 8.4 at 127.0.0.1:3306, user `shekor` / `shekor_dev_pw`, DBs `she
 - [x] 404 + catch-all, sitemap.xml, robots.txt, manifest
 - [ ] Check in prod build: React "script tag" console warning on 404 render (dev)
 ## Phase 4 — admin (Vite React)
+- [x] Vite + React Router + TanStack Query + RHF/zod + recharts scaffold, tokens shared with web, no-flash theme/lang
+- [x] Layout: permission-filtered grouped nav with badges, global search (Ctrl K), EN/BN, light/dark, view store
+- [x] Dashboard (KPIs, revenue area, payment mix, recent orders, attention list), Reports (range, CSV, charts)
+- [x] Orders list/detail (status transitions with notes, delivery edit, invoice, payments, timeline)
+- [x] Products list/edit (EN/BN tabs, images, variants field array, duplicate, delete→archive)
+- [x] Inventory adjust, Customers (block, points), Staff, Roles matrix, Settings tabs, Audit log, Media library
+- [x] Generic CMS/catalog/lead resources (23 sections) with list filters + typed forms
+- [x] Playwright smoke: every page + detail, 0 console errors / 0 failed requests / 0 overflow
+- [x] CRUD + persistence: price edit → store, product create/delete, order transition, inventory, points, FAQ create→store→delete, banner → home, coupon, settings, CSV, upload, staff create
+- [x] RBAC: 5 limited roles see only permitted nav; forbidden pages show NoAccess
+- [x] Fixes: /media route clashed with proxied /media → /media-library; form keeps edits after save; delete no longer refetches 404; BN tab opens on BN error; product description HTML rendered (sanitized) on store
+- [x] Lint/typecheck clean, prod build chunked (<400 kB per chunk)
 ## Phase 5 — tests, SEO, polish, docs, browser test report, screenshots, zip

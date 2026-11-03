@@ -55,6 +55,8 @@
   .pill::before{ content:''; @apply w-1.5 h-1.5 rounded-full bg-current; }
   .kbd{ @apply rounded border border-line bg-surface-2 px-1.5 text-[11px] text-muted; }
   .tbl{ @apply w-full text-sm; }
+  .overflow-x-auto > .tbl{ min-width: 640px; }
+  .tbl td a{ @apply whitespace-nowrap; }
   .tbl th{ @apply text-left font-medium text-muted text-xs uppercase tracking-wide px-4 py-3 border-b border-line whitespace-nowrap; }
   .tbl td{ @apply px-4 py-3 border-b border-line align-middle; }
   .tbl tbody tr:hover{ @apply bg-surface-2/50; }
