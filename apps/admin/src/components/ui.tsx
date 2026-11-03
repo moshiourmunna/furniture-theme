@@ -37,7 +37,8 @@ export const STATUS_TONE: Record<string, string> = { new: 'amber', requested: 'a
 export function SearchInput({ value, onChange, placeholder }: { value: string; onChange: (v: string) => void; placeholder?: string }) {
   const id = useId();
   const [v, setV] = useState(value);
-  useEffect(() => setV(value), [value]);
+  const [prev, setPrev] = useState(value);
+  if (prev !== value) { setPrev(value); setV(value); }
   useEffect(() => { const h = setTimeout(() => { if (v !== value) onChange(v); }, 300); return () => clearTimeout(h); }, [v, value, onChange]);
   return (
     <div className="relative flex-1 min-w-[200px]">

@@ -14,8 +14,8 @@ interface Report { totals: { revenue: number; discount: number; delivery: number
 export function Reports() {
   const { can } = useAuth();
   const { t, money, num } = usePrefs();
-  const [from, setFrom] = useState(toDhakaInput(new Date(Date.now() - 90 * 86400_000), false));
-  const [to, setTo] = useState(toDhakaInput(new Date(), false));
+  const [from, setFrom] = useState(() => toDhakaInput(new Date(Date.now() - 90 * 86400_000), false));
+  const [to, setTo] = useState(() => toDhakaInput(new Date(), false));
   const q = useQuery({ queryKey: ['reports', from, to], queryFn: () => api<Report>(`/admin/reports${qs({ from, to })}`), enabled: can('reports.read') });
   if (!can('reports.read')) return <NoAccess />;
   return (

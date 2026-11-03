@@ -68,7 +68,8 @@ export function Layout() {
   const [open, setOpen] = useState(false);
   const loc = useLocation();
   const nav = useNavigate();
-  useEffect(() => setOpen(false), [loc.pathname]);
+  const [path, setPath] = useState(loc.pathname);
+  if (path !== loc.pathname) { setPath(loc.pathname); setOpen(false); }
   const dash = useQuery({ queryKey: ['dashboard', 30], queryFn: () => api<{ kpis: { pendingOrders: number; reviewsPending: number; openLeads: number } }>('/admin/dashboard?range=30'), enabled: can('dashboard.read'), staleTime: 60_000 });
   const badges = { orders: dash.data?.kpis.pendingOrders, reviews: dash.data?.kpis.reviewsPending, quotes: dash.data?.kpis.openLeads };
   if (!user) return null;

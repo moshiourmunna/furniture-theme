@@ -9,7 +9,7 @@ export const useAuth = () => { const c = useContext(Ctx); if (!c) throw new Erro
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const qc = useQueryClient();
-  const q = useQuery({ queryKey: ['me'], queryFn: () => api<{ user: Staff }>('/admin/auth/me').then((r) => r.user).catch(() => null), staleTime: 60_000, retry: false });
+  const q = useQuery({ queryKey: ['me'], queryFn: () => api<{ user: Staff | null }>('/admin/auth/me').then((r) => r.user).catch(() => null), staleTime: 60_000, retry: false });
   useEffect(() => {
     const on = () => qc.setQueryData(['me'], null);
     window.addEventListener('shekor:unauthorized', on);

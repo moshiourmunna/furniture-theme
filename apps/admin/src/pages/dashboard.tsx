@@ -25,6 +25,7 @@ export function Dashboard() {
   const { can, user } = useAuth();
   const { t, money, num, date, lang } = usePrefs();
   const [range, setRange] = useState<'7' | '30' | '90' | '365'>('30');
+  const [h] = useState(() => new Date(Date.now() + 6 * 3600_000).getUTCHours()); // Dhaka hour for the greeting
   const q = useQuery({ queryKey: ['dashboard', Number(range)], queryFn: () => api<Dash>(`/admin/dashboard?range=${range}`), enabled: can('dashboard.read') });
   if (!can('dashboard.read')) {
     const first = NAV.flatMap((g) => g.items).find((i) => can(i.perm));
@@ -33,7 +34,6 @@ export function Dashboard() {
   if (q.isLoading) return <Loading />;
   if (q.error || !q.data) return <ErrorBox error={q.error} />;
   const d = q.data;
-  const h = Number(new Date(Date.now() + 6 * 3600_000).getUTCHours());
   const greet = h < 12 ? t('Good morning', 'শুভ সকাল') : h < 17 ? t('Good afternoon', 'শুভ অপরাহ্ন') : t('Good evening', 'শুভ সন্ধ্যা');
   const delta = (v: number | null) => v === null ? <span className="text-muted">—</span> : <span className={v >= 0 ? 'text-success' : 'text-sale'}>{v >= 0 ? <TrendingUp className="w-3.5 h-3.5 inline -mt-0.5" /> : <TrendingDown className="w-3.5 h-3.5 inline -mt-0.5" />} {v > 0 ? '+' : ''}{num(v)}%</span>;
   const kpis: [React.ComponentType<{ className?: string }>, string, string, React.ReactNode][] = [
