@@ -1,0 +1,62 @@
+/* Shekor admin — same design tokens as the storefront, denser admin component layer (mockups: html-mockups/admin). */
+@font-face { font-family: 'Jakarta'; src: url('/fonts/jakarta-latin.woff2') format('woff2'); font-weight: 200 800; font-display: swap; }
+@font-face { font-family: 'Fraunces'; src: url('/fonts/fraunces-latin.woff2') format('woff2'); font-weight: 300 700; font-display: swap; }
+@font-face { font-family: 'Hind'; src: url('/fonts/hind-siliguri-bn-400.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Hind'; src: url('/fonts/hind-siliguri-bn-500.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'Hind'; src: url('/fonts/hind-siliguri-bn-600.woff2') format('woff2'); font-weight: 600; font-display: swap; }
+@font-face { font-family: 'Hind'; src: url('/fonts/hind-siliguri-bn-700.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :where(.grid) > *, :where(.flex) > :where(.flex-1) { min-width: 0; }
+  :root{ --font-jakarta: 'Jakarta'; --font-fraunces: 'Fraunces'; --font-hind: 'Hind'; }
+  :root{
+    --bg:244 239 230; --surface:250 247 242; --surface-2:234 226 213; --ink:20 35 28; --muted:92 99 93; --line:213 203 186;
+    --primary:31 77 58; --primary-hover:20 35 28; --on-primary:250 247 242; --primary-soft:221 230 220;
+    --accent:124 74 45; --accent-soft:238 226 210; --teak:200 155 109;
+    --sale:150 58 36; --success:31 110 70; --warning:150 90 20; --info:40 80 120;
+    color-scheme: light;
+  }
+  .dark{
+    --bg:20 35 28; --surface:25 42 34; --surface-2:33 53 43; --ink:244 239 230; --muted:178 184 174; --line:55 76 65;
+    --primary:214 180 143; --primary-hover:233 215 194; --on-primary:20 35 28; --primary-soft:44 60 48;
+    --accent:214 180 143; --accent-soft:52 48 38; --teak:200 155 109;
+    --sale:236 150 120; --success:130 205 160; --warning:235 185 110; --info:140 180 225;
+    color-scheme: dark;
+  }
+  html.lang-bn body{ font-family:var(--font-hind),var(--font-jakarta),system-ui,sans-serif; }
+  :focus-visible{ outline:2px solid rgb(var(--primary)); outline-offset:2px; border-radius:4px; }
+  ::selection{ background:rgb(var(--primary) / .2); }
+  @media (prefers-reduced-motion: reduce){ *,*::before,*::after{ animation:none!important; transition:none!important; scroll-behavior:auto!important; } }
+}
+@layer components {
+  .skip-link{ @apply sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-primary focus:text-on-primary focus:px-4 focus:py-2 focus:rounded-lg; }
+  .btn{ @apply inline-flex items-center justify-center gap-2 rounded-md px-4 h-10 text-[13px] font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap; }
+  .btn-sm{ @apply h-9 px-3.5; }
+  .btn-xs{ @apply h-8 px-2.5 text-xs; }
+  .btn-primary{ @apply bg-ink text-bg hover:bg-primary dark:bg-primary dark:text-on-primary dark:hover:bg-primary-hover; }
+  .btn-outline{ @apply border border-line bg-surface text-ink hover:bg-surface-2; }
+  .btn-ghost{ @apply text-ink hover:bg-surface-2; }
+  .btn-danger{ @apply bg-sale text-white hover:opacity-90 dark:text-deep; }
+  .btn-icon{ @apply inline-flex items-center justify-center w-10 h-10 rounded-full text-ink hover:bg-surface-2 transition-colors relative; }
+  .card{ @apply bg-surface border border-line rounded-xl; }
+  .input{ @apply w-full h-10 rounded-md border border-line bg-surface px-3 text-sm text-ink placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition; }
+  textarea.input{ @apply h-auto py-2.5; }
+  .input[aria-invalid="true"]{ @apply border-sale; }
+  .label{ @apply block text-sm font-medium text-ink mb-1.5; }
+  .hint{ @apply text-xs text-muted mt-1; }
+  .err{ @apply text-xs text-sale mt-1; }
+  .chip{ @apply inline-flex items-center gap-1.5 h-8 px-3 rounded-full border border-line text-[13px] text-ink hover:border-ink transition-colors whitespace-nowrap; }
+  .chip-active{ @apply bg-ink text-bg border-ink; }
+  .pill{ @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium whitespace-nowrap; }
+  .pill::before{ content:''; @apply w-1.5 h-1.5 rounded-full bg-current; }
+  .kbd{ @apply rounded border border-line bg-surface-2 px-1.5 text-[11px] text-muted; }
+  .tbl{ @apply w-full text-sm; }
+  .tbl th{ @apply text-left font-medium text-muted text-xs uppercase tracking-wide px-4 py-3 border-b border-line whitespace-nowrap; }
+  .tbl td{ @apply px-4 py-3 border-b border-line align-middle; }
+  .tbl tbody tr:hover{ @apply bg-surface-2/50; }
+  .h-display{ @apply font-display font-light tracking-[-0.015em]; }
+}
