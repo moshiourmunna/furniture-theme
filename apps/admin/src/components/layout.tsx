@@ -56,7 +56,7 @@ export const NAV: { en: string; bn: string; items: Item[] }[] = [
     { to: '/staff', en: 'Staff & roles', bn: 'স্টাফ ও রোল', icon: ShieldCheck, perm: 'staff.read' },
     { to: '/settings', en: 'Settings', bn: 'সেটিংস', icon: Settings, perm: 'settings.read' },
     { to: '/audit', en: 'Audit log', bn: 'অডিট লগ', icon: ScrollText, perm: 'audit.read' },
-    { to: '/media', en: 'Media library', bn: 'মিডিয়া', icon: Tags, perm: 'media.write' },
+    { to: '/media-library', en: 'Media library', bn: 'মিডিয়া', icon: Tags, perm: 'media.write' },
   ] },
 ];
 

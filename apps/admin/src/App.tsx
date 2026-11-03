@@ -36,7 +36,7 @@ export function App() {
         <Route path="staff" element={<Staff />} />
         <Route path="settings" element={<SettingsPage />} />
         <Route path="audit" element={<AuditLog />} />
-        <Route path="media" element={<Media />} />
+        <Route path="media-library" element={<Media />} />
         <Route path="r/:resource" element={<ResourceList />} />
         <Route path="r/:resource/:id" element={<ResourceEdit />} />
         <Route path="*" element={<div className="card p-10 text-center" data-testid="admin-404"><h1 className="text-xl font-semibold">Page not found</h1></div>} />

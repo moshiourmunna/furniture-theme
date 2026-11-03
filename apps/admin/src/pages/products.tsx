@@ -119,7 +119,7 @@ function ProductForm({ id, init, slug }: { id: string; init: PForm; slug: string
   });
   const del = async () => {
     if (!(await confirm({ title: t('Delete this product?', 'পণ্যটি মুছবেন?'), body: t('Products with orders are archived instead of deleted.', 'অর্ডার থাকলে পণ্য আর্কাইভ হবে।'), confirm: t('Delete', 'মুছুন'), danger: true }))) return;
-    try { const r = await api<{ archived: boolean }>(`/admin/products/${id}`, { method: 'DELETE' }); toast(r.archived ? t('Archived (has orders)', 'আর্কাইভ করা হয়েছে') : t('Deleted', 'মুছে ফেলা হয়েছে')); qc.invalidateQueries({ queryKey: ['products'] }); nav('/products'); }
+    try { const r = await api<{ archived: boolean }>(`/admin/products/${id}`, { method: 'DELETE' }); toast(r.archived ? t('Archived (has orders)', 'আর্কাইভ করা হয়েছে') : t('Deleted', 'মুছে ফেলা হয়েছে')); nav('/products'); qc.invalidateQueries({ queryKey: ['products'] }); }
     catch (e) { toast((e as Error).message, 'err'); }
   };
   const e = errors as Record<string, { message?: string } | undefined>;
@@ -127,7 +127,7 @@ function ProductForm({ id, init, slug }: { id: string; init: PForm; slug: string
   const sel = (name: keyof PForm, label: string, opts: { id: number | string; nameEn: string }[] | undefined, required = false) => <Field label={label} htmlFor={`p-${name}`} error={e[name]?.message}><select id={`p-${name}`} className="input" aria-invalid={!!e[name]} {...register(name)}>{!required || isNew ? <option value="">—</option> : null}{opts?.map((o) => <option key={o.id} value={o.id}>{o.nameEn}</option>)}</select></Field>;
   const canWrite = can('products.write');
   return (
-    <form onSubmit={handleSubmit((d) => save.mutate(d))} noValidate data-testid="product-form" className="pb-24">
+    <form onSubmit={handleSubmit((d) => save.mutate(d), (errs) => { if (errs.nameBn && !errs.nameEn) setLang('Bn'); else if (errs.nameEn) setLang('En'); })} noValidate data-testid="product-form" className="pb-24">
       <PageHeader crumbs={<><Link to="/products" className="hover:underline">{t('Products', 'পণ্য')}</Link> / {isNew ? t('New', 'নতুন') : init.nameEn}</>} title={isNew ? t('New product', 'নতুন পণ্য') : t('Edit product', 'পণ্য সম্পাদনা')}
         actions={<>{!isNew && <Link to={`/products/new?duplicate=${id}`} className="btn btn-outline btn-sm"><Copy className="w-4 h-4" />{t('Duplicate', 'ডুপ্লিকেট')}</Link>}{slug && <a href={`${STORE_URL}/en/p/${slug}`} target="_blank" rel="noreferrer" className="btn btn-outline btn-sm"><ExternalLink className="w-4 h-4" />{t('View on store', 'স্টোরে দেখুন')}</a>}{!isNew && canWrite && <button type="button" className="btn btn-outline btn-sm text-sale" onClick={del} data-testid="product-delete"><Trash2 className="w-4 h-4" />{t('Delete', 'মুছুন')}</button>}</>} />
       <fieldset disabled={!canWrite} className="grid xl:grid-cols-[1fr_360px] gap-4 items-start">
@@ -135,8 +135,8 @@ function ProductForm({ id, init, slug }: { id: string; init: PForm; slug: string
           <Card title={t('Basic information', 'মৌলিক তথ্য')} action={<Tabs value={lang} onChange={setLang} items={[['En', 'English'], ['Bn', 'বাংলা']]} />}>
             <div className="grid gap-4">
               {inp(`name${lang}` as keyof PForm, `${t('Product name', 'পণ্যের নাম')} (${lang === 'En' ? 'EN' : 'বাংলা'}) *`)}
-              <Field label={`${t('Short description', 'সংক্ষিপ্ত বিবরণ')} (${lang})`} htmlFor={`p-short${lang}`}><textarea id={`p-short${lang}`} rows={2} className="input" {...register(`short${lang}` as keyof PForm)} /></Field>
-              <Field label={`${t('Description', 'বিবরণ')} (${lang})`} htmlFor={`p-desc${lang}`} hint={t('Plain text; blank lines become paragraphs.', 'সাধারণ টেক্সট; ফাঁকা লাইনে অনুচ্ছেদ।')}><textarea id={`p-desc${lang}`} rows={6} className="input" {...register(`description${lang}` as keyof PForm)} /></Field>
+              <Field label={`${t('Short description', 'সংক্ষিপ্ত বিবরণ')} (${lang === 'En' ? 'EN' : 'বাংলা'})`} htmlFor={`p-short${lang}`}><textarea id={`p-short${lang}`} rows={2} className="input" {...register(`short${lang}` as keyof PForm)} /></Field>
+              <Field label={`${t('Description', 'বিবরণ')} (${lang === 'En' ? 'EN' : 'বাংলা'})`} htmlFor={`p-desc${lang}`} hint={t('Plain text; blank lines become paragraphs.', 'সাধারণ টেক্সট; ফাঁকা লাইনে অনুচ্ছেদ।')}><textarea id={`p-desc${lang}`} rows={6} className="input" {...register(`description${lang}` as keyof PForm)} /></Field>
               {(e.nameEn || e.nameBn) && <p className="err">{t('Both English and Bangla names are required.', 'ইংরেজি ও বাংলা দুই নামই প্রয়োজন।')}</p>}
             </div>
           </Card>

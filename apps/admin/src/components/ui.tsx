@@ -131,3 +131,8 @@ export function Tabs<T extends string>({ value, onChange, items }: { value: T; o
     </div>
   );
 }
+
+export const METHOD_LABEL: Record<string, string> = { bkash: 'bKash', nagad: 'Nagad', card: 'Card', cod: 'Cash on delivery', bank: 'Bank transfer', sslcommerz: 'SSLCommerz', manual: 'Manual' };
+export const methodLabel = (m: string) => METHOD_LABEL[m] ?? m;
+/** Compact BDT axis label: 85k, 1.7L, 2.6Cr */
+export const compactTaka = (v: number) => (v >= 1e7 ? `${+(v / 1e7).toFixed(1)}Cr` : v >= 1e5 ? `${+(v / 1e5).toFixed(1)}L` : v >= 1e3 ? `${Math.round(v / 1e3)}k` : String(v));

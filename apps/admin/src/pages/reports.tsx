@@ -6,7 +6,7 @@ import { api, qs } from '@/lib/api';
 import { toDhakaInput } from '@/lib/form';
 import { useAuth } from '@/lib/auth';
 import { usePrefs } from '@/lib/prefs';
-import { Card, ErrorBox, Loading, PageHeader, Pill, ORDER_TONE } from '@/components/ui';
+import { Card, ErrorBox, Loading, PageHeader, Pill, ORDER_TONE, compactTaka } from '@/components/ui';
 import { NoAccess } from '@/components/layout';
 
 interface Report { totals: { revenue: number; discount: number; delivery: number; orders: number }; byCategory: { category: string; revenue: number; qty: number }[]; byZone: { zone: string; revenue: number; orders: number }[]; byStatus: { status: string; orders: number }[]; coupons: { code: string; orders: number; discount: number; revenue: number }[] }
@@ -29,7 +29,7 @@ export function Reports() {
         <div className="space-y-4">
           <div className="grid sm:grid-cols-4 gap-4">{([[t('Revenue', 'আয়'), money(q.data.totals.revenue)], [t('Orders', 'অর্ডার'), num(q.data.totals.orders)], [t('Discounts', 'ছাড়'), money(q.data.totals.discount)], [t('Delivery charged', 'ডেলিভারি চার্জ'), money(q.data.totals.delivery)]] as const).map(([l, v]) => <div key={l} className="card p-5"><p className="text-sm text-muted">{l}</p><p className="text-2xl font-semibold mt-1">{v}</p></div>)}</div>
           <Card title={t('Revenue by category', 'ক্যাটাগরি অনুযায়ী আয়')}>
-            <div className="h-72"><ResponsiveContainer width="100%" height="100%"><BarChart data={q.data.byCategory} layout="vertical" margin={{ left: 20 }}><CartesianGrid strokeDasharray="3 3" stroke="rgb(var(--line))" horizontal={false} /><XAxis type="number" tick={{ fontSize: 11, fill: 'rgb(var(--muted))' }} tickFormatter={(v: number) => `${Math.round(v / 1000)}k`} /><YAxis type="category" dataKey="category" width={110} tick={{ fontSize: 12, fill: 'rgb(var(--ink))' }} /><Tooltip formatter={(v) => money(Number(v))} /><Bar dataKey="revenue" fill="#1F4D3A" radius={[0, 4, 4, 0]} /></BarChart></ResponsiveContainer></div>
+            <div className="h-72"><ResponsiveContainer width="100%" height="100%"><BarChart data={q.data.byCategory} layout="vertical" margin={{ left: 20 }}><CartesianGrid strokeDasharray="3 3" stroke="rgb(var(--line))" horizontal={false} /><XAxis type="number" tick={{ fontSize: 11, fill: 'rgb(var(--muted))' }} tickFormatter={compactTaka} /><YAxis type="category" dataKey="category" width={110} tick={{ fontSize: 12, fill: 'rgb(var(--ink))' }} /><Tooltip formatter={(v) => money(Number(v))} /><Bar dataKey="revenue" fill="#1F4D3A" radius={[0, 4, 4, 0]} /></BarChart></ResponsiveContainer></div>
           </Card>
           <div className="grid lg:grid-cols-3 gap-4">
             <Card title={t('By delivery zone', 'জোন অনুযায়ী')}><table className="tbl"><tbody>{q.data.byZone.map((z) => <tr key={z.zone}><td>{z.zone}</td><td className="text-right">{num(z.orders)}</td><td className="text-right">{money(z.revenue)}</td></tr>)}</tbody></table></Card>

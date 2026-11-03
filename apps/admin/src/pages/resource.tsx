@@ -97,11 +97,11 @@ export function ResourceEdit() {
   if (!can(`${ui.group}.read`)) return <NoAccess />;
   if (!isNew && row.isLoading) return <Loading />;
   if (row.error) return <ErrorBox error={row.error} />;
-  return <ResourceForm key={`${resource}-${id}-${row.dataUpdatedAt}`} resource={resource} id={id} row={row.data ?? null} schema={schema!} lookups={lookups.data} canWrite={can(`${ui.group}.write`)}
+  return <ResourceForm key={`${resource}-${id}`} resource={resource} id={id} row={row.data ?? null} schema={schema!} lookups={lookups.data} canWrite={can(`${ui.group}.write`)}
     onSaved={(r) => { qc.invalidateQueries({ queryKey: ['r', resource] }); qc.invalidateQueries({ queryKey: ['dashboard'] }); toast(t('Saved', 'সংরক্ষিত')); if (isNew) nav(`/r/${resource}/${r.id}`, { replace: true }); }}
     onDelete={async () => {
       if (!(await confirm({ title: t(`Delete this ${ui.singular}?`, 'মুছে ফেলবেন?'), body: t('This cannot be undone.', 'এটি ফেরত আনা যাবে না।'), confirm: t('Delete', 'মুছুন'), danger: true }))) return;
-      try { await api(`/admin/r/${resource}/${id}`, { method: 'DELETE' }); qc.invalidateQueries({ queryKey: ['r', resource] }); toast(t('Deleted', 'মুছে ফেলা হয়েছে')); nav(`/r/${resource}`); }
+      try { await api(`/admin/r/${resource}/${id}`, { method: 'DELETE' }); nav(`/r/${resource}`); qc.invalidateQueries({ queryKey: ['r', resource], predicate: (x) => x.queryKey[2] !== 'one' }); toast(t('Deleted', 'মুছে ফেলা হয়েছে')); }
       catch (e) { toast((e as Error).message, 'err'); }
     }}
     dateFmt={date} />;
@@ -114,10 +114,10 @@ function ResourceForm({ resource, id, row, schema, lookups, canWrite, onSaved, o
   const ui = RESOURCE_UI[resource];
   const { t } = usePrefs();
   const isNew = id === 'new';
-  const { register, control, handleSubmit, setError, formState: { errors, isSubmitting, isDirty } } = useForm<Record<string, unknown>>({ resolver: zodResolver(schema) as never, defaultValues: toForm(ui.fields, row) });
+  const { register, control, handleSubmit, setError, reset, formState: { errors, isSubmitting, isDirty } } = useForm<Record<string, unknown>>({ resolver: zodResolver(schema) as never, defaultValues: toForm(ui.fields, row) });
   const save = useMutation({
     mutationFn: (values: Record<string, unknown>) => api<Record<string, unknown>>(isNew ? `/admin/r/${resource}` : `/admin/r/${resource}/${id}`, { method: isNew ? 'POST' : 'PUT', body: toPayload(ui.fields, values) }),
-    onSuccess: onSaved,
+    onSuccess: (r, values) => { if (!isNew) reset(values); onSaved(r); },
     onError: (e) => {
       const fe = (e as ApiError).fields ?? {};
       for (const [k, m] of Object.entries(fe)) setError(k, { message: m });

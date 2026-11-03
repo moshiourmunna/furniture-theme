@@ -7,7 +7,7 @@ import { api, qs } from '@/lib/api';
 import { toDhakaInput } from '@/lib/form';
 import { useAuth } from '@/lib/auth';
 import { usePrefs } from '@/lib/prefs';
-import { Card, Empty, ErrorBox, Loading, Modal, ORDER_TONE, PAY_TONE, PageHeader, Pager, Pill, SearchInput, useUi } from '@/components/ui';
+import { Card, Empty, ErrorBox, Loading, Modal, ORDER_TONE, PAY_TONE, PageHeader, Pager, Pill, SearchInput, useUi, methodLabel } from '@/components/ui';
 import { NoAccess, STORE_URL } from '@/components/layout';
 
 interface OrderRow { id: number; orderNo: string; customerName: string; phone: string; district: string; total: number; amountPaid: number; status: OrderStatusCode; paymentStatus: string; paymentMethod: string; createdAt: string; _count: { items: number } }
@@ -45,7 +45,7 @@ export function Orders() {
                   <td><Link to={`/orders/${o.id}`} className="font-medium text-primary hover:underline">#{o.orderNo}</Link><div className="text-xs text-muted">{date(o.createdAt, true)}</div></td>
                   <td>{o.customerName}<div className="text-xs text-muted">{o.phone} · {o.district}</div></td>
                   <td>{num(o._count.items)}</td>
-                  <td><span className="capitalize">{o.paymentMethod}</span><div><Pill tone={PAY_TONE[o.paymentStatus]}>{o.paymentStatus.toLowerCase()}</Pill></div></td>
+                  <td><span>{methodLabel(o.paymentMethod)}</span><div><Pill tone={PAY_TONE[o.paymentStatus]}>{o.paymentStatus.toLowerCase()}</Pill></div></td>
                   <td><Pill tone={ORDER_TONE[o.status]}>{ORDER_STATUS_LABEL[o.status][lang === 'bn' ? 1 : 0]}</Pill></td>
                   <td className="text-right">{money(o.total)}</td>
                 </tr>
@@ -115,7 +115,7 @@ export function OrderDetail() {
           </Card>
           <Card title={t('Payments', 'পেমেন্ট')}>
             {!o.payments.length ? <p className="text-sm text-muted">{o.paymentMethod === 'cod' ? t('Cash on delivery — collected by the delivery team.', 'ক্যাশ অন ডেলিভারি।') : o.paymentMethod === 'bank' ? t('Bank transfer — verify against the statement.', 'ব্যাংক ট্রান্সফার — স্টেটমেন্টে যাচাই করুন।') : '—'}</p> :
-              <table className="tbl"><tbody>{o.payments.map((p) => <tr key={p.id}><td className="capitalize">{p.provider} · {p.kind}</td><td>{date(p.createdAt, true)}</td><td><code className="text-xs">{p.providerRef}</code></td><td><Pill tone={p.status === 'success' ? 'green' : p.status === 'initiated' ? 'amber' : 'red'}>{p.status}</Pill></td><td className="text-right">{money(p.amount)}</td></tr>)}</tbody></table>}
+              <table className="tbl"><tbody>{o.payments.map((p) => <tr key={p.id}><td>{methodLabel(p.provider)} · {p.kind}</td><td>{date(p.createdAt, true)}</td><td><code className="text-xs">{p.providerRef}</code></td><td><Pill tone={p.status === 'success' ? 'green' : p.status === 'initiated' ? 'amber' : 'red'}>{p.status}</Pill></td><td className="text-right">{money(p.amount)}</td></tr>)}</tbody></table>}
           </Card>
         </div>
         <div className="space-y-4">

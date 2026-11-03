@@ -7,7 +7,7 @@ import { ORDER_STATUS_LABEL, type OrderStatusCode } from '@shekor/shared';
 import { api } from '@/lib/api';
 import { useAuth } from '@/lib/auth';
 import { usePrefs } from '@/lib/prefs';
-import { Card, ErrorBox, Loading, ORDER_TONE, PAY_TONE, PageHeader, Pill, Tabs } from '@/components/ui';
+import { Card, ErrorBox, Loading, ORDER_TONE, PAY_TONE, PageHeader, Pill, Tabs, compactTaka, methodLabel } from '@/components/ui';
 import { NAV } from '@/components/layout';
 
 interface Dash {
@@ -64,7 +64,7 @@ export function Dashboard() {
                 <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#1F4D3A" stopOpacity={0.35} /><stop offset="100%" stopColor="#1F4D3A" stopOpacity={0} /></linearGradient></defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgb(var(--line))" vertical={false} />
                 <XAxis dataKey="date" tick={{ fontSize: 11, fill: 'rgb(var(--muted))' }} tickFormatter={(v: string) => v.slice(5)} minTickGap={24} />
-                <YAxis tick={{ fontSize: 11, fill: 'rgb(var(--muted))' }} tickFormatter={(v: number) => (v >= 100000 ? `${Math.round(v / 100000)}L` : `${Math.round(v / 1000)}k`)} width={44} />
+                <YAxis tick={{ fontSize: 11, fill: 'rgb(var(--muted))' }} tickFormatter={compactTaka} width={48} />
                 <Tooltip formatter={(v) => money(Number(v))} contentStyle={{ background: 'rgb(var(--surface))', border: '1px solid rgb(var(--line))', borderRadius: 8, fontSize: 12 }} />
                 <Area type="monotone" dataKey="revenue" stroke="#1F4D3A" strokeWidth={2} fill="url(#g)" name={t('Revenue', 'আয়')} />
               </AreaChart>
@@ -75,13 +75,13 @@ export function Dashboard() {
           <div className="h-48" role="img" aria-label={t('Orders by payment method', 'পেমেন্ট পদ্ধতি অনুযায়ী অর্ডার')}>
             <ResponsiveContainer width="100%" height="100%"><PieChart><Pie data={d.byMethod} dataKey="orders" nameKey="method" innerRadius={50} outerRadius={80} paddingAngle={2}>{d.byMethod.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}</Pie><Tooltip /></PieChart></ResponsiveContainer>
           </div>
-          <ul className="grid grid-cols-2 gap-2 text-sm mt-2">{d.byMethod.map((m, i) => <li key={m.method} className="flex items-center gap-2"><span className="w-2.5 h-2.5 rounded-full" style={{ background: COLORS[i % COLORS.length] }} /><span className="flex-1 capitalize">{m.method}</span><span className="text-muted">{num(Math.round((m.orders / totalM) * 100))}%</span></li>)}</ul>
+          <ul className="grid grid-cols-2 gap-2 text-sm mt-2">{d.byMethod.map((m, i) => <li key={m.method} className="flex items-center gap-2"><span className="w-2.5 h-2.5 rounded-full" style={{ background: COLORS[i % COLORS.length] }} /><span className="flex-1">{methodLabel(m.method)}</span><span className="text-muted">{num(Math.round((m.orders / totalM) * 100))}%</span></li>)}</ul>
         </Card>
       </div>
       <div className="grid xl:grid-cols-[1fr_360px] gap-4 mt-4">
         <Card title={t('Recent orders', 'সাম্প্রতিক অর্ডার')} action={<Link to="/orders" className="text-sm text-primary hover:underline">{t('View all', 'সব দেখুন')}</Link>} pad={false}>
           <div className="overflow-x-auto mt-2"><table className="tbl"><thead><tr><th>{t('Order', 'অর্ডার')}</th><th>{t('Customer', 'গ্রাহক')}</th><th>{t('Payment', 'পেমেন্ট')}</th><th>{t('Status', 'স্ট্যাটাস')}</th><th className="text-right">{t('Total', 'মোট')}</th></tr></thead>
-            <tbody>{d.recentOrders.map((o) => <tr key={o.id}><td><Link to={`/orders/${o.id}`} className="font-medium text-primary">#{o.orderNo}</Link><div className="text-xs text-muted">{date(o.createdAt)}</div></td><td>{o.customerName}</td><td><span className="capitalize">{o.paymentMethod}</span> <Pill tone={PAY_TONE[o.paymentStatus]}>{o.paymentStatus.toLowerCase()}</Pill></td><td><Pill tone={ORDER_TONE[o.status]}>{ORDER_STATUS_LABEL[o.status][lang === 'bn' ? 1 : 0]}</Pill></td><td className="text-right">{money(o.total)}</td></tr>)}</tbody></table></div>
+            <tbody>{d.recentOrders.map((o) => <tr key={o.id}><td><Link to={`/orders/${o.id}`} className="font-medium text-primary">#{o.orderNo}</Link><div className="text-xs text-muted">{date(o.createdAt)}</div></td><td>{o.customerName}</td><td><span>{methodLabel(o.paymentMethod)}</span> <Pill tone={PAY_TONE[o.paymentStatus]}>{o.paymentStatus.toLowerCase()}</Pill></td><td><Pill tone={ORDER_TONE[o.status]}>{ORDER_STATUS_LABEL[o.status][lang === 'bn' ? 1 : 0]}</Pill></td><td className="text-right">{money(o.total)}</td></tr>)}</tbody></table></div>
         </Card>
         <div className="space-y-4">
           <Card title={t('Needs attention', 'মনোযোগ প্রয়োজন')}>
