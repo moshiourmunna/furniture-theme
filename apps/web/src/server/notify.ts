@@ -9,7 +9,7 @@ export interface EmailProvider { send(to: string, subject: string, html: string)
 const mockSms: SmsProvider = {
   async send(to, body) {
     await prisma.outboxMessage.create({ data: { channel: 'sms', to, body, provider: 'mock' } });
-    if (!env.isProd) console.info(`[sms:mock] → ${to}: ${body}`);
+    if (!env.isProd && !process.env.VITEST) console.info(`[sms:mock] → ${to}: ${body}`);
   },
 };
 const mockEmail: EmailProvider = {

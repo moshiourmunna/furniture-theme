@@ -44,7 +44,7 @@ export function canTransition(from: OrderStatusCode, to: OrderStatusCode): boole
 export const EMI_TENURES = [3, 6, 9, 12, 18, 24] as const;
 export function emiMonthly(price: number, months: number): number {
   const fee = months > 12 ? 0.07 : 0;
-  return Math.ceil((price * (1 + fee)) / months);
+  return Math.ceil(Math.round(price * (1 + fee)) / months); // round first: 120000 * 1.07 is 128400.00000000001 in floating point
 }
 export const EMI_MIN_ORDER = 10_000;
 

@@ -39,7 +39,7 @@ export function parseFilters(sp: URLSearchParams | Record<string, string | strin
     minPrice: num(one('minPrice')), maxPrice: num(one('maxPrice')),
     inStock: one('inStock') === '1', sale: one('sale') === '1', emi: one('emi') === '1',
     rating: num(one('rating')), ids: list(get('ids')).map(Number).filter(Number.isFinite),
-    sort: SORTS.includes(sort) ? sort : 'featured', page: Math.max(1, num(one('page')) ?? 1),
+    sort: SORTS.includes(sort) ? sort : 'featured', page: Math.max(1, num(one('page')) ?? 1), pageSize: num(one('pageSize')) ? Math.max(1, num(one('pageSize'))!) : undefined,
   };
 }
 

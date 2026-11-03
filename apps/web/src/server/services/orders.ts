@@ -1,3 +1,4 @@
+import { env } from '@/server/env';
 import 'server-only';
 import { randomBytes, randomInt } from 'node:crypto';
 import { prisma, type Prisma, type OrderStatus } from '@shekor/db';
@@ -141,7 +142,7 @@ export async function placeOrder(input: CheckoutInput, user: SessionUser | null)
     await prisma.payment.update({ where: { sessionId }, data: { providerRef: init.providerRef } });
     redirectUrl = init.redirectUrl;
   }
-  await sms.send(order.phone, `Shekor: order ${order.orderNo} received. Total ${formatPrice(order.total)}. Track: /track?order=${order.orderNo}`);
+  await sms.send(order.phone, `Shekor: order ${order.orderNo} received. Total ${formatPrice(order.total)}. Track: ${env.appUrl}/track?order=${order.orderNo}`);
   return { orderNo: order.orderNo, trackingToken: order.trackingToken, total: order.total, payNow, redirectUrl };
 }
 
