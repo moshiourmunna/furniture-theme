@@ -123,3 +123,10 @@ html.is-static .animate-kenburns{ animation:none !important; }
   .flip-page img{ display:block; width:100%; height:auto; }
   .container-narrow{ @apply container max-w-4xl; }
 }
+
+/* Catalogue flipbook page turn (disabled for reduced motion) */
+@keyframes flip-in-next { from { transform: rotateY(-14deg) translateX(18px); opacity: .4; } to { transform: none; opacity: 1; } }
+@keyframes flip-in-prev { from { transform: rotateY(14deg) translateX(-18px); opacity: .4; } to { transform: none; opacity: 1; } }
+.flip-next { animation: flip-in-next .45s cubic-bezier(.2,.7,.2,1) both; transform-origin: left center; }
+.flip-prev { animation: flip-in-prev .45s cubic-bezier(.2,.7,.2,1) both; transform-origin: right center; }
+@media (prefers-reduced-motion: reduce) { .flip-next, .flip-prev, .animate-kenburns, .lightbox-enter { animation: none !important; } }
