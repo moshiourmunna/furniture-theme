@@ -48,7 +48,7 @@ jobs:
           npx wait-on -t 60000 http://localhost:3000/api/v1/health http://localhost:5173/login
       - run: pnpm --filter @shekor/e2e exec playwright install --with-deps chromium firefox webkit
       - name: E2E flows (Chromium, Firefox, WebKit)
-        run: pnpm --filter @shekor/e2e test
+        run: pnpm --filter @shekor/e2e e2e
       - name: Browser pass (all engines × sizes × EN/BN × light/dark)
         run: pnpm --filter @shekor/e2e browser-pass
       - uses: actions/upload-artifact@v4

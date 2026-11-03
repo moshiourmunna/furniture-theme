@@ -125,7 +125,7 @@ For the end-to-end tests, the apps must be running: web on :3000 and admin on :5
 
 ```bash
 pnpm --filter @shekor/e2e exec playwright install chromium firefox webkit   # first time (Linux: add --with-deps)
-pnpm --filter @shekor/e2e test             # functional flows on Chromium, Firefox, WebKit
+pnpm --filter @shekor/e2e e2e              # functional flows on Chromium, Firefox, WebKit
 pnpm --filter @shekor/e2e browser-pass     # 87 pages × 3 engines × 3 sizes × EN/BN × light/dark
 ```
 

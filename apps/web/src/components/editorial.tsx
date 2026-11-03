@@ -29,6 +29,5 @@ export function Stats({ locale, items }: { locale: Locale; items: [string, strin
 }
 
 export function Prose({ html }: { html: string }) {
-  // eslint-disable-next-line react/no-danger
   return <div className="prose-sk" dangerouslySetInnerHTML={{ __html: html }} />;
 }

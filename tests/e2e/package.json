@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "playwright test",
+    "e2e": "playwright test",
     "browser-pass": "playwright test --config=playwright.browser-pass.config.ts",
     "report": "node scripts/browser-report.mjs"
   },

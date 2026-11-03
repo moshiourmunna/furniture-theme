@@ -8,7 +8,6 @@ export function JsonLd({ data }: { data: object | object[] }) {
   return (
     <>
       {arr.map((d, i) => (
-        // eslint-disable-next-line react/no-danger
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(d).replace(/</g, '\\u003c') }} />
       ))}
     </>

@@ -11,7 +11,7 @@
     "lint": "turbo run lint",
     "test": "turbo run test",
     "test:integration": "pnpm --filter @shekor/web test:integration",
-    "test:e2e": "pnpm --filter @shekor/e2e test",
+    "test:e2e": "pnpm --filter @shekor/e2e e2e",
     "db:generate": "pnpm --filter @shekor/db generate",
     "db:migrate": "pnpm --filter @shekor/db migrate:deploy",
     "db:migrate:dev": "pnpm --filter @shekor/db migrate:dev",

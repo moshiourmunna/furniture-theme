@@ -16,6 +16,7 @@ export function LeadForm({ type, fields, submitLabel, successTitle, successBody,
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState<string | null>(null);
+  const [todayDhaka] = useState(() => new Date(Date.now() + 6 * 3600_000).toISOString().slice(0, 10));
   if (done !== null) {
     return (
       <div className="card p-8 text-center" role="status" data-testid={`${testId ?? type}-success`}>
@@ -65,7 +66,7 @@ export function LeadForm({ type, fields, submitLabel, successTitle, successBody,
                 <label htmlFor={id} className="label">{f.label}{f.required && ' *'}</label>
                 {f.type === 'textarea' ? <textarea {...common} rows={4} className="input" value={v[f.name] as string} onChange={(e) => set(e.target.value)} placeholder={f.placeholder} />
                   : f.type === 'select' ? <select {...common} className="input" value={v[f.name] as string} onChange={(e) => set(e.target.value)}>{!f.required && <option value="">{t('Choose…', 'বেছে নিন…')}</option>}{f.options?.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}</select>
-                  : <input {...common} type={f.type ?? 'text'} min={f.min === 'today' ? new Date(Date.now() + 6 * 3600_000).toISOString().slice(0, 10) : f.min} suppressHydrationWarning className="input" value={v[f.name] as string} onChange={(e) => set(e.target.value)} placeholder={f.placeholder} autoComplete={f.autoComplete} inputMode={f.type === 'tel' ? 'tel' : undefined} />}
+                  : <input {...common} type={f.type ?? 'text'} min={f.min === 'today' ? todayDhaka : f.min} suppressHydrationWarning className="input" value={v[f.name] as string} onChange={(e) => set(e.target.value)} placeholder={f.placeholder} autoComplete={f.autoComplete} inputMode={f.type === 'tel' ? 'tel' : undefined} />}
               </>
             )}
             {f.hint && !err && <p id={`${id}-hint`} className="text-xs text-muted mt-1">{f.hint}</p>}

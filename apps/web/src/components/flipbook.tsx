@@ -31,7 +31,9 @@ export function Flipbook({ pages, title, pdfHref }: { pages: string[]; title: st
   const visible = wide ? (i === 0 ? [0] : [i, i + 1].filter((x) => x < pages.length)) : [i];
   const next = useCallback(() => { const n = wide ? (i === 0 ? 1 : i + 2) : i + 1; if (n < pages.length) { setDir(1); setI(n); } }, [i, wide, pages.length]);
   const prev = useCallback(() => { const n = wide ? (i <= 1 ? 0 : i - 2) : i - 1; if (n >= 0 && i > 0) { setDir(-1); setI(n); } }, [i, wide]);
-  useEffect(() => { setI((x) => spreadStart(x)); }, [wide, spreadStart]);
+  // Re-align to a spread when the layout switches between one and two pages (adjust state during render, not in an effect).
+  const [prevWide, setPrevWide] = useState(wide);
+  if (prevWide !== wide) { setPrevWide(wide); setI(spreadStart(i)); }
   useEffect(() => {
     const k = (e: KeyboardEvent) => {
       if ((e.target as HTMLElement)?.closest('input,textarea,select')) return;

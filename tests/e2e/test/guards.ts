@@ -8,13 +8,20 @@ export class PageGuard {
   private allow: RegExp[];
   constructor(page: Page, allow: RegExp[] = []) {
     this.allow = allow;
-    page.on('console', (m) => { if (m.type() === 'error' && !this.allowed(m.text())) this.consoleErrors.push(m.text().slice(0, 300)); });
+    page.on('console', (m) => {
+      if (m.type() !== 'error' || this.allowed(m.text())) return;
+      // Firefox logs a font fetch the page itself cancelled by navigating away (NS_BINDING_ABORTED = 2152398850) as an error
+      if (/downloadable font: download failed .*status=2152398850/.test(m.text())) return;
+      this.consoleErrors.push(m.text().slice(0, 300));
+    });
     page.on('pageerror', (e) => this.pageErrors.push(e.message.slice(0, 300)));
     page.on('response', (r: Response) => { if (r.status() >= 400 && !this.allowed(`${r.status()} ${r.url()}`)) this.failed.push(`${r.status()} ${r.request().method()} ${r.url()}`); });
     page.on('requestfailed', (r: Request) => {
       const err = r.failure()?.errorText ?? '';
       // navigations/prefetches cancelled by the browser are not failures
       if (/ERR_ABORTED|NS_BINDING_ABORTED|cancelled|Load request cancelled|interrupted/i.test(err)) return;
+      // Firefox reports an RSC prefetch torn down by a full navigation as NS_BASE_STREAM_CLOSED
+      if (err === 'NS_BASE_STREAM_CLOSED' && /[?&]_rsc=/.test(r.url())) return;
       if (!this.allowed(`${err} ${r.url()}`)) this.failed.push(`FAILED ${err} ${r.url()}`);
     });
   }

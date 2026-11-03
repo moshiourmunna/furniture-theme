@@ -176,14 +176,15 @@ export function SearchOverlay() {
   const close = () => setDrawer(null);
   const ref = useFocusTrap(open, close);
   const [q, setQ] = useState('');
-  const [res, setRes] = useState<Suggest | null>(null);
+  const [fetched, setRes] = useState<Suggest | null>(null);
   const f = pf(locale);
   useEffect(() => {
-    if (q.trim().length < 2) { setRes(null); return; }
+    if (q.trim().length < 2) return;
     const ac = new AbortController();
     const id = setTimeout(() => api<Suggest>(`/search/suggest?q=${encodeURIComponent(q)}`, { signal: ac.signal }).then(setRes).catch(() => {}), 200);
     return () => { clearTimeout(id); ac.abort(); };
   }, [q]);
+  const res = q.trim().length < 2 ? null : fetched; // short queries show the popular list, not stale results
   if (!open) return null;
   const popular: [string, string][] = [['Teak sofa', 'সেগুন সোফা'], ['King bed', 'কিং খাট'], ['Dining', 'ডাইনিং'], ['Almirah', 'আলমারি']];
   return (

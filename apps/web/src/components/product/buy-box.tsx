@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Bell, Calculator, GitCompareArrows, Heart, MessageCircle, Minus, PackageCheck, Plus, Ruler, ShieldCheck, ShoppingBag, Store, Truck } from 'lucide-react';
@@ -38,7 +38,8 @@ export function BuyBox({ p, zones, whatsapp }: { p: BuyProduct; zones: BuyZone[]
   const [district, setDistrict] = useState('Dhaka');
   const [delivery, setDelivery] = useState<string | null>(null);
   const districts = BD_DIVISIONS.find((d) => d.en === division)?.districts ?? [];
-  useEffect(() => { setQty((q) => Math.min(q, maxQty)); }, [maxQty]);
+  const [prevMax, setPrevMax] = useState(maxQty);
+  if (prevMax !== maxQty) { setPrevMax(maxQty); setQty((q) => Math.min(q, maxQty)); }
 
   const stockLine = madeToOrder
     ? t(`Made to order · ships in about ${p.leadTimeDays} days`, `অর্ডারে তৈরি · প্রায় ${num('bn', p.leadTimeDays)} দিনে পাঠানো হবে`)
