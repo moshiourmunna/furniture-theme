@@ -39,7 +39,14 @@ lines.push(`_Generated ${now} (Asia/Dhaka, UTC+6) by \`tests/e2e/scripts/browser
 
 const pass = load('browser-pass.json');
 if (pass) {
-  const rows = flatten(pass);
+  let rows = flatten(pass);
+  // After fixing failures, only the failed tests are re-run (reports/browser-pass-rerun.json); their final result replaces the first one.
+  const rerun = load('browser-pass-rerun.json');
+  const fixedFirstRun = [];
+  if (rerun) {
+    const again = new Map(flatten(rerun).map((r) => [`${r.project}|${r.title}`, r]));
+    rows = rows.map((r) => { const n = again.get(`${r.project}|${r.title}`); if (n && r.status !== n.status) fixedFirstRun.push({ ...r, now: n.status }); return n ?? r; });
+  }
   const c = count(rows);
   lines.push('## Page matrix (browser pass)', '', `**${rows.length} page loads**: ${fmt(c)}. Wall time ${Math.round((pass.stats?.duration ?? 0) / 60000)} min.`, '');
   lines.push('Each cell is one project (engine × viewport × language × theme) running every storefront and admin page. A page fails on any console error, uncaught exception, failed request (4xx/5xx), broken image, horizontal overflow, wrong theme class or wrong `lang`.', '');
@@ -59,9 +66,14 @@ if (pass) {
   lines.push('');
   const pages = [...new Set(rows.map((r) => r.title.split(' › ').at(-1)))];
   lines.push(`Pages covered (${pages.length}): ${pages.map((p) => `\`${p}\``).join(', ')}.`, '');
+  if (fixedFirstRun.length) {
+    lines.push(`### Failed in the first full run, fixed and re-run (${fixedFirstRun.length})`, '', '| Project | Page | First run | After fix | First-run error |', '|---|---|---|---|---|');
+    for (const r of fixedFirstRun) lines.push(`| ${r.project} | ${r.title} | ${r.status} | ${r.now} | ${r.error.replace(/\|/g, '\\|').slice(0, 160)} |`);
+    lines.push('');
+  }
   const bad = rows.filter((r) => r.status === 'failed' || r.status === 'flaky');
   if (bad.length) {
-    lines.push('### Failed or flaky page loads', '', '| Project | Page | Status | First error line |', '|---|---|---|---|');
+    lines.push('### Failed or flaky page loads (final)', '', '| Project | Page | Status | First error line |', '|---|---|---|---|');
     for (const r of bad) lines.push(`| ${r.project} | ${r.title} | ${r.status} | ${r.error.replace(/\|/g, '\\|').slice(0, 220)} |`);
     lines.push('');
   } else lines.push('No failed or flaky page loads.', '');

@@ -115,7 +115,7 @@ export function OrderDetail() {
           </Card>
           <Card title={t('Payments', 'পেমেন্ট')}>
             {!o.payments.length ? <p className="text-sm text-muted">{o.paymentMethod === 'cod' ? t('Cash on delivery — collected by the delivery team.', 'ক্যাশ অন ডেলিভারি।') : o.paymentMethod === 'bank' ? t('Bank transfer — verify against the statement.', 'ব্যাংক ট্রান্সফার — স্টেটমেন্টে যাচাই করুন।') : '—'}</p> :
-              <table className="tbl"><tbody>{o.payments.map((p) => <tr key={p.id}><td>{methodLabel(p.provider)} · {p.kind}</td><td>{date(p.createdAt, true)}</td><td><code className="text-xs">{p.providerRef}</code></td><td><Pill tone={p.status === 'success' ? 'green' : p.status === 'initiated' ? 'amber' : 'red'}>{p.status}</Pill></td><td className="text-right">{money(p.amount)}</td></tr>)}</tbody></table>}
+              <div className="overflow-x-auto"><table className="tbl"><tbody>{o.payments.map((p) => <tr key={p.id}><td>{methodLabel(p.provider)} · {p.kind}</td><td>{date(p.createdAt, true)}</td><td><code className="text-xs">{p.providerRef}</code></td><td><Pill tone={p.status === 'success' ? 'green' : p.status === 'initiated' ? 'amber' : 'red'}>{p.status}</Pill></td><td className="text-right">{money(p.amount)}</td></tr>)}</tbody></table></div>}
           </Card>
         </div>
         <div className="space-y-4">
